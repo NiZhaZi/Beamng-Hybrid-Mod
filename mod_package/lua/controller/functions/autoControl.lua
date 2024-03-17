@@ -1,5 +1,5 @@
---autoContrl version 0.0.7alpha
---Final Edit 19点58分2024年1月14日
+--autoContrl version 0.0.8alpha
+--Final Edit 2024年3月17日12点48分
 --by NZZ
 
 local M = {}
@@ -67,6 +67,14 @@ local function switchECrawl()
 end
 
 local function updateGFX(dt)
+
+    local ign
+    if electrics.values.ignitionLevel == 2 then
+        ign = 1
+    else
+        ign = 0
+    end
+    electrics.values.brakewithign = input.brake * ign
 
     local hybridMode = electrics.values.hybridMode
 
