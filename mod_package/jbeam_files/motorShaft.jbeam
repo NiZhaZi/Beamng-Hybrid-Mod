@@ -16,7 +16,6 @@
 		],
 		"controller": [
 			["fileName"],
-			["hybrid/singleMotors", {"name": "singleMotors"}],
 			["hybrid/hybridControl", {
 				"name": "hybridControl",
 				//get all motors Names

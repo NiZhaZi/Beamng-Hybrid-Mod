@@ -7,6 +7,7 @@
         "slots": [
 			["type", "default", "description"],
 			["Shift_Logic", "", "Shift Logic"],
+			["Single_Motors", "", "Single Motors"],
 		],
 		"slotType" : "Hybrid_Configure",
 		"variables": [
@@ -53,7 +54,21 @@
 
 	},
 
+	"Single_Motors": {
+		"information":{
+			"name":"Single Motors Control",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors",
 
+		"controller": [
+			["fileName"],
+			["hybrid/singleMotors", {"name": "singleMotors"}],
+		],
+	},
 
 	"Automatic_Gearbox": {
 		"information":{
