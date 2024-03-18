@@ -1,5 +1,5 @@
---eSH-AWD version 0.0.1alpha
---Final Edit 19点11分2024年1月14日
+--eSH-AWD version 0.0.2alpha
+--Final Edit 2024年3月18日22点06分
 --by NZZ
 
 local M = {}
@@ -26,13 +26,23 @@ end
 
 local function updateGFX()
     gear = motorShaft.motorDirection
-    originalMode = electrics.values.hybridMode
+    FLMotor.motorDirection = gear
+    FRMotor.motorDirection = gear
+    
     --log("", "", "" .. originalMode)
-    if gear == -1 then
-        proxyEngine:setIgnition(0)
+    if gear == -1 and detN == 0 then
+        originalMode = electrics.values.hybridMode
+        electrics.values.hybridMode = "electric"
+
+        --proxyEngine:setIgnition(0)
         detN = 1
-    elseif detN == 1 then
+    elseif gear ~= -1 and detN == 1 then
+
+        electrics.values.hybridMode = originalMode
+
         detN = 0
+
+        --[[
         local mode = originalMode
         if mode == "hybrid" then
             if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
@@ -50,7 +60,9 @@ local function updateGFX()
             if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
                 proxyEngine:activateStarter()
             end
-        end     
+        end
+        ]]
+
     end 
 
     local lrpm = FLShaft.outputAV1 * AVtoRPM
@@ -82,5 +94,6 @@ end
 
 M.updateGFX = updateGFX
 M.init = init
+M.reset = init
 
 return M

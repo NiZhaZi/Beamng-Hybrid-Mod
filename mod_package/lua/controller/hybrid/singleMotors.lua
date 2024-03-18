@@ -1,5 +1,5 @@
---single motors Control version 0.0.1alpha
---Final Edit 2024年3月11日20点21分
+--single motors Control version 0.0.2alpha
+--Final Edit 2024年3月18日21点52分
 --by NZZ
 
 local M = {}
@@ -28,7 +28,15 @@ local function updateGFX(dt)
     if motorType == "fullTime" then
         typeDirection = 1
     elseif motorType == "partTime" then
-        if abs(node1.outputAV1 - node2.outputAV1) * AVtoRPM >= maxRPMdiff then
+
+        local compareNum
+        if node1 and node2 then
+            compareNum = abs(node1.outputAV1 - node2.outputAV1)
+        else
+            compareNum = 999999999
+        end
+
+        if compareNum * AVtoRPM >= maxRPMdiff then
             typeDirection = 1
         else
             typeDirection = 0
@@ -49,7 +57,7 @@ local function updateGFX(dt)
                 motorDirection = 0
             end
         else
-            electrics.values.motorDirection = gearbox.gearIndex
+            motorDirection = gearbox.gearIndex
         end
     else
         motorDirection = 0
@@ -101,8 +109,8 @@ local function init(jbeamData)
     compareNodes1 = jbeamData.compareNodes1 or nil
     compareNodes2 = jbeamData.compareNodes2 or nil
     if compareNodes1 and compareNodes2 then
-        node1 = powertrain.getDevice(compareNodes1)
-        node2 = powertrain.getDevice(compareNodes2)
+        node1 = powertrain.getDevice(compareNodes1) or nil
+        node2 = powertrain.getDevice(compareNodes2) or nil
     end
 
     maxRPMdiff = jbeamData.maxRPMdiff or 50
