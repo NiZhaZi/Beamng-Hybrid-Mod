@@ -85,7 +85,7 @@
 
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-			["motorShaft", "frontDriveShaft", "transferCase", 2, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
+			
 		]
 	},
 
@@ -175,7 +175,7 @@
 
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-			["motorShaft", "rearDriveShaft", "transferCase", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
+			
 		]
 	},
 }
