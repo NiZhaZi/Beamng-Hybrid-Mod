@@ -1,0 +1,15 @@
+
+"digidash_screen_logic": "digidash_screen_logic_bng_cus",
+"digidash_cells_top_left0": "digidash_cells_top_left0_evVolume",
+
+"Camso_differential_center": "Camso_differential_center",
+"Camso_TransferCase": "Camso_TransferCase_FWD",
+"Camso_TransferCase": "Camso_TransferCase_RWD",
+
+"Hybrid_Configure": "Hybrid_Configure_01",
+
+"Shift_Logic": "Automatic_Gearbox",
+"Shift_Logic": "DCT_Gearbox",
+"Shift_Logic": "CVT_Gearbox",
+
+["Functions", "Functions", "Functions"]
