@@ -33,8 +33,8 @@ local function judgeUpdateSteer()
         end
     else
         if electrics.values['steering_input'] < 0.01 then
-        else
             direction = 2
+        else
         end
     end
 end
