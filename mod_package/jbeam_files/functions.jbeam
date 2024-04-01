@@ -8,7 +8,7 @@
 			["type", "default", "description"],
             ["Auto_Control", "Auto_Control", "Auto Control"],
             ["Dynamic_System", "Dynamic_System", "dynamic system"],
-			["Rear_Wheel_Steering", "Rear_Wheel_Steering", "Rear Wheel Steering"],
+	    ["Rear_Wheel_Steering", , "Rear Wheel Steering"],
 		],
 		"slotType" : "Functions",
 		"variables": [
