@@ -1,5 +1,5 @@
---hybridContrl version 0.0.9alpha
---Final Edit 2024年3月9日20点59分
+--hybridContrl version 0.0.10alpha
+--Final Edit 2024年4月12日09点27分
 --by NZZ
 
 local M = {}
@@ -347,7 +347,7 @@ local function updateGFX(dt)
     subRPM = subRPM / #subMotors
 
     if edriveMode == "partTime" then
-        if abs(mianRPM - subRPM) >= ondemandMaxRPM then
+        if (abs(mianRPM - subRPM) >= ondemandMaxRPM) or (input.throttle > 0.8 and electrics.values.airspeed <= 0.08) then
             electrics.values.subThrottle = electrics.values.throttle
         else
             electrics.values.subThrottle = 0
