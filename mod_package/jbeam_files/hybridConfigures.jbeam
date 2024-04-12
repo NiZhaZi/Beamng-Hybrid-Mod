@@ -1,0 +1,118 @@
+{
+    "Hybrid_Configure_01": {
+		"information":{
+			"name":"Hybrid Configure 01",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+			["Shift_Logic", "", "Shift Logic"],
+			["Single_Motors", "", "Single Motors"],
+		],
+		"slotType" : "Hybrid_Configure",
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+
+		"singleMotors":{
+			"motorNames": ["rearMotor", "frontMotor"],
+			"motorType": "partTime",
+			"compareNodes1": "frontDriveShaft",
+			"compareNodes2": "rearDriveShaft",
+			"maxRPMdiff": 50,
+		},
+        
+		"hybridControl":{
+			"motorNames": ["frontDriveShaft", "rearDriveShaft"],
+			"mainMotorNames": ["rearDriveShaft"],
+			"subMotorNames": ["frontDriveShaft"],
+
+			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
+			"defaultMode" : "hybrid",
+		},
+
+		"motorControl":{
+			"motorNames": ["frontDriveShaft", "rearDriveShaft", "gearbox", "rearMotor", "frontMotor"],
+		},
+
+		"powerGenerator":{
+			"powerGeneratorName": "gearbox",
+			"SOC": 80,
+			"defaultMode": "auto",
+		}
+
+		"gearbox":{
+			"torque":[
+				["rpm", "torque"],
+				[0, 120.00],
+				[10000, 120.00],
+			],
+			"electricsThrottleName": "powerGenerator",
+			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)",
+
+		},
+
+	},
+
+	"Single_Motors": {
+		"information":{
+			"name":"Single Motors Control",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors",
+
+		"controller": [
+			["fileName"],
+			["hybrid/singleMotors", {"name": "singleMotors"}],
+		],
+	},
+
+	"Automatic_Gearbox": {
+		"information":{
+			"name":"Shift Logic Automatic Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "automaticGearbox",
+		},
+	},
+
+	"DCT_Gearbox": {
+		"information":{
+			"name":"Shift Logic DCT Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "dctGearbox",
+		},
+	},
+
+	"CVT_Gearbox": {
+		"information":{
+			"name":"Shift Logic CVT Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "cvtGearbox",
+		},
+	},
+
+}
