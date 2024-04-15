@@ -16,6 +16,7 @@
 		],
 		"controller": [
 			["fileName"],
+			["AVAS"],
 			["hybrid/hybridControl", {
 				"name": "hybridControl",
 				//get all motors Names
@@ -44,6 +45,15 @@
 			}],
 			["hybrid/powerGenerator", {"name": "powerGenerator"}],
 		],
+
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
+            "forwardSoundNode:":["a61"],
+            "reverseSoundNode:":["a1"],
+            "warningMaxSpeed": 14,
+            "warningVolume": 0.5
+        }
 
 		"motorShaft":{
 			//"motorType": "a",
