@@ -29,6 +29,8 @@
 
 			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
 			"defaultMode" : "hybrid",
+
+			"lowSpeed": 1,
 		},
 
 		"motorControl":{

@@ -8,11 +8,12 @@
 			["type", "default", "description"],
             ["Auto_Control", "Auto_Control", "Auto Control"],
             ["Dynamic_System", "Dynamic_System", "dynamic system"],
-			["Rear_Wheel_Steering", "", "Rear Wheel Steering"],
+			["Rear_Wheel_Steering", "Rear_Wheel_Steering", "Rear Wheel Steering"],
 		],
 		"slotType" : "Functions",
 		"variables": [
 			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+			["$switchVelocity", "range", "airspeed", "Suspension", 12, 0, 50, "Rear Steering Switch Velocity", "Adjusts the Rear Steering Switch Velocity"{"subCategory":"", "minDis": 0, "maxDis": 50}],
 		],
         "controller": [
         	["fileName"],
@@ -26,7 +27,7 @@
     }
     "variables": [
         ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
-        ["$switchVelocity", "range", "airspeed", "Suspension", 12, 0, 50, "Rear Steering Switch Velocity", "Adjusts the Rear Steering Switch Velocity"{"subCategory":"", "minDis": 0, "maxDis": 50}],
+        //["$switchVelocity", "range", "airspeed", "Suspension", 12, 0, 50, "Rear Steering Switch Velocity", "Adjusts the Rear Steering Switch Velocity"{"subCategory":"", "minDis": 0, "maxDis": 50}],
     ],
     "slotType" : "Rear_Wheel_Steering",
     "controller": [
@@ -39,10 +40,10 @@
             //{"breakGroupType":1},
             {"beamPrecompression":1.0, "beamType":"| BOUNDED", "beamLongBound":1, "beamShortBound":1},
             {"beamSpring":160000,"beamDamp":0,"beamDeform":120000000,"beamStrength":160000000},
-            ["rh2l","rh1r", {"factor": -0.5, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
-            ["rh2r","rh1l", {"factor": 0.5, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
-            ["rh4l","rh3r", {"factor": -0.5, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
-            ["rh4r","rh3l", {"factor": 0.5, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
+            ["rh2l","rh1r", {"factor": -0.35, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
+            ["rh2r","rh1l", {"factor": 0.35, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
+            ["rh4l","rh3r", {"factor": -0.35, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
+            ["rh4r","rh3l", {"factor": 0.35, "inputSource":"4wsAdvance", "steeringWheelLock":400, "inRate":5,"outRate":5}],
             {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1}
     	],
 	}
@@ -59,7 +60,7 @@
 				"name": "autoControl", 
 				"defaultAutoHold": "on",
 				"defaultAutoStart": "off",
-				"HDC": "disable",
+				"HDC": "off",
 				"defaultECrawl": "disable",
 			}],
     	],
