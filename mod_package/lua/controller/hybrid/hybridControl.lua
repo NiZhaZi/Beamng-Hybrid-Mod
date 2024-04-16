@@ -1,5 +1,5 @@
 --hybridContrl version 0.0.10alpha
---Final Edit 2024年4月12日09点27分
+--Final Edit 2024年4月16日22点07分
 --by NZZ
 
 local M = {}
@@ -36,6 +36,7 @@ local regenLevel = 5
 local ifComfortRegen = nil
 local comfortRegenBegine = nil
 local comfortRegenEnd = nil
+local lowSpeed = nil
 
 local enableModes = {}
 
@@ -347,7 +348,7 @@ local function updateGFX(dt)
     subRPM = subRPM / #subMotors
 
     if edriveMode == "partTime" then
-        if (abs(mianRPM - subRPM) >= ondemandMaxRPM) or (input.throttle > 0.8 and electrics.values.airspeed <= 0.08) then
+        if (abs(mianRPM - subRPM) >= ondemandMaxRPM) or (input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed) then
             electrics.values.subThrottle = electrics.values.throttle
         else
             electrics.values.subThrottle = 0
@@ -417,6 +418,7 @@ local function init(jbeamData)
     directRPM2 = jbeamData.directRPM2 or 3000
 
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
+    lowSpeed = jbeamData.lowSpeed or 0.08
     ifComfortRegen = jbeamData.ifComfortRegen or true
     comfortRegenBegine = jbeamData.comfortRegenBegine or 0.75
     comfortRegenEnd = jbeamData.comfortRegenEnd or 0.15
