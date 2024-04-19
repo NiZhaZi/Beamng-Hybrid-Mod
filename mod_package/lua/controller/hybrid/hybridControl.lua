@@ -1,5 +1,5 @@
---hybridContrl version 0.0.10alpha
---Final Edit 2024年4月16日22点07分
+--hybridContrl version 0.0.11alpha
+--Final Edit 2024年4月19日23点16分
 --by NZZ
 
 local M = {}
@@ -27,6 +27,7 @@ local directRPM2 = nil
 
 local detN = nil
 local detM = nil
+local detO = nil
 
 local startVelocity = nil
 local connectVelocity = nil
@@ -39,6 +40,7 @@ local comfortRegenEnd = nil
 local lowSpeed = nil
 
 local enableModes = {}
+local ifREEVEnable = false
 
 local function reduceRegen()
     --[[
@@ -143,6 +145,7 @@ local function getGear()
 end
 
 local function setMode(mode)
+    detO = 1
     for _, u in ipairs(enableModes) do
         if mode == u then
             electrics.values.hybridMode = mode
@@ -183,6 +186,16 @@ local function setMode(mode)
                     v:setMode("disconnected")
                     ifMotorOn = true
                 end
+            elseif mode == "reev" then
+                gui.message({ txt = "Switch to REEV mode" }, 5, "", "")
+                if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
+                    proxyEngine:activateStarter()
+                end
+                for _, v in ipairs(motors) do
+                    v:setmotorRatio(motorRatio2)
+                    v:setMode("disconnected")
+                    ifMotorOn = true         
+                end
             elseif mode == "direct" then
                 gui.message({ txt = "Switch to direct mode" }, 5, "", "")
                 if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
@@ -201,6 +214,13 @@ local function setMode(mode)
 
         end
     end
+
+    if ifREEVEnable and mode == "reev" then
+        controller.getControllerSafe('powerGenerator').setMode('on')
+    else
+        controller.getControllerSafe('powerGenerator').setMode('off')
+    end
+
 end
 
 local function cauculateRegen(percentage)
@@ -331,6 +351,26 @@ local function updateGFX(dt)
     end
     --direct mode
 
+    --reev mode
+    if ifREEVEnable and detO == 1 then
+        controller.getControllerSafe('tractionControl').updateMotor(electrics.values.hybridMode)
+        detO = 0
+    end
+
+    if electrics.values.hybridMode == "reev" then
+        if proxyEngine.outputRPM < 3000 then
+            electrics.values.reevThrottle = 1
+        elseif proxyEngine.outputRPM > 4000 then
+            electrics.values.reevThrottle = 0
+        else
+            electrics.values.reevThrottle = 0.5
+        end
+    else
+        electrics.values.reevThrottle = electrics.values.throttle
+    end
+
+    --reev mode
+
     --ev part time drive
     local mianRPM = 0
     local subRPM = 0
@@ -409,6 +449,14 @@ local function init(jbeamData)
     --fuel      燃油直驱
     --hybrid    混合驱动
     --direct    直接驱动
+    for _, u in ipairs(enableModes) do
+        if u == "reev" then
+            ifREEVEnable = true
+            break
+        end
+    end
+
+    detO = 0
     
     motorRatio1 = jbeamData.motorRatio1 or 1
     motorRatio2 = jbeamData.motorRatio2 or 1

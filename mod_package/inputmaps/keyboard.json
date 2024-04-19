@@ -21,6 +21,11 @@
      },
 
      {
+          "control": "alt r",
+          "action":  "REEV"
+     },
+
+     {
           "control": "alt =",
           "action":  "Enhance Energy Recovery"
      },
@@ -113,16 +118,6 @@
      {
           "control": "ctrl alt r",
           "action":  "reset SOC"
-     },
-
-     {
-          "control": "shift ctrl t",
-          "action":  "Power Generator On"
-     },
-
-     {
-          "control": "shift ctrl o",
-          "action":  "Power Generator Off"
      },
 
      {

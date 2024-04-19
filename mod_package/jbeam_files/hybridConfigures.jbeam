@@ -27,8 +27,10 @@
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontDriveShaft"],
 
-			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
+			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
 			"defaultMode" : "hybrid",
+
+			"lowSpeed": 1,
 		},
 
 		"motorControl":{
