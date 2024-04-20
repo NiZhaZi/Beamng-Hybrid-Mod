@@ -145,7 +145,7 @@ local function updateMotor(mode, jbeamData)
 
   M.tractionControlledWheels = {}
 
-  if mode == "reev" then
+  if mode == "on" then
 
     local tractionControlledMotors = motors2 or {}
     for _, motorName in ipairs(tractionControlledMotors) do
@@ -218,7 +218,7 @@ local function initSecondStage(jbeamData)
 
   motors1 = jbeamData.tractionControlledMotors
   motors2 = jbeamData.REEVTCMotors
-  updateMotor(electrics.values.hybridMode)
+  updateMotor(electrics.values.reevmode or "off")
 
   tractionControlledWheelGroupsCount = #tractionControlledWheelGroups
 

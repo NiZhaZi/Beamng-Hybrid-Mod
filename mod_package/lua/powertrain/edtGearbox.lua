@@ -2,7 +2,7 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
---edtGearbox ver 0.2.1 Final Edit 
+--edtGearbox ver 0.2.2 Final Edit 2024年4月20日14点45分
 --by NZZ
 
 local M = {}
@@ -483,7 +483,21 @@ local function setMode(device, mode)
 end
 
 local function setGearIndex1(device, index)
-  device.gearIndex1 = min(max(index, device.minGearIndex), device.maxGearIndex)
+  --insert0
+  if electrics.values.reevmode ~= "on" then
+    device.gearIndex1 = min(max(index, device.minGearIndex), device.maxGearIndex)
+  else
+    local minG = 0
+    local maxG = 0
+    if device.minGearIndex ~= 0 then
+      minG = device.minGearIndex / abs(device.minGearIndex)
+    end
+    if device.maxGearIndex ~= 0 then
+      maxG = device.maxGearIndex / abs(device.maxGearIndex)
+    end
+    device.gearIndex1 = min(max(index, minG), maxG)
+  end
+  --insert1
   device.gearRatio1 = device.gearRatios[device.gearIndex1]
 
   powertrain.calculateTreeInertia()
@@ -492,6 +506,21 @@ local function setGearIndex1(device, index)
 end
 
 local function setGearIndex2(device, index)
+  --insert0
+  if electrics.values.reevmode ~= "on" then
+    device.gearIndex2 = min(max(index, device.minGearIndex), device.maxGearIndex)
+  else
+    local minG = 0
+    local maxG = 0
+    if device.minGearIndex ~= 0 then
+      minG = device.minGearIndex / abs(device.minGearIndex)
+    end
+    if device.maxGearIndex ~= 0 then
+      maxG = device.maxGearIndex / abs(device.maxGearIndex)
+    end
+    device.gearIndex2 = min(max(index, minG), maxG)
+  end
+  --insert1
   device.gearIndex2 = min(max(index, device.minGearIndex), device.maxGearIndex)
   device.gearRatio2 = device.gearRatios[device.gearIndex2]
 

@@ -1,5 +1,5 @@
---powerGenerator Control version 0.0.1alpha
---Final Edit 19点11分2024年1月14日
+--powerGenerator Control version 0.0.2alpha
+--Final Edit 12点55分2024年4月20日
 --by NZZ
 
 local M = {}
@@ -9,6 +9,8 @@ local abs = math.abs
 local AVtoRPM = 9.549296596425384
 
 local powerGenerator = nil
+local proxyEngine = nil
+
 local powerGeneratorMode = nil -- "on" or "off"
 local functionMode = nil -- "on", "off" or "auto"
 
@@ -56,8 +58,13 @@ local function updateGFX(dt)
 
     if powerGeneratorMode == "on" then
         powerGenerator.motorDirection = 1
+        if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 and electrics.values.hybridMode ~= "electric" then
+            proxyEngine:activateStarter()
+        end
+        electrics.values.powerGeneratorMode = "on"
     elseif powerGeneratorMode == "off" then
         powerGenerator.motorDirection = 0
+        electrics.values.powerGeneratorMode = "off"
     end
 
     --log("", "", "" .. powerGenerator.inputAV)
@@ -71,6 +78,9 @@ end
 local function init(jbeamData)
     local powerGeneratorName = jbeamData.powerGeneratorName
     powerGenerator = powertrain.getDevice(powerGeneratorName)
+    local proxyEngineName = jbeamData.proxyEngineName or "mainEngine"
+    proxyEngine = powertrain.getDevice(proxyEngineName)
+
     functionMode = jbeamData.defaultMode or "off"
 
     defaultSOC = jbeamData.SOC or 80

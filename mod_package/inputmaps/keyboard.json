@@ -41,13 +41,18 @@
      },
 
      {
-          "control": "shift ctrl p",
-          "action":  "EV part-time AWD On"
+          "control": "shift alt i",
+          "action":  "EV part-time AWD"
      },
 
      {
-          "control": "shift ctrl f",
-          "action":  "EV part-time AWD Off"
+          "control": "shift alt o",
+          "action":  "EV full-time AWD"
+     },
+
+     {
+          "control": "shift alt p",
+          "action":  "EV 2WD"
      },
 
      {
@@ -121,7 +126,17 @@
      },
 
      {
-          "control": "shift ctrl a",
+          "control": "shift alt j",
+          "action":  "Power Generator On"
+     },
+
+     {
+          "control": "shift alt k",
+          "action":  "Power Generator Off"
+     },
+
+     {
+          "control": "shift alt l",
           "action":  "Power Generator Auto"
      },
 

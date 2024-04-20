@@ -2,7 +2,7 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
---eatGearbox ver 0.2.1 Final Edit 17点52分2024年3月8日
+--eatGearbox ver 0.2.2 Final Edit 2024年4月20日14点45分
 --by NZZ
 
 local M = {}
@@ -512,7 +512,21 @@ local function setMode(device, mode)
 end
 
 local function setGearIndex(device, index, gearChangeTime)
-  device.gearIndex = min(max(index, device.minGearIndex), device.maxGearIndex)
+  --insert0
+  if electrics.values.reevmode ~= "on" then
+    device.gearIndex = min(max(index, device.minGearIndex), device.maxGearIndex)
+  else
+    local minG = 0
+    local maxG = 0
+    if device.minGearIndex ~= 0 then
+      minG = device.minGearIndex / abs(device.minGearIndex)
+    end
+    if device.maxGearIndex ~= 0 then
+      maxG = device.maxGearIndex / abs(device.maxGearIndex)
+    end
+    device.gearIndex = min(max(index, minG), maxG)
+  end
+  --insert1
   device.desiredGearRatio = device.gearRatios[device.gearIndex]
   device.gearRatioChangeRate = abs((device.desiredGearRatio - device.gearRatio) / (max(device.minimumGearChangeTime, gearChangeTime or 0)))
   if abs(device.gearRatio - device.desiredGearRatio) > 0.01 then

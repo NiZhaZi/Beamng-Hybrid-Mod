@@ -1,5 +1,5 @@
 --hybridContrl version 0.0.11alpha
---Final Edit 2024年4月19日23点16分
+--Final Edit 2024年4月20日13点18分
 --by NZZ
 
 local M = {}
@@ -41,6 +41,9 @@ local lowSpeed = nil
 
 local enableModes = {}
 local ifREEVEnable = false
+local REEVMode = nil
+local REEVRPM = nil
+local reevThrottle = 0
 
 local function reduceRegen()
     --[[
@@ -160,6 +163,7 @@ local function setMode(mode)
                     v:setMode("connected")
                     ifMotorOn = true
                 end
+                REEVMode = "off"
             elseif mode == "fuel" then
                 gui.message({ txt = "Switch to fuel mode" }, 5, "", "")
                 if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
@@ -170,6 +174,7 @@ local function setMode(mode)
                     v:setMode("connected")
                     ifMotorOn = false  
                 end
+                REEVMode = "off"
             elseif mode == "electric" then
                 gui.message({ txt = "Switch to electric mode" }, 5, "", "")
                 proxyEngine:setIgnition(0)
@@ -178,9 +183,10 @@ local function setMode(mode)
                     v:setMode("disconnected")
                     ifMotorOn = true         
                 end
+                REEVMode = "off"
             elseif mode == "auto" then
                 gui.message({ txt = "Switch to auto mode" }, 5, "", "")
-                proxyEngine:setIgnition(0)
+                --proxyEngine:setIgnition(0)
                 for _, v in ipairs(motors) do
                     v:setmotorRatio(motorRatio2)
                     v:setMode("disconnected")
@@ -196,6 +202,7 @@ local function setMode(mode)
                     v:setMode("disconnected")
                     ifMotorOn = true         
                 end
+                REEVMode = "on"
             elseif mode == "direct" then
                 gui.message({ txt = "Switch to direct mode" }, 5, "", "")
                 if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
@@ -218,7 +225,7 @@ local function setMode(mode)
     if ifREEVEnable and mode == "reev" then
         controller.getControllerSafe('powerGenerator').setMode('on')
     else
-        controller.getControllerSafe('powerGenerator').setMode('off')
+        controller.getControllerSafe('powerGenerator').setMode('auto')
     end
 
 end
@@ -241,7 +248,7 @@ local function setPartTimeDriveMode(mode)
     else
         gui.message({ txt = "subMotors off" }, 5, "", "")
     end
-    edriveMode = mode
+    edriveMode = mode or "off"
 end
 
 local function updateGFX(dt)
@@ -257,6 +264,11 @@ local function updateGFX(dt)
     end
 
     --auto mode
+    local powerGeneratorOff = true
+    if electrics.values.powerGeneratorMode == "on" then
+        powerGeneratorOff = false
+    end
+
     if electrics.values.hybridMode == "auto" then
         if electrics.values.airspeed < startVelocity - 5 and detN ~= 1 then
             for _, v in ipairs(motors) do
@@ -279,10 +291,16 @@ local function updateGFX(dt)
         end
     
         if electrics.values.airspeed < startVelocity - 5 then
-            if electrics.values.engineRunning == 1 then  
+            if electrics.values.engineRunning == 1 and powerGeneratorOff then  
                 proxyEngine:setIgnition(0)
             end
+            if powerGeneratorOff then
+                REEVMode = "off"
+            elseif ifREEVEnable then
+                REEVMode = "on"
+            end
         elseif electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity then
+            REEVMode = "off"
             if electrics.values.engineRunning == 0 then
                 proxyEngine:activateStarter()
             end
@@ -353,21 +371,24 @@ local function updateGFX(dt)
 
     --reev mode
     if ifREEVEnable and detO == 1 then
-        controller.getControllerSafe('tractionControl').updateMotor(electrics.values.hybridMode)
+        controller.getControllerSafe('tractionControl').updateMotor(REEVMode)
         detO = 0
     end
 
-    if electrics.values.hybridMode == "reev" then
-        if proxyEngine.outputRPM < 3000 then
-            electrics.values.reevThrottle = 1
-        elseif proxyEngine.outputRPM > 4000 then
-            electrics.values.reevThrottle = 0
+    if REEVMode == "on" then
+        if proxyEngine.outputRPM < REEVRPM then
+            reevThrottle = 1
+        elseif proxyEngine.outputRPM > REEVRPM + 500 then
+            reevThrottle = 0
         else
-            electrics.values.reevThrottle = 0.5
+            reevThrottle = 0.5
         end
     else
-        electrics.values.reevThrottle = electrics.values.throttle
+        reevThrottle = electrics.values.throttle
     end
+
+    electrics.values.reevThrottle = reevThrottle
+    electrics.values.reevmode = REEVMode
 
     --reev mode
 
@@ -442,7 +463,7 @@ end
 
 local function init(jbeamData)
 
-    enableModes = jbeamData.enableModes or {"hybrid", "fuel", "electric", "auto"}
+    enableModes = jbeamData.enableModes or {"hybrid", "fuel", "electric", "auto", "reev"}
     --auto      自动选择
     --reev      增程模式
     --electric  电机直驱
@@ -455,6 +476,9 @@ local function init(jbeamData)
             break
         end
     end
+
+    REEVMode = "off"
+    REEVRPM = jbeamData.REEVRPM or 3000
 
     detO = 0
     
@@ -545,6 +569,8 @@ end
 local function onReset(jbeamData)
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     ifComfortRegen = jbeamData.ifComfortRegen or true
+
+    REEVMode = "off"
 
     if jbeamData.defaultMode then
         setMode(jbeamData.defaultMode)
