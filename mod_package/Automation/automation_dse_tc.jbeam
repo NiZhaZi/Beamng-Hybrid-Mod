@@ -11,7 +11,7 @@
 		"controller": [
 			["fileName"],
 			["drivingDynamics/supervisors/HybridTC" {"name": "tractionControl"}],
-			["drivingDynamics/supervisors/slipProviders/virtualSpeedSlip"]
+			["drivingDynamics/supervisors/slipProviders/HybridVSS"]
 		],
 
 		"tractionControl": {
