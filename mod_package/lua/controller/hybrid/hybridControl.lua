@@ -371,7 +371,9 @@ local function updateGFX(dt)
 
     --reev mode
     if ifREEVEnable and detO == 1 then
-        controller.getControllerSafe('tractionControl').updateMotor(REEVMode)
+        if controller.getControllerSafe('tractionControl') or false then
+            controller.getControllerSafe('tractionControl').updateMotor(REEVMode)
+        end
         detO = 0
     end
 
