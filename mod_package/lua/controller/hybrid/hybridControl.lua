@@ -1,5 +1,5 @@
---hybridContrl version 0.0.11alpha
---Final Edit 2024年4月20日13点18分
+--hybridContrl version 0.0.12alpha
+--Final Edit 2024年4月21日23点19分
 --by NZZ
 
 local M = {}
@@ -263,14 +263,14 @@ local function updateGFX(dt)
         proxyEngine:setIgnition(0)
     end
 
-    --auto mode
+    --auto mode begin
     local powerGeneratorOff = true
     if electrics.values.powerGeneratorMode == "on" then
         powerGeneratorOff = false
     end
 
     if electrics.values.hybridMode == "auto" then
-        if electrics.values.airspeed < startVelocity - 5 and detN ~= 1 then
+        if (electrics.values.airspeed < startVelocity - 5 and not(input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed)) and detN ~= 1 then
             for _, v in ipairs(motors) do
                 v:setmotorRatio(motorRatio2)
                 v:setMode("disconnected")
@@ -279,7 +279,7 @@ local function updateGFX(dt)
             detN = 1
         elseif electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity and detN ~= 2 then
             detN = 2
-        elseif electrics.values.airspeed >= connectVelocity and detN ~= 3 then
+        elseif (electrics.values.airspeed >= connectVelocity or (input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed)) and detN ~= 3 then
             for _, v in ipairs(motors) do
                 v:setmotorRatio(motorRatio1)
                 v:setMode("connected")
@@ -290,7 +290,7 @@ local function updateGFX(dt)
             detN = 3
         end
     
-        if electrics.values.airspeed < startVelocity - 5 then
+        if electrics.values.airspeed < startVelocity - 5 and not(input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed) then
             if electrics.values.engineRunning == 1 and powerGeneratorOff then  
                 proxyEngine:setIgnition(0)
             end
@@ -299,9 +299,9 @@ local function updateGFX(dt)
             elseif ifREEVEnable then
                 REEVMode = "on"
             end
-        elseif electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity then
+        elseif (electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity) or (input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed) then
             REEVMode = "off"
-            if electrics.values.engineRunning == 0 then
+            if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
                 proxyEngine:activateStarter()
             end
         end
@@ -310,9 +310,9 @@ local function updateGFX(dt)
     if electrics.values.hybridMode ~= "auto" then
         detN = 0
     end
-    --auto mode
+    --auto mode end
 
-    --direct mode
+    --direct mode begin
     if electrics.values.hybridMode == "direct" then
 
         if proxyEngine.outputRPM < directRPM1 and electrics.values.airspeed < 0.5 then
@@ -367,9 +367,9 @@ local function updateGFX(dt)
             v:setmotorRatio(0)
         end
     end
-    --direct mode
+    --direct mode end
 
-    --reev mode
+    --reev mode begin
     if ifREEVEnable and detO == 1 then
         if controller.getControllerSafe('tractionControl') or false then
             controller.getControllerSafe('tractionControl').updateMotor(REEVMode)
@@ -392,7 +392,7 @@ local function updateGFX(dt)
     electrics.values.reevThrottle = reevThrottle
     electrics.values.reevmode = REEVMode
 
-    --reev mode
+    --reev mode end
 
     --ev part time drive
     local mianRPM = 0
