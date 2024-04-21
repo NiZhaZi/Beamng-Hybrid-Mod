@@ -76,11 +76,6 @@
      },
 
      {
-          "control": "alt 1",
-          "action":  "Switch Rear Wheel Steering"
-     },
-
-     {
           "control": "alt 8",
           "action":  "Chassis Lift"
      },
