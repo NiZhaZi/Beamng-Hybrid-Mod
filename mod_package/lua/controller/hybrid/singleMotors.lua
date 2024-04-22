@@ -1,5 +1,5 @@
---single motors Control version 0.0.2alpha
---Final Edit 2024年3月18日21点52分
+--single motors Control version 0.0.3alpha
+--Final Edit 20点44分2024年4月22日
 --by NZZ
 
 local M = {}
@@ -74,6 +74,18 @@ local function updateGFX(dt)
             v.motorDirection = 0
         end
     elseif mode == "electric" then
+        for _, v in ipairs(motors) do
+            v.motorDirection = motorDirection
+        end
+    elseif mode == "auto" then
+        for _, v in ipairs(motors) do
+            v.motorDirection = motorDirection
+        end
+    elseif mode == "reev" then
+        for _, v in ipairs(motors) do
+            v.motorDirection = motorDirection
+        end
+    elseif mode == "direct" then
         for _, v in ipairs(motors) do
             v.motorDirection = motorDirection
         end
