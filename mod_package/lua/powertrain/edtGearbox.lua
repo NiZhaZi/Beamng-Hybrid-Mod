@@ -2,7 +2,7 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
---edtGearbox ver 0.2.2 Final Edit 2024年4月20日14点45分
+--edtGearbox ver 0.2.3 Final Edit 2024年4月25日22点29分
 --by NZZ
 
 local M = {}
@@ -483,19 +483,25 @@ local function setMode(device, mode)
 end
 
 local function setGearIndex1(device, index)
+  --log("","1" , index)
   --insert0
   if electrics.values.reevmode ~= "on" then
     device.gearIndex1 = min(max(index, device.minGearIndex), device.maxGearIndex)
   else
-    local minG = 0
-    local maxG = 0
-    if device.minGearIndex ~= 0 then
-      minG = device.minGearIndex / abs(device.minGearIndex)
+    --local minG = 0
+    --local maxG = 0
+    --if device.minGearIndex ~= 0 then
+    --  minG = device.minGearIndex / abs(device.minGearIndex)
+    --end
+    --if device.maxGearIndex ~= 0 then
+    --  maxG = device.maxGearIndex / abs(device.maxGearIndex)
+    --end
+    --device.gearIndex1 = min(max(index, minG), maxG)
+    if index == -1 then
+      device.gearIndex1 = -1
+    else
+      device.gearIndex1 = 1
     end
-    if device.maxGearIndex ~= 0 then
-      maxG = device.maxGearIndex / abs(device.maxGearIndex)
-    end
-    device.gearIndex1 = min(max(index, minG), maxG)
   end
   --insert1
   device.gearRatio1 = device.gearRatios[device.gearIndex1]
@@ -503,30 +509,31 @@ local function setGearIndex1(device, index)
   powertrain.calculateTreeInertia()
 
   selectUpdates(device)
+
 end
 
 local function setGearIndex2(device, index)
+  --log("","2" , index)
   --insert0
   if electrics.values.reevmode ~= "on" then
     device.gearIndex2 = min(max(index, device.minGearIndex), device.maxGearIndex)
+    device.gearRatio2 = device.gearRatios[device.gearIndex2]
+
+    powertrain.calculateTreeInertia()
+
+    selectUpdates(device)
+  elseif index == 0 then
+    device.gearIndex2 = 0
+    device.gearRatio2 = device.gearRatios[device.gearIndex2]
+
+    powertrain.calculateTreeInertia()
+
+    selectUpdates(device)
   else
-    local minG = 0
-    local maxG = 0
-    if device.minGearIndex ~= 0 then
-      minG = device.minGearIndex / abs(device.minGearIndex)
-    end
-    if device.maxGearIndex ~= 0 then
-      maxG = device.maxGearIndex / abs(device.maxGearIndex)
-    end
-    device.gearIndex2 = min(max(index, minG), maxG)
+    setGearIndex1(device, 1)
   end
   --insert1
-  device.gearIndex2 = min(max(index, device.minGearIndex), device.maxGearIndex)
-  device.gearRatio2 = device.gearRatios[device.gearIndex2]
 
-  powertrain.calculateTreeInertia()
-
-  selectUpdates(device)
 end
 
 local function setLock(device, enabled)
