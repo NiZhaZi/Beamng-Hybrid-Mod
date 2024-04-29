@@ -41,7 +41,7 @@ local lowSpeed = nil
 
 local enableModes = {}
 local ifREEVEnable = false
-local REEVMode = nil
+local REEVMode = nil -- control engine start and TC
 local PreRMode = nil
 local REEVRPM = nil
 local reevThrottle = 0
@@ -182,10 +182,14 @@ local function setMode(mode)
         end
     end
 
+    local PGMode = controller.getControllerSafe('powerGenerator').getFunctionMode()
+    if mode ~= "reev" then
+        PreRMode = PGMode
+    end
     if ifREEVEnable and mode == "reev" then
         controller.getControllerSafe('powerGenerator').setMode('on')
     else
-        controller.getControllerSafe('powerGenerator').setMode('auto')
+        controller.getControllerSafe('powerGenerator').setMode(PreRMode)
     end
 
 end

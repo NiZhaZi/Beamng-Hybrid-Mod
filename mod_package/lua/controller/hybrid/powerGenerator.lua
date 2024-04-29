@@ -36,7 +36,15 @@ end
 
 local function setMode(mode)
     functionMode = mode
+end
+
+local function changeMode(mode)
+    setMode(mode)
     guihooks.message("Power Generator " .. mode , 5, "")
+end
+
+local function getFunctionMode()
+    return functionMode
 end
 
 local function updateGFX(dt)
@@ -68,7 +76,7 @@ local function updateGFX(dt)
 end
 
 local function reset(jbeamData)
-    functionMode = jbeamData.defaultMode or "off"
+    functionMode = jbeamData.defaultMode or "auto"
     SOC = defaultSOC
 end
 
@@ -87,6 +95,8 @@ end
 
 M.setSOC = setSOC
 M.setMode = setMode
+M.changeMode = changeMode
+M.getFunctionMode = getFunctionMode
 
 M.updateGFX = updateGFX
 M.reset = reset
