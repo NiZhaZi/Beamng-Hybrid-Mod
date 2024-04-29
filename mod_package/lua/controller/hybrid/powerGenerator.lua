@@ -1,5 +1,5 @@
---powerGenerator Control version 0.0.2alpha
---Final Edit 12点55分2024年4月20日
+--powerGenerator Control version 0.0.3alpha
+--Final Edit 2024年4月29日17点27分
 --by NZZ
 
 local M = {}
@@ -49,18 +49,15 @@ local function updateGFX(dt)
     elseif functionMode == "off" then
         powerGeneratorMode = "off"
     elseif functionMode == "auto" then
-        if electrics.values.evfuel <= lowValue and powerGeneratorMode == "off" then
+        if electrics.values.evfuel <= lowValue and powerGeneratorMode ~= "on" then
             powerGeneratorMode = "on"
-        elseif electrics.values.evfuel >= highValue and powerGeneratorMode == "on" then
+        elseif electrics.values.evfuel >= highValue and powerGeneratorMode ~= "off" then
             powerGeneratorMode = "off"
         end
     end
 
     if powerGeneratorMode == "on" then
         powerGenerator.motorDirection = 1
-        if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 and electrics.values.hybridMode ~= "electric" then
-            proxyEngine:activateStarter()
-        end
         electrics.values.powerGeneratorMode = "on"
     elseif powerGeneratorMode == "off" then
         powerGenerator.motorDirection = 0

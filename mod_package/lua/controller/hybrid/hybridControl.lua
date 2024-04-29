@@ -254,7 +254,10 @@ local function updateGFX(dt)
         if electrics.values.airspeed < startVelocity - 5 and not(ifLowSpeed()) then
             if electrics.values.engineRunning == 1 and powerGeneratorOff then  
                 engineMode("off")
+            elseif not powerGeneratorOff then
+                engineMode("on")
             end
+            
             if powerGeneratorOff then
                 REEVMode = "off"
             elseif ifREEVEnable then
