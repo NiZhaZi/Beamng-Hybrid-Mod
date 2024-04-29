@@ -1,5 +1,5 @@
---hybridContrl version 0.0.12alpha
---Final Edit 2024年4月21日23点19分
+--hybridContrl version 0.0.13alpha
+--Final Edit 2024年4月29日17点06分
 --by NZZ
 
 local M = {}
@@ -42,40 +42,11 @@ local lowSpeed = nil
 local enableModes = {}
 local ifREEVEnable = false
 local REEVMode = nil
+local PreRMode = nil
 local REEVRPM = nil
 local reevThrottle = 0
 
 local function reduceRegen()
-    --[[
-    for _, v in ipairs(motors) do
-        if v.maxWantedRegenTorque > 0 then
-            v.maxWantedRegenTorque = v.maxWantedRegenTorque - v.originalRegenTorque * 0.2
-            gui.message({ txt = "Energy Recovery Reduced" }, 5, "", "")
-        elseif v.maxWantedRegenTorque == 0 then
-            gui.message({ txt = "Energy Recovery Min" }, 5, "", "")
-        elseif v.maxWantedRegenTorque < 0 then
-            v.maxWantedRegenTorque = 0
-            gui.message({ txt = "Energy Recovery Min" }, 5, "", "")
-        end
-    end
-    --[[
-    for _, v in ipairs(mainMotors) do
-        if v.maxWantedRegenTorque > 0 then
-            v.maxWantedRegenTorque = v.maxWantedRegenTorque - v.originalRegenTorque * 0.2
-            gui.message({ txt = "Energy Recovery Reduced" }, 5, "", "")
-        elseif v.maxWantedRegenTorque == 0 then
-            gui.message({ txt = "Energy Recovery Min" }, 5, "", "")
-        elseif v.maxWantedRegenTorque < 0 then
-            v.maxWantedRegenTorque = 0
-            gui.message({ txt = "Energy Recovery Min" }, 5, "", "")
-        end
-    end]]
-
-    if regenLevel == 0 then
-        --gui.message({ txt = "Energy Recovery Min" }, 5, "", "")
-    else
-        --gui.message({ txt = "Energy Recovery Reduced" }, 5, "", "")
-    end
 
     guihooks.message("Energy Recovery Level is " .. regenLevel , 5, "")
 
@@ -86,36 +57,6 @@ local function reduceRegen()
 end
 
 local function enhanceRegen()
-    --[[
-    for _, v in ipairs(motors) do
-        if v.maxWantedRegenTorque < v.originalRegenTorque then
-            v.maxWantedRegenTorque = v.maxWantedRegenTorque + v.originalRegenTorque * 0.2
-            gui.message({ txt = "Energy Recovery Enhanced" }, 5, "", "")
-        elseif v.maxWantedRegenTorque == v.originalRegenTorque then
-            gui.message({ txt = "Energy Recovery Max" }, 5, "", "")
-        elseif v.maxWantedRegenTorque > v.originalRegenTorque then
-            v.maxWantedRegenTorque = v.originalRegenTorque
-            gui.message({ txt = "Energy Recovery Max" }, 5, "", "")
-        end
-    end
-    --[[
-    for _, v in ipairs(mainMotors) do
-        if v.maxWantedRegenTorque < v.originalRegenTorque then
-            v.maxWantedRegenTorque = v.maxWantedRegenTorque + v.originalRegenTorque * 0.2
-            gui.message({ txt = "Energy Recovery Enhanced" }, 5, "", "")
-        elseif v.maxWantedRegenTorque == v.originalRegenTorque then
-            gui.message({ txt = "Energy Recovery Max" }, 5, "", "")
-        elseif v.maxWantedRegenTorque > v.originalRegenTorque then
-            v.maxWantedRegenTorque = v.originalRegenTorque
-            gui.message({ txt = "Energy Recovery Max" }, 5, "", "")
-        end
-    end]]
-
-    if regenLevel == 5 then
-        --gui.message({ txt = "Energy Recovery Max" }, 5, "", "")
-    else
-        --gui.message({ txt = "Energy Recovery Enhanced" }, 5, "", "")
-    end
 
     guihooks.message("Energy Recovery Level is " .. regenLevel , 5, "")
 
@@ -147,6 +88,51 @@ local function getGear()
 
 end
 
+local function engineMode(state)
+    if state == "on" then
+        if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
+            proxyEngine:activateStarter()
+        end
+    elseif state == "off" then
+        proxyEngine:setIgnition(0)
+    end
+end
+
+local function motorMode(state)
+    if state == "on1" then -- hybrid drive ratio
+        for _, v in ipairs(motors) do
+            v:setmotorRatio(motorRatio1)
+            v:setMode("connected")
+            ifMotorOn = true
+        end
+    elseif state == "on2" then -- EV drive ratio
+        for _, v in ipairs(motors) do
+            v:setmotorRatio(motorRatio2)
+            v:setMode("disconnected")
+            ifMotorOn = true         
+        end
+    elseif state == "off" then
+        for _, v in ipairs(motors) do
+            v:setmotorRatio(0)
+            v:setMode("connected")
+            ifMotorOn = false  
+        end
+    end
+end
+
+local function trig(signal)
+    if signal == "hybrid" then
+        engineMode("on")
+        motorMode("on1")
+    elseif signal == "fuel" then
+        engineMode("on")
+        motorMode("off")
+    elseif signal == "electric" then
+        engineMode("off")
+        motorMode("on2")
+    end
+end
+
 local function setMode(mode)
     detO = 1
     for _, u in ipairs(enableModes) do
@@ -155,54 +141,28 @@ local function setMode(mode)
 
             if mode == "hybrid" then
                 gui.message({ txt = "Switch to hybrid mode" }, 5, "", "")
-                if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
-                    proxyEngine:activateStarter()
-                end
-                for _, v in ipairs(motors) do
-                    v:setmotorRatio(motorRatio1)
-                    v:setMode("connected")
-                    ifMotorOn = true
-                end
+                trig(mode)
                 REEVMode = "off"
+
             elseif mode == "fuel" then
                 gui.message({ txt = "Switch to fuel mode" }, 5, "", "")
-                if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
-                    proxyEngine:activateStarter()
-                end
-                for _, v in ipairs(motors) do
-                    v:setmotorRatio(0)
-                    v:setMode("connected")
-                    ifMotorOn = false  
-                end
+                trig(mode)
                 REEVMode = "off"
+
             elseif mode == "electric" then
                 gui.message({ txt = "Switch to electric mode" }, 5, "", "")
-                proxyEngine:setIgnition(0)
-                for _, v in ipairs(motors) do
-                    v:setmotorRatio(motorRatio2)
-                    v:setMode("disconnected")
-                    ifMotorOn = true         
-                end
+                trig(mode)
                 REEVMode = "off"
+
             elseif mode == "auto" then
                 gui.message({ txt = "Switch to auto mode" }, 5, "", "")
-                --proxyEngine:setIgnition(0)
-                for _, v in ipairs(motors) do
-                    v:setmotorRatio(motorRatio2)
-                    v:setMode("disconnected")
-                    ifMotorOn = true
-                end
+
             elseif mode == "reev" then
                 gui.message({ txt = "Switch to REEV mode" }, 5, "", "")
-                if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
-                    proxyEngine:activateStarter()
-                end
-                for _, v in ipairs(motors) do
-                    v:setmotorRatio(motorRatio2)
-                    v:setMode("disconnected")
-                    ifMotorOn = true         
-                end
+                engineMode("on")
+                motorMode("on2")
                 REEVMode = "on"
+
             elseif mode == "direct" then
                 gui.message({ txt = "Switch to direct mode" }, 5, "", "")
                 if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
@@ -251,6 +211,15 @@ local function setPartTimeDriveMode(mode)
     edriveMode = mode or "off"
 end
 
+local function ifLowSpeed()
+    if input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed then
+        return true
+    else
+        return false
+    end
+    return false
+end
+
 local function updateGFX(dt)
     if drivetrain.shifterMode == 2 then
         --controller.mainController.setGearboxMode("realistic")
@@ -270,40 +239,30 @@ local function updateGFX(dt)
     end
 
     if electrics.values.hybridMode == "auto" then
-        if (electrics.values.airspeed < startVelocity - 5 and not(input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed)) and detN ~= 1 then
-            for _, v in ipairs(motors) do
-                v:setmotorRatio(motorRatio2)
-                v:setMode("disconnected")
-                proxyEngine:setIgnition(0)
-            end
+        if (electrics.values.airspeed < startVelocity - 5 and not(ifLowSpeed())) and detN ~= 1 then
+            engineMode("off")
+            motorMode("on2")
             detN = 1
         elseif electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity and detN ~= 2 then
             detN = 2
-        elseif (electrics.values.airspeed >= connectVelocity or (input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed)) and detN ~= 3 then
-            for _, v in ipairs(motors) do
-                v:setmotorRatio(motorRatio1)
-                v:setMode("connected")
-                if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
-                    proxyEngine:activateStarter()
-                end
-            end
+        elseif (electrics.values.airspeed >= connectVelocity or (ifLowSpeed())) and detN ~= 3 then
+            engineMode("on")
+            motorMode("on1")
             detN = 3
         end
     
-        if electrics.values.airspeed < startVelocity - 5 and not(input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed) then
+        if electrics.values.airspeed < startVelocity - 5 and not(ifLowSpeed()) then
             if electrics.values.engineRunning == 1 and powerGeneratorOff then  
-                proxyEngine:setIgnition(0)
+                engineMode("off")
             end
             if powerGeneratorOff then
                 REEVMode = "off"
             elseif ifREEVEnable then
                 REEVMode = "on"
             end
-        elseif (electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity) or (input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed) then
+        elseif (electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity) or ifLowSpeed() then
             REEVMode = "off"
-            if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
-                proxyEngine:activateStarter()
-            end
+            engineMode("on")
         end
     end
 
@@ -411,7 +370,7 @@ local function updateGFX(dt)
     subRPM = subRPM / #subMotors
 
     if edriveMode == "partTime" then
-        if (abs(mianRPM - subRPM) >= ondemandMaxRPM) or (input.throttle > 0.8 and electrics.values.airspeed <= lowSpeed) then
+        if (abs(mianRPM - subRPM) >= ondemandMaxRPM) or ifLowSpeed() then
             electrics.values.subThrottle = electrics.values.throttle
         else
             electrics.values.subThrottle = 0
