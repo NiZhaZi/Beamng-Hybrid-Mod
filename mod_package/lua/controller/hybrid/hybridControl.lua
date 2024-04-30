@@ -1,5 +1,5 @@
---hybridContrl version 0.0.14alpha
---Final Edit 2024年4月30日13点14分
+--hybridContrl version 0.0.15alpha
+--Final Edit 2024年4月30日13点28分
 --by NZZ
 
 local M = {}
@@ -17,7 +17,7 @@ local directMotors = nil
 
 local ondemandMaxRPM = nil
 local controlLogicModule = nil
-local mode = nil
+local hybridMode = nil
 local isCrawl = 0
 local ifMotorOn = nil
 local motorRatio1 = nil
@@ -137,35 +137,27 @@ local function setMode(mode)
     detO = 1
     for _, u in ipairs(enableModes) do
         if mode == u then
+            hybridMode = mode
             electrics.values.hybridMode = mode
+            guihooks.message("Switch to " .. mode .. " mode" , 5, "")
 
             if mode == "hybrid" then
-                gui.message({ txt = "Switch to hybrid mode" }, 5, "", "")
                 trig(mode)
-                REEVMode = "off"
 
             elseif mode == "fuel" then
-                gui.message({ txt = "Switch to fuel mode" }, 5, "", "")
                 trig(mode)
-                REEVMode = "off"
 
             elseif mode == "electric" then
-                gui.message({ txt = "Switch to electric mode" }, 5, "", "")
                 trig(mode)
-                REEVMode = "off"
 
             elseif mode == "auto" then
-                gui.message({ txt = "Switch to auto mode" }, 5, "", "")
-                REEVMode = "off"
 
             elseif mode == "reev" then
-                gui.message({ txt = "Switch to REEV mode" }, 5, "", "")
                 engineMode("on")
                 motorMode("on2")
-                REEVMode = "on"
 
             elseif mode == "direct" then
-                gui.message({ txt = "Switch to direct mode" }, 5, "", "")
+                --gui.message({ txt = "Switch to direct mode" }, 5, "", "")
                 if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
                     proxyEngine:activateStarter()
                 end
@@ -184,8 +176,11 @@ local function setMode(mode)
     end
 
     local PGMode = controller.getControllerSafe('powerGenerator').getFunctionMode()
-    if mode ~= "reev" then
+    if mode ~= "reev" and REEVMode ~= "on" then
         PreRMode = PGMode
+        REEVMode = "off"
+    else
+        REEVMode = "on"
     end
     if ifREEVEnable and mode == "reev" then
         controller.getControllerSafe('powerGenerator').setMode('on')
@@ -277,6 +272,7 @@ local function updateGFX(dt)
     if electrics.values.hybridMode ~= "auto" then
         detN = 0
     end
+
     --auto mode end
 
     --direct mode begin
@@ -302,30 +298,6 @@ local function updateGFX(dt)
             end
         end
 
-        --[[if proxyEngine.outputRPM < directRPM1 then 
-            for _, v in ipairs(motors) do
-                v:setmotorRatio(motorRatio2)
-                v:setMode("disconnected")
-            end
-            for _, v in ipairs(directMotors) do
-                v:setmotorRatio(0)
-                v:setMode("disconnected")
-            end
-        elseif proxyEngine.outputRPM >= directRPM1 and proxyEngine.outputRPM < directRPM2 then
-            for _, v in ipairs(motors) do
-                v:setmotorRatio(motorRatio1)
-                v:setMode("connected")
-            end
-            for _, v in ipairs(directMotors) do
-                v:setmotorRatio(motorRatio1)
-                v:setMode("disconnected")
-            end
-        elseif proxyEngine.outputRPM >= directRPM2 then 
-            for _, v in ipairs(directMotors) do
-                v:setmotorRatio(motorRatio1)
-                v:setMode("connected")
-            end
-        end]]
     end
 
     if electrics.values.hybridMode ~= "direct" then
@@ -344,7 +316,7 @@ local function updateGFX(dt)
         detO = 0
     end
 
-    if REEVMode == "on" then
+    if REEVMode == "on" and hybridMode ~= ("hybrid" or "electric" or "fuel" or "direct")  then
         if proxyEngine.outputRPM < REEVRPM then
             reevThrottle = 1
         elseif proxyEngine.outputRPM > REEVRPM + 500 then
@@ -433,12 +405,12 @@ end
 local function init(jbeamData)
 
     enableModes = jbeamData.enableModes or {"hybrid", "fuel", "electric", "auto", "reev"}
-    --auto      自动选择
-    --reev      增程模式
-    --electric  电机直驱
-    --fuel      燃油直驱
-    --hybrid    混合驱动
-    --direct    直接驱动
+    -- auto      自动选择
+    -- reev      增程模式
+    -- electric  电机直驱
+    -- fuel      燃油直驱
+    -- hybrid    混合驱动
+    -- direct    直接驱动
     for _, u in ipairs(enableModes) do
         if u == "reev" then
             ifREEVEnable = true
