@@ -1,5 +1,5 @@
---hybridContrl version 0.0.13alpha
---Final Edit 2024年4月29日17点06分
+--hybridContrl version 0.0.14alpha
+--Final Edit 2024年4月30日13点14分
 --by NZZ
 
 local M = {}
@@ -156,6 +156,7 @@ local function setMode(mode)
 
             elseif mode == "auto" then
                 gui.message({ txt = "Switch to auto mode" }, 5, "", "")
+                REEVMode = "off"
 
             elseif mode == "reev" then
                 gui.message({ txt = "Switch to REEV mode" }, 5, "", "")
