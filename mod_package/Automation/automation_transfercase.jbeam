@@ -41,6 +41,7 @@
 			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
 			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft"],
 			["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft"],
+			["Rear_ElectricMotor", "Rear_ElectricMotor", "Rear ElectricMotor"],
 		],
 		"slotType" : "Camso_TransferCase",
 		"powertrain" : [
@@ -60,6 +61,7 @@
 			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
 			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft"],
 			["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft"],
+			["Front_ElectricMotor", "Front_ElectricMotor", "Front ElectricMotor"],
 		],
 		"slotType" : "Camso_TransferCase",
 		"powertrain" : [
