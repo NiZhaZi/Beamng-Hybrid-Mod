@@ -1,0 +1,169 @@
+-- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
+-- by NZZ
+-- version 0.0.2 alpha
+-- final edit - 2024.5.5 17:26
+
+local M = {}
+
+local rpmToAV = 0.104719755
+local avToRPM = 9.549296596425384
+local abs = math.abs
+
+local battery = nil
+local mainMotors = nil
+local subMotors = nil
+local motors = nil
+
+local edriveMode = nil
+local regenLevel = 5
+local ifAdvanceBrake = nil
+local comfortRegenBegine = nil
+local comfortRegenEnd = nil
+
+local ondemandMaxRPM = nil
+
+local function onInit(jbeamData)
+    battery =  jbeamData.energyStorage or "mainBattery"
+    edriveMode = jbeamData.defaultEAWDMode or "partTime"
+    ifAdvanceBrake = jbeamData.ifAdvanceBrake or true
+
+    motors = {}
+
+    mainMotors = {}
+    local mainMotorNames = jbeamData.mainMotorNames or {"mainMotor"}
+    if mainMotorNames then
+        for _, v in ipairs(mainMotorNames) do
+            local mainMotor = powertrain.getDevice(v)
+            if mainMotor then
+                table.insert(mainMotors, mainMotor)
+                table.insert(motors, mainMotor)
+                mainMotor.originalRegenTorque = mainMotor.maxWantedRegenTorque
+            end
+        end
+    end
+
+    subMotors = {}
+    local subMotorNames = jbeamData.subMotorNames or {"subMotor"}
+    if subMotorNames then
+        for _, v in ipairs(subMotorNames) do
+            local subMotor = powertrain.getDevice(v)
+            if subMotor then
+                table.insert(subMotors, subMotor)
+                table.insert(motors, subMotor)
+                subMotor.originalRegenTorque = subMotor.maxWantedRegenTorque
+            end
+        end
+    end
+
+    ondemandMaxRPM = jbeamData.ondemandMaxRPM or 50
+end
+
+local function switchAdvanceBrake()
+    ifAdvanceBrake = not ifAdvanceBrake
+end
+
+local function switchAWD(mode)
+    edriveMode = mode
+end
+
+local function switchBrakeMode()
+    switchAdvanceBrake()
+    if ifAdvanceBrake then
+        gui.message({ txt = "advance brake on" }, 5, "", "")
+    else
+        gui.message({ txt = "one-pedal brake on" }, 5, "", "")
+    end
+end
+
+local function switchAWDMode(mode)
+    switchAWD(mode)
+    if edriveMode == "fullTime" then
+        gui.message({ txt = "on-demand AWD mode on" }, 5, "", "")
+    elseif edriveMode == "partTime" then
+        gui.message({ txt = "full-time AWD mode on" }, 5, "", "")
+    else
+        gui.message({ txt = "AWD mode off" }, 5, "", "")
+    end
+end
+
+local function updateGFX(dt)
+    -- battery begin
+    local storage = energyStorage.getStorage(battery)
+    electrics.values.remainingpower = storage.remainingRatio
+    electrics.values.evfuel = electrics.values.remainingpower * 100
+    -- battery end
+
+    -- ev part time drive begin
+    local mianRPM = 0
+    local subRPM = 0
+    for _, v in ipairs(mainMotors) do
+        if v then
+            mianRPM = mianRPM + v.outputAV1 * avToRPM
+        end
+    end
+    mianRPM = mianRPM / #mainMotors
+    for _, v in ipairs(subMotors) do
+        if v then
+            subRPM = subRPM + v.outputAV1 * avToRPM
+        end
+    end
+    subRPM = subRPM / #subMotors
+
+    if edriveMode == "partTime" then
+        if abs(mianRPM - subRPM) >= ondemandMaxRPM then
+            electrics.values.subThrottle = electrics.values.throttle
+        else
+            electrics.values.subThrottle = 0
+        end
+    elseif edriveMode == "fullTime" then
+        electrics.values.subThrottle = electrics.values.throttle
+    else
+        electrics.values.subThrottle = 0
+    end
+    -- ev part time drive end
+
+
+    -- advance brake begin
+    if ifAdvanceBrake then
+        for _, v in ipairs(motors) do
+            if v then
+                v.maxWantedRegenTorque = v.originalRegenTorque * input.brake * 2
+                if v.maxWantedRegenTorque > v.originalRegenTorque then
+                    v.maxWantedRegenTorque = v.originalRegenTorque
+                end
+            end
+            if input.brake > 0.5 then
+                electrics.values.brake = (input.brake - 0.5) * 2
+            end
+        end
+    else
+        for _, v in ipairs(motors) do
+            if v then
+                v.maxWantedRegenTorque = v.originalRegenTorque
+            end
+        end
+        electrics.values.brake = input.brake
+    end
+
+    local ign
+    if electrics.values.ignitionLevel == 2 then
+        ign = 1
+    else
+        ign = 0
+    end
+    electrics.values.brakewithign = input.brake * ign
+    -- advance brake end
+
+end
+
+-- public interface
+
+M.switchBrakeMode = switchBrakeMode
+M.switchAWDMode = switchAWDMode
+
+M.init = onInit
+M.onInit      = onInit
+M.onReset     = onInit
+M.updateGFX = updateGFX
+
+return M

@@ -1,0 +1,117 @@
+{
+	"Rear_ElectricMotor": {
+		"information":{
+			"name":"Rear Electric Motor",
+			"value": 4000
+		}
+		"slotType" : "Rear_ElectricMotor",
+		"slots": [
+			["type", "default", "description"],
+			["Differential_rear","Differential_rear","Rear differential"],
+		],
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["electricMotor", "rearMotor", "dummy", 0],
+			["shaft", "rearDriveShaft", "rearMotor", 1, {"gearRatio":4.75}]
+		],
+		"rearMotor": {
+			"torque":[
+				["rpm", "torque"],
+				[0, 95.00],
+				[500, 95.00],
+				[1000, 95.00],
+				[1500, 95.00],
+				[2000, 95.00],
+				[2500, 95.00],
+				[3000, 95.00],
+				[3500, 95.00],
+				[4000, 95.00],
+				[4500, 80.64],
+				[5000, 72.57],
+				[5500, 65.97],
+				[6000, 60.48],
+				[6500, 55.82],
+				[7000, 51.84],
+				[7500, 48.38],
+				[8000, 45.36],
+				[8500, 42.69],
+				[9000, 40.32],
+				[9500, 38.20],
+				[10000, 36.29],
+				[10500, 34.56],
+				[11000, 32.99],
+				[11500, 31.55],
+				[12000, 30.24],
+				[12500, 29.03],
+				[13000, 27.91],
+				[13500, 26.88],
+				[14000, 25.92],
+				[14500, 25.02],
+				[15000, 24.19],
+				[15500, 23.41],
+				[16000, 22.68],
+				[16500, 21.99],
+				[17000, 21.34],
+				[17500, 20.73],
+				
+
+			],
+			"maxRPM":18000,
+			"inertia":0.40,
+			"friction":4,
+			"dynamicFriction":0.0005,
+			"electricalEfficiency":0.55,
+			"electricsThrottleFactorName": "throttleFactorRear",
+			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
+			"soundConfig": "soundConfigRear",
+			"energyStorage": "mainBattery", //Name of the fuel tank
+			"torqueReactionNodes":["engine1", "engine2", "engine3"],
+			"maximumWantedRegenTorque": 40,
+		},
+
+		"soundConfigRear": {
+			"sampleName": "ElectricMotor_02",
+			"mainGain": -10
+		}
+	}
+
+	"Differential_rear": {
+		"information":{
+			"name":"Rear Differential",
+			"value":500
+		},
+		"slotType" : "Differential_rear",
+		"slots": [
+			["type", "default", "description"],
+			["Halfshafts_rear","Halfshafts_rear","Rear Halfshafts"],
+		],
+		"controller": [
+			["fileName"],
+			
+		],
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+		//https://wiki.beamng.com/Differential
+		["differential", "rearDiff", "rearDriveShaft", 1],
+
+		]
+		"rearDiff":{
+			"diffType": "open",
+			"uiName": "Rear Differential", 
+			"friction": 2.6452382432567,
+		}
+	},
+
+	"Halfshafts_rear": {
+		"information":{
+			"name":"Rear Halfshafts",
+			"value":100
+		},
+		"slotType" : "Halfshafts_rear",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["shaft", "halfshaftRL", "rearDiff", 1, {"breakTriggerBeam": "axle_RL", "uiName": "Rear Left Halfshaft", "friction": 1}],
+			["shaft", "halfshaftRR", "rearDiff", 2, {"breakTriggerBeam": "axle_RR", "uiName": "Rear Right Halfshaft", "friction": 1}]
+		]
+	},
+}

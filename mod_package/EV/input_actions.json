@@ -1,0 +1,7 @@
+{
+"switvh brake mode":                {"order":  6, "onDown":"controller.getControllerSafe('evdrive').switchBrakeMode()",  	                    "title": "switch brake mode", 	                    "desc": "switvh brake mode"                                         },
+
+"switvh to on-demand AWD":          {"order":  16, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('partTime')",  	            "title": "switvh to on-demand AWD", 	            "desc": "switvh to on-demand AWD"                                   },
+"switvh to full-time AWD":          {"order":  17, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('fullTime')",  	            "title": "switvh to full-time AWD", 	            "desc": "switvh to full-time AWD"                                   },
+"switvh to 2WD":                    {"order":  18, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('off')",  	                "title": "switvh to 2WD", 	                        "desc": "switvh to 2WD"                                             }
+}

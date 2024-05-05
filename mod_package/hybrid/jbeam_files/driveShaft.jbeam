@@ -1,0 +1,54 @@
+{
+	"driveshaft_front_motor": {
+		"information":{
+			"name":"Front Driveshaft Motor",
+			"value":150
+		},
+		"slotType" : "driveshaft_front",
+		"slots": [
+			["type", "default", "description"],
+			["Front_Torque_Table", "Front_Torque_Table_120NM", "Front Torque Table"],
+		],
+
+		"vehicleController": {
+			//"shiftLogicName":"",
+			"motorNames": ["frontDriveShaft", "rearDriveShaft"],
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
+		},
+
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			
+		]
+	},
+
+	"driveshaft_rear_motor": {
+		"information":{
+			"name":"Rear Driveshaft Motor",
+			"value":150
+		},
+		"slotType" : "driveshaft_rear",
+		"slots": [
+			["type", "default", "description"],
+			["Rear_Torque_Table", "Rear_Torque_Table_200NM", "Rear Torque Table"],
+		],
+		
+
+		"vehicleController": {
+			//"shiftLogicName":"",
+			"motorNames": ["frontDriveShaft", "rearDriveShaft"],
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
+		},
+
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			
+		]
+	},
+}
