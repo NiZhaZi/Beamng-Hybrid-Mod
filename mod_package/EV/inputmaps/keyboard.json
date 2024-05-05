@@ -2,7 +2,12 @@
 "bindings" :   [
      {
           "control": "alt b",
-          "action":  "switvh brake mode"
+          "action":  "switvh advance brake mode"
+     },
+
+     {
+          "control": "alt x",
+          "action":  "switvh sport brake mode"
      },
 
      {

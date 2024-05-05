@@ -1,7 +1,7 @@
 -- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
 -- by NZZ
--- version 0.0.2 alpha
--- final edit - 2024.5.5 17:26
+-- version 0.0.3 alpha
+-- final edit - 2024.5.5 21:54
 
 local M = {}
 
@@ -17,6 +17,7 @@ local motors = nil
 local edriveMode = nil
 local regenLevel = 5
 local ifAdvanceBrake = nil
+local ifSportBrake = nil
 local comfortRegenBegine = nil
 local comfortRegenEnd = nil
 
@@ -26,6 +27,7 @@ local function onInit(jbeamData)
     battery =  jbeamData.energyStorage or "mainBattery"
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     ifAdvanceBrake = jbeamData.ifAdvanceBrake or true
+    ifSportBrake = jbeamData.ifSportBrake or false
 
     motors = {}
 
@@ -62,16 +64,34 @@ local function switchAdvanceBrake()
     ifAdvanceBrake = not ifAdvanceBrake
 end
 
+local function switchSportBrake()
+    ifSportBrake = not ifSportBrake
+end
+
 local function switchAWD(mode)
     edriveMode = mode
 end
 
-local function switchBrakeMode()
-    switchAdvanceBrake()
-    if ifAdvanceBrake then
-        gui.message({ txt = "advance brake on" }, 5, "", "")
-    else
-        gui.message({ txt = "one-pedal brake on" }, 5, "", "")
+local function switchBrakeMode(type)
+    if type == "advance" then
+        switchAdvanceBrake()
+        if ifAdvanceBrake then
+            gui.message({ txt = "advance brake on" }, 5, "", "")
+        else
+            gui.message({ txt = "one-pedal brake on" }, 5, "", "")
+            ifSportBrake = false
+        end
+    elseif type == "sport" then
+        if ifAdvanceBrake then
+            switchSportBrake()
+            if ifSportBrake then
+                gui.message({ txt = "sport brake on" }, 5, "", "")
+            else
+                gui.message({ txt = "sport brake off" }, 5, "", "")
+            end
+        else
+            gui.message({ txt = "switch to advance brake firest" }, 5, "", "")
+        end
     end
 end
 
@@ -126,14 +146,21 @@ local function updateGFX(dt)
     -- advance brake begin
     if ifAdvanceBrake then
         for _, v in ipairs(motors) do
-            if v then
-                v.maxWantedRegenTorque = v.originalRegenTorque * input.brake * 2
-                if v.maxWantedRegenTorque > v.originalRegenTorque then
-                    v.maxWantedRegenTorque = v.originalRegenTorque
+            if ifSportBrake then
+                if v then
+                    v.maxWantedRegenTorque = v.originalRegenTorque * input.brake
                 end
-            end
-            if input.brake > 0.5 then
-                electrics.values.brake = (input.brake - 0.5) * 2
+                electrics.values.brake = input.brake
+            else
+                if v then
+                    v.maxWantedRegenTorque = v.originalRegenTorque * input.brake * 2
+                    if v.maxWantedRegenTorque > v.originalRegenTorque then
+                        v.maxWantedRegenTorque = v.originalRegenTorque
+                    end
+                end
+                if input.brake > 0.5 then
+                    electrics.values.brake = (input.brake - 0.5) * 2
+                end
             end
         end
     else

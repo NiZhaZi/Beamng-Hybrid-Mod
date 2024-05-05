@@ -1,5 +1,6 @@
 {
-"switvh brake mode":                {"order":  6, "onDown":"controller.getControllerSafe('evdrive').switchBrakeMode()",  	                    "title": "switch brake mode", 	                    "desc": "switvh brake mode"                                         },
+"switvh advance brake mode":        {"order":  6, "onDown":"controller.getControllerSafe('evdrive').switchBrakeMode('advance')",  	            "title": "switch advance brake mode", 	            "desc": "switch advance brake mode"                                         },
+"switvh sport brake mode":          {"order":  7, "onDown":"controller.getControllerSafe('evdrive').switchBrakeMode('sport')",  	            "title": "switch aport brake mode", 	            "desc": "switch aport brake mode"                                         },
 
 "switvh to on-demand AWD":          {"order":  16, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('partTime')",  	            "title": "switvh to on-demand AWD", 	            "desc": "switvh to on-demand AWD"                                   },
 "switvh to full-time AWD":          {"order":  17, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('fullTime')",  	            "title": "switvh to full-time AWD", 	            "desc": "switvh to full-time AWD"                                   },
