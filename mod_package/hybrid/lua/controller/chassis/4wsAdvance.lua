@@ -1,8 +1,7 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
---NZZ 4wsAdvance 17点09分2024年4月19日
+-- 4wsAdvance.lua - 2024.4.19 17:09 - advance rear wheel steering
+-- by NZZ
+-- version 0.0.2 alpha
+-- final edit - 2024.5.6 22:51
 
 local M = {}
 
@@ -25,7 +24,7 @@ end
 local function onInit()
     electrics.values.fws = 1
     electrics.values['4wsAdvance'] = 0
-    switchVelocity = v.data.variables["$switchVelocity"].val or 7
+    switchVelocity = (v.data.variables["$switchVelocity"].val or 7) * 0.2778
 end
 
 local function judgeUpdateSteer()
