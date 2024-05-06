@@ -22,7 +22,10 @@
 			["$ExhaustOffsetZVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Exhaust Offset Z", "Visual vertical exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
 			// ["$torquesplitE", "range", "", "Motor Controller", 0.6700000166893, 0, 1, "Torque Split", "Power to Rear", {"stepDis": 0.01, "minDis":0, "maxDis":100}],
 			["$regenTorqueModRear", "range", "", "Motor Controller", 0.6, 0, 3, "Rear motor regenerative braking torque", "Maximum regenerative braking torque", {"stepDis": 1, "minDis":0, "maxDis":300}],
-			["$regenTorqueModFront", "range", "", "Motor Controller", 1, 0, 3, "Front motor regenerative braking torque", "Maximum regenerative braking torque", {"stepDis": 1, "minDis":0, "maxDis":300}]
+			["$regenTorqueModFront", "range", "", "Motor Controller", 1, 0, 3, "Front motor regenerative braking torque", "Maximum regenerative braking torque", {"stepDis": 1, "minDis":0, "maxDis":300}],
+
+			["$FinalDriveRatioFront", "range", ":1", "Motor Controller", 5.25, 0, 100, "Front Motor Final Drive Ratio", "Final Drive Ratio Front", {"stepDis": 0.01, "minDis":0, "maxDis":100}],
+			["$FinalDriveRatioRear",  "range", ":1", "Motor Controller", 5.25, 0, 100, "Rear Motor Final Drive Ratio",  "Final Drive Ratio Rear",  {"stepDis": 0.01, "minDis":0, "maxDis":100}],
 		],
 
 		"controller": [
