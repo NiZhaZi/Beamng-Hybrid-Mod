@@ -66,7 +66,6 @@
 		},
 	    "vehicleController": {
 			"shiftLogicName":"electricMotor",
-			"motorNames": [],
 			"topSpeedLimitReverse": 15,
 			//"defaultRegen": 0.5,
 			//"brakeRegenCoef": 1,
@@ -200,7 +199,6 @@
 		},
 	    "vehicleController": {
 			"shiftLogicName":"electricMotor",
-			"motorNames": ["frontMotor"],
 			"topSpeedLimitReverse": 15,
 			//"defaultRegen": 0.5,
 			//"brakeRegenCoef": 1,

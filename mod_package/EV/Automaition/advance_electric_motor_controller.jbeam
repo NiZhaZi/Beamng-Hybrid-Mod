@@ -38,6 +38,10 @@
 			"subMotorNames": ["frontMotor"],
 		},
 
+		"vehicleController": {
+			"motorNames": ["frontMotor", "rearMotor", "rearMotor_R"],
+		},
+		
 		"slots": [
 			["type", "default", "description"],
 			["Camso_engine_structure", "", "Engine Structure", {"coreSlot": true}],
