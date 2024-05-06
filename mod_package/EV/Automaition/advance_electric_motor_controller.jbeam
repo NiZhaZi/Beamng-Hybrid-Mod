@@ -40,6 +40,11 @@
 
 		"vehicleController": {
 			"motorNames": ["frontMotor", "rearMotor", "rearMotor_R"],
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
 		},
 		
 		"slots": [

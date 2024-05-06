@@ -64,14 +64,6 @@
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"maximumWantedRegenTorque": 400
 		},
-	    "vehicleController": {
-			"shiftLogicName":"electricMotor",
-			"topSpeedLimitReverse": 15,
-			//"defaultRegen": 0.5,
-			//"brakeRegenCoef": 1,
-			"onePedalRegenCoef": 0.85
-		},
-
 		"soundConfigRear": {
 			"sampleName": "ElectricMotor_02",
 			"mainGain": 15
@@ -197,14 +189,6 @@
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"maximumWantedRegenTorque": 400
 		},
-	    "vehicleController": {
-			"shiftLogicName":"electricMotor",
-			"topSpeedLimitReverse": 15,
-			//"defaultRegen": 0.5,
-			//"brakeRegenCoef": 1,
-			"onePedalRegenCoef": 0.85
-		},
-
 		"soundConfigRear": {
 			"sampleName": "ElectricMotor_02",
 			"mainGain": 15
