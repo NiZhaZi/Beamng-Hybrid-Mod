@@ -128,9 +128,9 @@ end
 local function switchAWDMode(mode)
     switchAWD(mode)
     if edriveMode == "fullTime" then
-        gui.message({ txt = "on-demand AWD mode on" }, 5, "", "")
-    elseif edriveMode == "partTime" then
         gui.message({ txt = "full-time AWD mode on" }, 5, "", "")
+    elseif edriveMode == "partTime" then
+        gui.message({ txt = "on-demand AWD mode on" }, 5, "", "")
     else
         gui.message({ txt = "AWD mode off" }, 5, "", "")
     end
