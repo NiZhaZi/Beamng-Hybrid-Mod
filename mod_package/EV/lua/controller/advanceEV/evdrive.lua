@@ -1,7 +1,7 @@
 -- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
 -- by NZZ
--- version 0.0.3 alpha
--- final edit - 2024.5.5 21:54
+-- version 0.0.4 alpha
+-- final edit - 2024.5.7 13:36
 
 local M = {}
 
@@ -12,14 +12,16 @@ local abs = math.abs
 local battery = nil
 local mainMotors = nil
 local subMotors = nil
+local leftMotors = nil
+local rightMotors = nil
 local motors = nil
 
 local edriveMode = nil
 local regenLevel = 5
 local ifAdvanceBrake = nil
 local ifSportBrake = nil
-local comfortRegenBegine = nil
-local comfortRegenEnd = nil
+local ifAssistSteering = nil
+local assistSteeringSpeed = nil
 
 local ondemandMaxRPM = nil
 
@@ -28,6 +30,8 @@ local function onInit(jbeamData)
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     ifAdvanceBrake = jbeamData.ifAdvanceBrake or true
     ifSportBrake = jbeamData.ifSportBrake or false
+    ifAssistSteering = jbeamData.ifAssistSteering or true
+    assistSteeringSpeed = jbeamData.assistSteeringSpeed or 75
 
     motors = {}
 
@@ -55,6 +59,32 @@ local function onInit(jbeamData)
                 subMotor.originalRegenTorque = subMotor.maxWantedRegenTorque
             end
         end
+    end
+
+    if ifAssistSteering then
+
+        leftMotors = {}
+        local leftMotorNames = jbeamData.leftMotorNames
+        if leftMotorNames then
+            for _, v in ipairs(leftMotorNames) do
+                local leftMotor = powertrain.getDevice(v)
+                if leftMotor then
+                    table.insert(leftMotors, leftMotor)
+                end
+            end
+        end
+
+        rightMotors = {}
+        local rightMotorNames = jbeamData.rightMotorNames
+        if rightMotorNames then
+            for _, v in ipairs(rightMotorNames) do
+                local rightMotor = powertrain.getDevice(v)
+                if rightMotor then
+                    table.insert(rightMotors, rightMotor)
+                end
+            end
+        end
+
     end
 
     ondemandMaxRPM = jbeamData.ondemandMaxRPM or 50
@@ -180,6 +210,34 @@ local function updateGFX(dt)
     end
     electrics.values.brakewithign = input.brake * ign
     -- advance brake end
+
+    -- assist steering begin
+    local speed = electrics.values.wheelspeed / 0.2778
+    local steering = input.steering
+    local direction = fsign(steering)
+
+    if ifAssistSteering and speed > assistSteeringSpeed and math.abs(steering) > 0.2 then
+        -- log("", "", direction)
+        if direction == 1 then
+            for _, v in ipairs(rightMotors) do
+                v.maxWantedRegenTorque = v.originalRegenTorque
+            end
+            electrics.values.throttle_L = electrics.values.throttle
+            electrics.values.throttle_R = 0
+        elseif direction == -1 then
+            for _, v in ipairs(leftMotors) do
+                v.maxWantedRegenTorque = v.originalRegenTorque
+            end
+            electrics.values.throttle_L = 0
+            electrics.values.throttle_R = electrics.values.throttle
+        end
+        -- log("", "throttle_L ", electrics.values.throttle_L)
+        -- log("", "throttle_R ", electrics.values.throttle_R)
+    else
+        electrics.values.throttle_L = electrics.values.throttle
+        electrics.values.throttle_R = electrics.values.throttle
+    end
+    -- assist steering end
 
 end
 
