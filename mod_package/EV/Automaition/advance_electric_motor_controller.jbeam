@@ -26,6 +26,7 @@
 
 			["$FinalDriveRatioFront", "range", ":1", "Motor Controller", 5.25, 0, 100, "Front Motor Final Drive Ratio", "Final Drive Ratio Front", {"stepDis": 0.01, "minDis":0, "maxDis":100}],
 			["$FinalDriveRatioRear",  "range", ":1", "Motor Controller", 5.25, 0, 100, "Rear Motor Final Drive Ratio",  "Final Drive Ratio Rear",  {"stepDis": 0.01, "minDis":0, "maxDis":100}],
+			["$assistSteeringSpeed",  "range", "km/h", "Motor Controller", 75, 0, 600, "Assist Steering Speed",  "speed of when Assist Steering intervene",  {"stepDis": 1, "minDis":0, "maxDis":600}],
 		],
 
 		"controller": [
@@ -36,15 +37,19 @@
 		"evdrive": {
 			"mainMotorNames": ["rearMotor", "rearMotor_R"],
 			"subMotorNames": ["frontMotor"],
+
+			"leftMotorNames": ["rearMotor"],
+			"rightMotorNames": ["rearMotor_R"],
+
+			"defaultEAWDMode": "partTime",
+			"ifAdvanceBrake": true,
+			"ifSportBrake": false,
+			"ifAssistSteering": true,
+			"assistSteeringSpeed": "$assistSteeringSpeed",
 		},
 
 		"vehicleController": {
 			"motorNames": ["frontMotor", "rearMotor", "rearMotor_R"],
-			"shiftLogicName":"electricMotor",
-			"topSpeedLimitReverse": 15,
-			//"defaultRegen": 0.5,
-			//"brakeRegenCoef": 1,
-			"onePedalRegenCoef": 0.85
 		},
 		
 		"slots": [

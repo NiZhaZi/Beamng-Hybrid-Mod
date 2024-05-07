@@ -56,14 +56,23 @@
 			"inertia":0.40,
 			"friction":4,
 			"dynamicFriction":0.0005,
-			"electricalEfficiency":0.55,
+			"electricalEfficiency":0.85,
 			"electricsThrottleFactorName": "throttleFactorRear",
+			"electricsThrottleName": "throttle",
 			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
 			"soundConfig": "soundConfigRear",
 			"energyStorage": "mainBattery", //Name of the fuel tank
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"maximumWantedRegenTorque": 400
 		},
+	    "vehicleController": {
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
+		},
+
 		"soundConfigRear": {
 			"sampleName": "ElectricMotor_02",
 			"mainGain": 15
@@ -127,8 +136,9 @@
 			"inertia":0.40,
 			"friction":4,
 			"dynamicFriction":0.0005,
-			"electricalEfficiency":0.55,
+			"electricalEfficiency":0.85,
 			"electricsThrottleFactorName": "throttleFactorRear",
+			"electricsThrottleName": "throttle_L",
 			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
 			"soundConfig": "soundConfigRear",
 			"energyStorage": "mainBattery", //Name of the fuel tank
@@ -181,14 +191,23 @@
 			"inertia":0.40,
 			"friction":4,
 			"dynamicFriction":0.0005,
-			"electricalEfficiency":0.55,
+			"electricalEfficiency":0.85,
 			"electricsThrottleFactorName": "throttleFactorRear",
+			"electricsThrottleName": "throttle_R",
 			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
 			"soundConfig": "soundConfigRear",
 			"energyStorage": "mainBattery", //Name of the fuel tank
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"maximumWantedRegenTorque": 400
 		},
+	    "vehicleController": {
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
+		},
+
 		"soundConfigRear": {
 			"sampleName": "ElectricMotor_02",
 			"mainGain": 15

@@ -56,7 +56,7 @@
 			"inertia":0.40,
 			"friction":4,
 			"dynamicFriction":0.0005,
-			"electricalEfficiency":0.55,
+			"electricalEfficiency":0.85,
 			"electricsThrottleFactorName": "throttleFactorRear",
 			"electricsThrottleName": "subThrottle",
 			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
@@ -64,6 +64,13 @@
 			"energyStorage": "mainBattery", //Name of the fuel tank
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"maximumWantedRegenTorque": 280,
+		},
+	    "vehicleController": {
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
 		},
 		"soundConfigFront": {
 			"sampleName": "ElectricMotor_02",
@@ -128,7 +135,7 @@
 			"inertia":0.40,
 			"friction":4,
 			"dynamicFriction":0.0005,
-			"electricalEfficiency":0.55,
+			"electricalEfficiency":0.85,
 			"electricsThrottleFactorName": "throttleFactorRear",
 			"electricsThrottleName": "subThrottle",
 			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
@@ -183,7 +190,7 @@
 			"inertia":0.40,
 			"friction":4,
 			"dynamicFriction":0.0005,
-			"electricalEfficiency":0.55,
+			"electricalEfficiency":0.85,
 			"electricsThrottleFactorName": "throttleFactorRear",
 			"electricsThrottleName": "subThrottle",
 			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
@@ -191,6 +198,13 @@
 			"energyStorage": "mainBattery", //Name of the fuel tank
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"maximumWantedRegenTorque": 280,
+		},
+	    "vehicleController": {
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
 		},
 		"soundConfigFront": {
 			"sampleName": "ElectricMotor_02",
