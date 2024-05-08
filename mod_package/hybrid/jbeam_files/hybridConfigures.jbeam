@@ -42,7 +42,7 @@
 			//auto mode settings
 			"startVelocity" : 36,
 			"connectVelocity" : 41,
-			"lowSpeed": 1, // km/h
+			"lowSpeed": 0.5, // km/h
 		},
 
 		"motorControl":{
