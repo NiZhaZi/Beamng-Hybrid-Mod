@@ -40,8 +40,8 @@
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 10,
-			"connectVelocity" : 12,
+			"startVelocity" : 36,
+			"connectVelocity" : 41,
 			"lowSpeed": 1, // km/h
 		},
 
