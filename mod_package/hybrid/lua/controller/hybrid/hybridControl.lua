@@ -1,6 +1,7 @@
---hybridContrl version 0.0.15alpha
---Final Edit 2024年4月30日13点28分
---by NZZ
+-- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
+-- by NZZ
+-- version 0.0.16 alpha
+-- final edit - 2024.5.8 12:28
 
 local M = {}
 
@@ -425,13 +426,13 @@ local function init(jbeamData)
     
     motorRatio1 = jbeamData.motorRatio1 or 1
     motorRatio2 = jbeamData.motorRatio2 or 1
-    startVelocity = jbeamData.startVelocity or 10
-    connectVelocity = jbeamData.connectVelocity or (startVelocity + 2)
+    startVelocity = (jbeamData.startVelocity or 36) * 0.2778
+    connectVelocity = (jbeamData.connectVelocity or (startVelocity + 5)) * 0.2778
     directRPM1 = jbeamData.directRPM1 or 1000
     directRPM2 = jbeamData.directRPM2 or 3000
 
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
-    lowSpeed = jbeamData.lowSpeed or 0.08
+    lowSpeed = (jbeamData.lowSpeed or 0.08) * 0.2778
     ifComfortRegen = jbeamData.ifComfortRegen or true
     comfortRegenBegine = jbeamData.comfortRegenBegine or 0.75
     comfortRegenEnd = jbeamData.comfortRegenEnd or 0.15
