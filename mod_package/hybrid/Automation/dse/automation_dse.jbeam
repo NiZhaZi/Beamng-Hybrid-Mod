@@ -1,0 +1,38 @@
+{
+	"Hybrid_DSE_01": {
+		"information":{
+			"name":"Hybrid Electronic Stability & Traction Control",
+			"value":250
+		}
+
+		"slotType" : "Camso_DSE",
+
+		"slots":[
+			["type", "default", "description"],
+			["Camso_DriveModes", "Hybrid_DriveModes_01", "Drive Modes"], 
+			["Camso_TC", "Hybrid_TC_01", "Traction Control"], 
+			["Camso_ESC", "Hybrid_ESC_01", "Stability Control"],
+
+			["Functions", "Functions", "Functions"],
+			["adas_mod", "driver_assistance_angelo234_mainslot_alt", "ADAS"] 
+		],
+
+		"controller": [
+			["fileName"],
+			["postCrashBrake",{"brakeThreshold": 60}],
+			["drivingDynamics/CMU", {"name":"CMU", "debugSettings": {"enableDebugMode": false, "peerIP": "127.0.0.1"}}],
+			["drivingDynamics/sensors/sensorHub"],
+			["drivingDynamics/sensors/virtualSensors" {"name":"sensors"}],
+			["drivingDynamics/sensors/vehicleData" {"name":"vehicleData"}],
+			["drivingDynamics/supervisors/components/motorTorqueControl" {"name":"motorTorqueControl"}],
+			["drivingDynamics/supervisors/components/brakeControl" {"name":"brakeControl"}],
+			["twoStepLaunch", {"rpmLimit":4900}],
+			["adaptiveBrakeLights"],
+		],
+
+		"vehicleData": {
+			"skewStiffnessFront": 122631.01622285,
+			"skewStiffnessRear": 103205.94568833
+		}
+	}
+}

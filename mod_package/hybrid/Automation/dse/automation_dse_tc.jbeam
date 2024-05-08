@@ -1,0 +1,46 @@
+{
+	"Hybrid_TC_01": {
+		"information":{
+			"authors":"Diamondback",
+			"name":"Hybrid Traction Control",
+			"value":250
+		},
+
+		"slotType" : "Camso_TC",
+
+		"controller": [
+			["fileName"],
+			["drivingDynamics/supervisors/HybridTC" {"name": "tractionControl"}],
+			["drivingDynamics/supervisors/slipProviders/HybridVSS"]
+		],
+
+		"tractionControl": {
+			"tractionControlledMotors": ["mainEngine", "frontDriveShaft", "rearDriveShaft"],
+			"REEVTCMotors": ["frontDriveShaft", "rearDriveShaft"],
+		},
+
+		"motorTorqueControl": {
+			"useForTractionControl": true,
+			"tractionControl": {
+				"wheelGroupSettings":[
+					["motorName",   	"slipThreshold",	"kP",   "kI",   "kD",   "integralInCoef",   "integralOutCoef"],
+					["mainEngine",	 	 0.15,				 4,		 0,		 4,		 10,				 50				 ],
+					["frontDriveShaft",	 0.15,				 4,		 0,		 4,		 10,				 50				 ],
+					["rearDriveShaft",	 0.15,				 4,		 0,		 4,		 10,				 50				 ],
+				]
+			}
+		},
+
+		"brakeControl": {
+			"useForTractionControl": true,
+			"tractionControl": {
+				"wheelGroupSettings":[
+					["motorName",   	"slipThreshold",	"slipRangeThreshold",   "maxVelocity"	"kP",   "kI",   "kD",   "integralInCoef",   "integralOutCoef"],
+					["mainEngine",  	 0.1,				 0.2,					 30,			 1,		 0,		 4,		 20,				 2				 ],
+					["frontDriveShaft",  0.1,				 0.2,					 30,			 1,		 0,		 4,		 20,				 2				 ],
+					["rearDriveShaft",   0.1,				 0.2,					 30,			 1,		 0,		 4,		 20,				 2				 ],
+				]
+			}
+		}
+	}
+}
