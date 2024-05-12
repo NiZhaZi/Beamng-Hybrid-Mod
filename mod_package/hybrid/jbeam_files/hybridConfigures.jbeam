@@ -63,8 +63,13 @@
 			],
 			"electricsThrottleName": "powerGenerator",
 			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)",
-
+			"soundConfig": "soundConfigGearbox",
 		},
+
+		"soundConfigGearbox": {
+			"sampleName": "ElectricMotor_02",
+			"mainGain": -4.5
+		}
 
 	},
 
