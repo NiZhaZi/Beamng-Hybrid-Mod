@@ -1,9 +1,7 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
---eatGearbox ver 0.2.2 Final Edit 2024年4月20日14点45分
---by NZZ
+-- eatGearbox.lua - 2024.4.20 14:45 - AT Gearbox with electric motor
+-- by NZZ
+-- version 0.2.3 beta
+-- final edit - 2024.5.12 11:04
 
 local M = {}
 
@@ -284,6 +282,21 @@ local function updateSounds(device, dt)
 
   --print (string.format(" INPUT  volumeInput =%0.4f : pitchInput =%6.0d : inputLoad =%0.4f : outputRPMSign=%0.4f", volumeInput, pitchInput, inputLoad, outputRPMSign))
   --print (string.format(" OUTPUT volumeOutput=%0.4f : pitchOutput=%6.0d : outputLoad=%0.4f : outputRPMSign=%0.4f", volumeOutput, pitchOutput, outputLoad, outputRPMSign))
+
+  -- insert0
+  local soundsign
+  if device.motorRatio == 0 then
+    soundsign = 0
+  else
+    soundsign = 1
+  end
+
+  local rpm = device.soundRPMSmoother:get(abs(device.outputAV1 * avToRPM), dt) * soundsign
+  local engineLoad = clamp(device.soundLoadSmoother:get(abs(device.instantEngineLoad), dt), device.soundMinLoadMix, device.soundMaxLoadMix)
+  local fundamentalFreq = sounds.hzToFMODHz(rpm * device.fundamentalFrequencyRPMCoef)
+  obj:setEngineSound(device.engineSoundID, rpm, engineLoad, fundamentalFreq, device.engineVolumeCoef)
+  -- insert1
+
 end
 
 local function updateVelocity(device, dt)
@@ -564,7 +577,7 @@ local function calculateInertia(device)
   device.maxCumulativeGearRatio = maxCumulativeGearRatio * device.maxGearRatio
 end
 
-local function resetSounds(device)
+local function resetSounds(device, jbeamData)
   device.gearWhineInputTorqueSmoother:reset()
   device.gearWhineOutputTorqueSmoother:reset()
   device.gearWhineInputAVSmoother:reset()
@@ -574,6 +587,41 @@ local function resetSounds(device)
   device.gearWhineOutputAV = 0
   device.gearWhineInputTorque = 0
   device.gearWhineOutputTorque = 0
+
+  -- insert0
+  if not sounds.usesOldCustomSounds then
+    if jbeamData.soundConfig then
+      local soundConfig = v.data[jbeamData.soundConfig]
+      if soundConfig then
+        device.soundRPMSmoother:reset()
+        device.soundLoadSmoother:reset()
+        device.engineVolumeCoef = 1
+        --dump(sounds)
+        sounds.disableOldEngineSounds()
+      else
+        log("E", "electricMotor.resetSounds", "Can't find sound config: " .. jbeamData.soundConfig)
+      end
+    end
+  else
+    log("W", "electricMotor.resetSounds", "Disabling new sounds, found old custom engine sounds...")
+  end
+  -- insert1
+
+end
+
+local function initEngineSound(device, soundID, samplePath, engineNodeIDs, offLoadGain, onLoadGain, reference)
+  device.soundConfiguration[reference] = device.soundConfiguration[reference] or {}
+  device.soundConfiguration[reference].blendFile = samplePath
+  obj:queueGameEngineLua(string.format("core_sounds.initEngineSound(%d,%d,%q,%s,%f,%f)", objectId, soundID, samplePath, serialize(engineNodeIDs), offLoadGain, onLoadGain))
+
+  bdebug.setNodeDebugText("Powertrain", engineNodeIDs[1], device.name .. ": " .. samplePath)
+end
+
+local function setEngineSoundParameterList(device, soundID, params, reference)
+  device.soundConfiguration[reference] = device.soundConfiguration[reference] or {}
+  device.soundConfiguration[reference].params = tableMergeRecursive(device.soundConfiguration[reference].params or {}, params)
+  device.soundConfiguration[reference].soundID = soundID
+  obj:queueGameEngineLua(string.format("core_sounds.setEngineSoundParameterList(%d,%d,%s)", objectId, soundID, serialize(params)))
 end
 
 local function initSounds(device, jbeamData)
@@ -610,6 +658,80 @@ local function initSounds(device, jbeamData)
   device.gearWhinePowerCoefOutput = 1 - device.gearWhineFixedCoefOutput
   device.gearWhineFixedCoefInput = jbeamData.gearWhineFixedCoefInput or 0.4
   device.gearWhinePowerCoefInput = 1 - device.gearWhineFixedCoefInput
+
+  -- insert0
+  if not sounds.usesOldCustomSounds then
+    if jbeamData.soundConfig then
+      local soundConfig = v.data[jbeamData.soundConfig]
+      if soundConfig and not sounds.usesOldCustomSounds then
+        device.soundConfiguration = {}
+        device.engineSoundID = powertrain.getEngineSoundID()
+        local rpmInRate = soundConfig.rpmSmootherInRate or 15
+        local rpmOutRate = soundConfig.rpmSmootherOutRate or 25
+        device.soundRPMSmoother = newTemporalSmoothingNonLinear(rpmInRate, rpmOutRate)
+        local loadInRate = soundConfig.loadSmootherInRate or 20
+        local loadOutRate = soundConfig.loadSmootherOutRate or 20
+        device.soundLoadSmoother = newTemporalSmoothingNonLinear(loadInRate, loadOutRate)
+        device.soundMaxLoadMix = soundConfig.maxLoadMix or 1
+        device.soundMinLoadMix = soundConfig.minLoadMix or 0
+        local fundamentalFrequencyCylinderCount = soundConfig.fundamentalFrequencyCylinderCount or 6
+        device.fundamentalFrequencyRPMCoef = fundamentalFrequencyCylinderCount / 120
+        device.engineVolumeCoef = 1
+        local onLoadGain = soundConfig.onLoadGain or 1
+        local offLoadGain = soundConfig.offLoadGain or 1
+
+        local sampleName = soundConfig.sampleName
+        if sampleName then
+          local sampleFolder = soundConfig.sampleFolder or "art/sound/blends/"
+          local samplePath = sampleFolder .. sampleName .. ".sfxBlend2D.json"
+          device:initEngineSound(device.engineSoundID, samplePath, {device.engineNodeID}, offLoadGain, onLoadGain, "motor")
+
+          local main_gain = soundConfig.mainGain or 0
+
+          local eq_a_freq = sounds.hzToFMODHz(soundConfig.lowCutFreq or 20)
+          local eq_b_freq = sounds.hzToFMODHz(soundConfig.highCutFreq or 10000)
+          local eq_c_freq = sounds.hzToFMODHz(soundConfig.eqLowFreq or 500)
+          local eq_c_gain = soundConfig.eqLowGain or 0
+          local eq_c_reso = soundConfig.eqLowWidth or 0
+          local eq_d_freq = sounds.hzToFMODHz(soundConfig.eqHighFreq or 2000)
+          local eq_d_gain = soundConfig.eqHighGain or 0
+          local eq_d_reso = soundConfig.eqHighWidth or 0
+          local eq_e_gain = soundConfig.eqFundamentalGain or 0
+          local eq_e_reso = soundConfig.eqFundamentalWidth or 1
+
+          local params = {
+            main_gain = main_gain,
+            eq_a_freq = eq_a_freq,
+            eq_b_freq = eq_b_freq,
+            eq_c_freq = eq_c_freq,
+            eq_c_gain = eq_c_gain,
+            eq_c_reso = eq_c_reso,
+            eq_d_freq = eq_d_freq,
+            eq_d_gain = eq_d_gain,
+            eq_d_reso = eq_d_reso,
+            eq_e_gain = eq_e_gain,
+            eq_e_reso = eq_e_reso,
+            onLoadGain = onLoadGain,
+            offLoadGain = offLoadGain,
+            muffled = 0.5
+          }
+          --dump(params)
+
+          device:setEngineSoundParameterList(device.engineSoundID, params, "motor")
+
+          device.updateSounds = updateSounds
+        end
+        --dump(sounds)
+        sounds.disableOldEngineSounds()
+      else
+        log("E", "electricMotor.init", "Can't find sound config: " .. jbeamData.soundConfig)
+      end
+    end
+  else
+    log("W", "electricMotor.init", "Disabling new sounds, found old custom engine sounds...")
+  end
+  -- insert1
+
 end
 
 local function reset(device, jbeamData)
