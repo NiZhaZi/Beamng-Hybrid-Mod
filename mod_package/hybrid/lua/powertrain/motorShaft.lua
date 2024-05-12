@@ -1,10 +1,7 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
---motorShaft version 0.0.7alpha
---Final Edit 15点15分2024年3月8日
---by NZZ
+-- motorShaft.lua - 2024.3.8 14:45 - Shaft with electric motor
+-- by NZZ
+-- version 0.0.7 alpha
+-- final edit - 2024.5.12 13:41
 
 local M = {}
 
@@ -751,6 +748,7 @@ local function new(jbeamData)
     updateSimpleControlButtons = updateSimpleControlButtons,
 
     --insert0
+    outputAV1 = 0,
     torqueDiff = 0,
 
     setmotorRatio = setmotorRatio,
