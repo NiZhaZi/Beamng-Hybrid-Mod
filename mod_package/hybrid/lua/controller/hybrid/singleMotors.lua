@@ -1,6 +1,7 @@
---single motors Control version 0.0.2alpha
---Final Edit 2024年3月18日21点52分
---by NZZ
+-- signleMotors.lua - 2024.3.18 21:52 - Control single motors
+-- by NZZ
+-- version 0.0.3 alpha
+-- final edit - 2024.5.12 23:28
 
 local M = {}
 
@@ -79,7 +80,7 @@ local function updateGFX(dt)
         end
     else
         for _, v in ipairs(motors) do
-            v.motorDirection = 0
+            v.motorDirection = motorDirection
         end
     end
 
