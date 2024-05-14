@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.16 alpha
--- final edit - 2024.5.8 12:28
+-- version 0.0.17 alpha
+-- final edit - 2024.5.14 21:05
 
 local M = {}
 
@@ -95,7 +95,9 @@ local function engineMode(state)
             proxyEngine:activateStarter()
         end
     elseif state == "off" then
-        proxyEngine:setIgnition(0)
+        if electrics.values.engineRunning == 1 then
+            proxyEngine:setIgnition(0)
+        end
     end
 end
 
