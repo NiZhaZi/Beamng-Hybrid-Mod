@@ -1,7 +1,7 @@
 -- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
 -- by NZZ
--- version 0.0.4 alpha
--- final edit - 2024.5.7 13:36
+-- version 0.0.5 alpha
+-- final edit - 2024.5.20 21:19
 
 local M = {}
 
@@ -241,12 +241,19 @@ local function updateGFX(dt)
 
 end
 
+local function reset(jbeamData)
+    switchAWD("partTime")
+    ifAdvanceBrake = jbeamData.ifAdvanceBrake or true
+    ifSportBrake = jbeamData.ifSportBrake or false
+end
+
 -- public interface
 
 M.switchBrakeMode = switchBrakeMode
 M.switchAWDMode = switchAWDMode
 
 M.init = onInit
+M.reset = reset
 M.onInit      = onInit
 M.onReset     = onInit
 M.updateGFX = updateGFX
