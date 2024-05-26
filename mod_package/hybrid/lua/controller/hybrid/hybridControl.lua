@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.17 alpha
--- final edit - 2024.5.14 21:05
+-- version 0.0.18 alpha
+-- final edit - 2024.5.26 16:57
 
 local M = {}
 
@@ -193,6 +193,31 @@ local function setMode(mode)
 
 end
 
+local function rollingMode(direct)
+    local modeCount = #enableModes
+    local modeNum = 0
+    for _, u in ipairs(enableModes) do
+        if electrics.values.hybridMode == u then
+            modeNum = modeNum + 1
+            break
+        else
+            modeNum = modeNum + 1
+        end
+    end
+    if direct > 0 then
+        if modeNum + 1 > modeCount then
+            modeNum = 0
+        end
+        setMode(enableModes[modeNum + 1])
+    elseif direct < 0 then
+        if modeNum - 1 < 1 then
+            modeNum = #enableModes + 1
+        end
+        setMode(enableModes[modeNum - 1])
+    else
+    end
+end
+
 local function cauculateRegen(percentage)
     if percentage > comfortRegenBegine then
         return 1
@@ -319,7 +344,8 @@ local function updateGFX(dt)
         detO = 0
     end
 
-    if REEVMode == "on" and hybridMode ~= ("hybrid" or "electric" or "fuel" or "direct")  then
+    if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
+        -- log("", "", "" .. hybridMode)
         if proxyEngine.outputRPM < REEVRPM then
             reevThrottle = 1
         elseif proxyEngine.outputRPM > REEVRPM + 500 then
@@ -525,6 +551,7 @@ end
 
 M.setMode = setMode
 M.setPartTimeDriveMode = setPartTimeDriveMode
+M.rollingMode = rollingMode
 
 M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
