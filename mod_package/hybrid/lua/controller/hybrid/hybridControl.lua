@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.18 alpha
--- final edit - 2024.5.26 16:57
+-- version 0.0.19 alpha
+-- final edit - 2024.5.28 16:37
 
 local M = {}
 
@@ -158,7 +158,7 @@ local function setMode(mode)
             elseif mode == "reev" then
                 engineMode("on")
                 motorMode("on2")
-
+                
             elseif mode == "direct" then
                 --gui.message({ txt = "Switch to direct mode" }, 5, "", "")
                 if electrics.values.ignitionLevel == 2 and electrics.values.engineRunning == 0 then
@@ -182,6 +182,7 @@ local function setMode(mode)
     if mode ~= "reev" and REEVMode ~= "on" then
         PreRMode = PGMode
         REEVMode = "off"
+        proxyEngine:resetTempRevLimiter()
     else
         REEVMode = "on"
     end
@@ -345,14 +346,12 @@ local function updateGFX(dt)
     end
 
     if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
-        -- log("", "", "" .. hybridMode)
-        if proxyEngine.outputRPM < REEVRPM then
-            reevThrottle = 1
-        elseif proxyEngine.outputRPM > REEVRPM + 500 then
-            reevThrottle = 0
-        else
-            reevThrottle = 0.5
+        local REEVrpm = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ 2.37)
+        if REEVrpm > proxyEngine.maxRPM then
+            REEVrpm = proxyEngine.maxRPM
         end
+        proxyEngine:setTempRevLimiter(REEVrpm)
+        reevThrottle = 1
     else
         reevThrottle = electrics.values.throttle
     end
