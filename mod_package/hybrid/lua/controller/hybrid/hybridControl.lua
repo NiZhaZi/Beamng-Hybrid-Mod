@@ -535,6 +535,19 @@ end
 local function onInit()
 end
 
+local function reset(jbeamData)
+    edriveMode = jbeamData.defaultEAWDMode or "partTime"
+    ifComfortRegen = jbeamData.ifComfortRegen or true
+
+    REEVMode = "off"
+
+    if jbeamData.defaultMode then
+        setMode(jbeamData.defaultMode)
+    else
+        setMode("hybrid")
+    end
+end
+
 local function onReset(jbeamData)
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     ifComfortRegen = jbeamData.ifComfortRegen or true
@@ -556,6 +569,7 @@ M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
 
 M.init = init
+M.reset = reset
 M.onInit = onInit
 M.onReset = onReset
 
