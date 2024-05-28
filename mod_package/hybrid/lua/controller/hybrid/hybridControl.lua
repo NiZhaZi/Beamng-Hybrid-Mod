@@ -349,7 +349,7 @@ local function updateGFX(dt)
 
     if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
         local REEVrpm = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ (2.37 * REEVMutiplier))
-        if REEVrpm > proxyEngine.maxRPM then
+        if REEVrpm > proxyEngine.maxRPM - REEVRPMProtect then
             REEVrpm = proxyEngine.maxRPM - REEVRPMProtect
         end
         proxyEngine:setTempRevLimiter(REEVrpm)
