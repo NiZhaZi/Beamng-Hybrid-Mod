@@ -45,6 +45,8 @@ local ifREEVEnable = false
 local REEVMode = nil -- control engine start and TC
 local PreRMode = nil
 local REEVRPM = nil
+local REEVMutiplier = nil
+local REEVRPMProtect = nil
 local reevThrottle = 0
 
 local function reduceRegen()
@@ -346,9 +348,9 @@ local function updateGFX(dt)
     end
 
     if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
-        local REEVrpm = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ 2.37)
+        local REEVrpm = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ (2.37 * REEVMutiplier))
         if REEVrpm > proxyEngine.maxRPM then
-            REEVrpm = proxyEngine.maxRPM
+            REEVrpm = proxyEngine.maxRPM - REEVRPMProtect
         end
         proxyEngine:setTempRevLimiter(REEVrpm)
         reevThrottle = 1
@@ -448,6 +450,8 @@ local function init(jbeamData)
 
     REEVMode = "off"
     REEVRPM = jbeamData.REEVRPM or 3000
+    REEVMutiplier = jbeamData.REEVMutiplier or 1.00
+    REEVRPMProtect = jbeamData.REEVRPMProtect or 0
 
     detO = 0
     
