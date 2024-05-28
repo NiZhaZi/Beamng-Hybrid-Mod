@@ -43,6 +43,10 @@
 			"startVelocity" : 36,
 			"connectVelocity" : 41,
 			"lowSpeed": 0.5, // km/h
+			//REEV mode settings
+			"REEVRPM": 1500,
+			"REEVMutiplier": 2.0,
+			"REEVRPMProtect": 200,
 		},
 
 		"motorControl":{
