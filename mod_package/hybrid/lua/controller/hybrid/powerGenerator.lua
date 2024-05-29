@@ -1,6 +1,7 @@
---powerGenerator Control version 0.0.3alpha
---Final Edit 2024年4月29日17点27分
---by NZZ
+-- powerGenerator.lua - 2024.4.29 17:27 - powerGenerator control for hybrid Transmissions
+-- by NZZ
+-- version 0.0.4 alpha
+-- final edit - 2024.5.29 18:59
 
 local M = {}
 
@@ -50,7 +51,7 @@ end
 local function updateGFX(dt)
 
     lowValue = SOC
-    highValue = SOC + 5
+    highValue = math.min(SOC + 5, 100)
 
     if functionMode == "on" then
         powerGeneratorMode = "on"
@@ -89,6 +90,7 @@ local function init(jbeamData)
     functionMode = jbeamData.defaultMode or "off"
 
     defaultSOC = jbeamData.SOC or 80
+    defaultSOC = math.min(defaultSOC, 100)
     SOC = defaultSOC
 
 end
