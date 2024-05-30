@@ -748,7 +748,7 @@ local function new(jbeamData)
     updateSimpleControlButtons = updateSimpleControlButtons,
 
     --insert0
-    visualType = "shaft",
+    visualType = "electricMotor",
     outputAV1 = 0,
     torqueDiff = 0,
 
