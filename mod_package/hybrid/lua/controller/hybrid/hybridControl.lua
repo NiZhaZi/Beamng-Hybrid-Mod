@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.19 alpha
--- final edit - 2024.5.28 16:37
+-- version 0.0.20 alpha
+-- final edit - 2024.5.30 18:59
 
 local M = {}
 
@@ -180,9 +180,12 @@ local function setMode(mode)
         end
     end
 
-    local PGMode = controller.getControllerSafe('powerGenerator').getFunctionMode()
-    if mode ~= "reev" and REEVMode ~= "on" then
+    local PGMode = nil
+    if mode == "reev" then
+        PGMode = controller.getControllerSafe('powerGenerator').getFunctionMode()
         PreRMode = PGMode
+    end
+    if mode ~= "reev" then
         REEVMode = "off"
         proxyEngine:resetTempRevLimiter()
     else
@@ -191,7 +194,9 @@ local function setMode(mode)
     if ifREEVEnable and mode == "reev" then
         controller.getControllerSafe('powerGenerator').setMode('on')
     else
-        controller.getControllerSafe('powerGenerator').setMode(PreRMode)
+        if PreRMode then
+            controller.getControllerSafe('powerGenerator').setMode(PreRMode)
+        end
     end
 
 end
