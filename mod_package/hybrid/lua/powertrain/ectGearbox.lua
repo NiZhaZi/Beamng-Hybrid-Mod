@@ -1,7 +1,7 @@
 -- ectGearbox.lua - 2024.4.20 14:45 - CVT Gearbox with electric motor
 -- by NZZ
--- version 0.2.3 beta
--- final edit - 2024.5.12 11:28
+-- version 0.2.4 beta
+-- final edit - 2024.5.30 11:51
 
 local M = {}
 
@@ -640,6 +640,8 @@ local function new(jbeamData)
   local device = {
 
     --insert0
+    visualType = "cvtGearbox",
+
     updateGFX = updateGFX,
 
     torqueDiff = 0,

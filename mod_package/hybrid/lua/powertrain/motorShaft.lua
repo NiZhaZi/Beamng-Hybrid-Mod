@@ -1,7 +1,7 @@
 -- motorShaft.lua - 2024.3.8 14:45 - Shaft with electric motor
 -- by NZZ
--- version 0.0.7 alpha
--- final edit - 2024.5.12 13:41
+-- version 0.0.8 alpha
+-- final edit - 2024.5.30 11:51
 
 local M = {}
 
@@ -748,6 +748,7 @@ local function new(jbeamData)
     updateSimpleControlButtons = updateSimpleControlButtons,
 
     --insert0
+    visualType = "shaft",
     outputAV1 = 0,
     torqueDiff = 0,
 
