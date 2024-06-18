@@ -1,7 +1,7 @@
 -- eatGearbox.lua - 2024.4.20 14:45 - AT Gearbox with electric motor
 -- by NZZ
--- version 0.2.4 beta
--- final edit - 2024.5.30 11:51
+-- version 0.2.5 beta
+-- final edit - 2024.6.18 11:35
 
 local M = {}
 
@@ -402,15 +402,16 @@ local function updateGFX(device, dt)
   end
 
   if device.motorType == "drive" then
+    device.electricsThrottleName = "throttle"
     if electrics.values.ignitionLevel == 2 then
-      device.motorDirection = electrics.values.motorDirection or 0
+      device.motorDirection = electrics.values.gearDirection or 0
     elseif electrics.values.ignitionLevel ~= 2 then
       device.motorDirection = 0
     end
   elseif device.motorType == "powerGenerator" then
-    --device.motorDirection = 1
+    device.electricsThrottleName = "powerGenerator"
   else
-    --device.motorDirection = 0
+    device.electricsThrottleName = 0
   end
 
   device:updateEnergyUsage()
@@ -906,7 +907,7 @@ local function new(jbeamData)
     requiredExternalInertiaOutputs = shallowcopy(M.requiredExternalInertiaOutputs),
     outputPorts = shallowcopy(M.outputPorts),
     name = jbeamData.name,
-    type = jbeamData.type,
+    type = "eatGearbox",
     inputName = jbeamData.inputName,
     inputIndex = jbeamData.inputIndex,
     gearRatio = jbeamData.gearRatio or 1,
