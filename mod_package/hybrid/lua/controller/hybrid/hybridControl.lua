@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.20 alpha
--- final edit - 2024.5.30 18:59
+-- version 0.0.21 alpha
+-- final edit - 2024.6.18 11:25
 
 local M = {}
 
@@ -48,6 +48,9 @@ local REEVRPM = nil
 local REEVMutiplier = nil
 local REEVRPMProtect = nil
 local reevThrottle = 0
+
+local ifGearMotorDrive = false
+local enhanceDrive = false
 
 local function reduceRegen()
 
@@ -125,16 +128,46 @@ local function motorMode(state)
     end
 end
 
+local function enhanceDriveMode()
+    if ifGearMotorDrive then
+        enhanceDrive = not enhanceDrive
+        if enhanceDrive then
+            guihooks.message("Enhance Drive on", 5, "")
+        else
+            guihooks.message("Enhance Drive off", 5, "")
+        end
+    end
+end
+
+local function gearboxMode(state)
+    if ifGearMotorDrive then
+        if state == "drive" then
+            if enhanceDrive then
+                gearbox:setmotorType(state)
+            end
+        else
+            gearbox:setmotorType(state)
+        end
+    end
+end
+
 local function trig(signal)
     if signal == "hybrid" then
         engineMode("on")
         motorMode("on1")
+        gearboxMode("drive")
     elseif signal == "fuel" then
         engineMode("on")
         motorMode("off")
+        gearboxMode("powerGenerator")
     elseif signal == "electric" then
         engineMode("off")
         motorMode("on2")
+        gearboxMode("drive")
+    elseif signal == "reev" then
+        engineMode("on")
+        motorMode("on2")
+        gearboxMode("powerGenerator")
     end
 end
 
@@ -158,8 +191,7 @@ local function setMode(mode)
             elseif mode == "auto" then
 
             elseif mode == "reev" then
-                engineMode("on")
-                motorMode("on2")
+                trig(mode)
                 
             elseif mode == "direct" then
                 --gui.message({ txt = "Switch to direct mode" }, 5, "", "")
@@ -266,6 +298,12 @@ local function updateGFX(dt)
 
     if electrics.values.hybridMode == "electric" then
         proxyEngine:setIgnition(0)
+    end
+
+    if enhanceDrive then
+        electrics.values.gearDirection = 1
+    else
+        electrics.values.gearDirection = 0
     end
 
     --auto mode begin
@@ -457,6 +495,7 @@ local function init(jbeamData)
     REEVRPM = jbeamData.REEVRPM or 3000
     REEVMutiplier = jbeamData.REEVMutiplier or 1.00
     REEVRPMProtect = jbeamData.REEVRPMProtect or 0
+    ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
 
     detO = 0
     
@@ -475,6 +514,13 @@ local function init(jbeamData)
 
     proxyEngine = powertrain.getDevice("mainEngine")
     gearbox = powertrain.getDevice("gearbox")
+
+    ifGearMotorDrive = ifGearMotorDrive and (gearbox.type == "eatGearbox" or gearbox.type == "ectGearbox" or gearbox.type == "edtGearbox" or gearbox.type == "emtGearbox" or gearbox.type == "estGearbox")
+    if enhanceDrive then
+        electrics.values.gearDirection = 1
+    else
+        electrics.values.gearDirection = 0
+    end
 
     mainMotors = {}
     local mainMotorNames = jbeamData.mainMotorNames or {"mainMotor"}
@@ -555,6 +601,9 @@ local function reset(jbeamData)
     else
         setMode("hybrid")
     end
+
+    enhanceDrive = false
+    ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
 end
 
 local function onReset(jbeamData)
@@ -576,6 +625,8 @@ M.rollingMode = rollingMode
 
 M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
+
+M.enhanceDriveMode = enhanceDriveMode
 
 M.init = init
 M.reset = reset
