@@ -1,0 +1,54 @@
+{
+
+    "Hybrid_Configure_AWD": {
+		"information":{
+			"name":"Hybrid Configure AWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+			["Hybrid_Control_Configure", "Hybrid_Control_AWD", "Hybrid Control Configure", {"coreSlot":true}],
+			["Motor_Control_Configure", "Motor_Control_AWD", "Motor Control Configure", {"coreSlot":true}],
+			["Power_Generator_Control_Configure", "Power_Generator_Control", "Power Generator Control Configure"],
+		],
+		"slotType" : "Hybrid_Configure",
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+	},
+
+	"Hybrid_Configure_FWD": {
+		"information":{
+			"name":"Hybrid Configure AWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+			["Hybrid_Control_Configure", "Hybrid_Control_FWD", "Hybrid Control Configure", {"coreSlot":true}],
+			["Motor_Control_Configure", "Motor_Control_FWD", "Motor Control Configure", {"coreSlot":true}],
+			["Power_Generator_Control_Configure", "Power_Generator_Control", "Power Generator Control Configure"],
+		],
+		"slotType" : "Hybrid_Configure",
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+	},
+
+	"Hybrid_Configure_RWD": {
+		"information":{
+			"name":"Hybrid Configure AWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+			["Hybrid_Control_Configure", "Hybrid_Control_RWD", "Hybrid Control Configure", {"coreSlot":true}],
+			["Motor_Control_Configure", "Motor_Control_RWD", "Motor Control Configure", {"coreSlot":true}],
+			["Power_Generator_Control_Configure", "Power_Generator_Control", "Power Generator Control Configure"],
+		],
+		"slotType" : "Hybrid_Configure",
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+	},
+
+}

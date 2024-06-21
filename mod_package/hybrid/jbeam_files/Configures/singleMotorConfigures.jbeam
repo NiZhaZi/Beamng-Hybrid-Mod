@@ -1,0 +1,94 @@
+{
+    "Single_Motors_Control": {
+		"information":{
+			"name":"Single Motors Control",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors_Control",
+
+		"controller": [
+			["fileName"],
+			["hybrid/singleMotors", {"name": "singleMotors"}],
+		],
+
+	},
+
+	"Rear_Single_Motor": {
+		"information":{
+			"name":"Rear Single Motor",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors_Configure",
+
+		"singleMotors":{
+			"motorNames": ["rearMotor"],
+			"motorType": "partTime",
+			"compareNodes1": "frontDriveShaft",
+			"compareNodes2": "rearDriveShaft",
+			"maxRPMdiff": 50,
+		},
+	},
+
+	"Rear_Dual_Motor": {
+		"information":{
+			"name":"Rear Dual Motor",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors_Configure",
+
+		"singleMotors":{
+			"motorNames": ["rearMotor_L", "rearMotor_R"],
+			"motorType": "partTime",
+			"compareNodes1": "frontDriveShaft",
+			"compareNodes2": "rearDriveShaft",
+			"maxRPMdiff": 50,
+		},
+	},
+
+	"Front_Single_Motor": {
+		"information":{
+			"name":"Front Single Motor",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors_Configure",
+
+		"singleMotors":{
+			"motorNames": ["frontMotor"],
+			"motorType": "fullTime",
+			"compareNodes1": "",
+			"compareNodes2": "",
+			"maxRPMdiff": 50,
+		},
+	},
+
+	"Front_Dual_Motor": {
+		"information":{
+			"name":"Front Dual Motor",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Single_Motors_Configure",
+
+		"singleMotors":{
+			"motorNames": ["frontMotor_L", "frontMotor_R"],
+			"motorType": "fullTime",
+			"compareNodes1": "",
+			"compareNodes2": "",
+			"maxRPMdiff": 50,
+		},
+	},
+}

@@ -1,0 +1,81 @@
+{
+    "Power_Generator_Control": {
+		"information":{
+			"name":"Power Generator Control",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+			["Shift_Logic", "", "Shift Logic", {"coreSlot":true}],
+		],
+		"slotType" : "Power_Generator_Control_Configure",
+
+		"powerGenerator":{
+			"powerGeneratorName": "gearbox",
+			"SOC": 80,
+			"defaultMode": "auto",
+		}
+
+		"gearbox":{
+			"torque":[
+				["rpm", "torque"],
+				[0, 120.00],
+				[10000, 120.00],
+			],
+			"electricsThrottleName": "powerGenerator",
+			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)",
+			"soundConfig": "soundConfigGearbox",
+		},
+
+		"soundConfigGearbox": {
+			"sampleName": "ElectricMotor_02",
+			"mainGain": -4.5
+		}
+	},
+
+	"Automatic_Gearbox": {
+		"information":{
+			"name":"Shift Logic Automatic Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "automaticGearbox",
+		},
+	},
+
+	"DCT_Gearbox": {
+		"information":{
+			"name":"Shift Logic DCT Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "dctGearbox",
+		},
+	},
+
+	"CVT_Gearbox": {
+		"information":{
+			"name":"Shift Logic CVT Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "cvtGearbox",
+		},
+	},
+
+}

@@ -1,0 +1,47 @@
+{
+    "Motor_Control_AWD": {
+		"information":{
+			"name":"Motor Control AWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Motor_Control_Configure",
+
+		"motorControl":{
+			"motorNames": ["frontDriveShaft", "rearDriveShaft", "gearbox"],
+		},
+	},
+
+	"Motor_Control_FWD": {
+		"information":{
+			"name":"Motor Control FWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Motor_Control_Configure",
+
+		"motorControl":{
+			"motorNames": ["frontDriveShaft", "gearbox", "rearMotor", "rearMotor_L", "rearMotor_R"],
+		},
+	},
+
+	"Motor_Control_RWD": {
+		"information":{
+			"name":"Motor Control RWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Motor_Control_Configure",
+
+		"motorControl":{
+			"motorNames": ["rearDriveShaft", "gearbox", "frontMotor", "frontMotor_L", "frontMotor_R"],
+		},
+	},
+
+}

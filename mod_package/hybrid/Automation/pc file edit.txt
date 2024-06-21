@@ -1,0 +1,38 @@
+// display screen
+"digidash_screen_logic": "digidash_screen_logic_bng_cus",
+"digidash_cells_top_left0": "digidash_cells_top_left0_evVolume",
+
+
+// powertrain system
+"Camso_differential_center": "Camso_differential_center",
+"Camso_TransferCase": "Camso_TransferCase_FWD",
+"Camso_TransferCase": "Camso_TransferCase_RWD",
+
+
+// hybrid configures
+"Hybrid_Configure": "Hybrid_Configure_AWD",
+
+"Hybrid_Configure": "Hybrid_Configure_FWD",
+
+"Hybrid_Configure": "Hybrid_Configure_RWD",
+
+
+// gearbox type
+"Shift_Logic": "Automatic_Gearbox",
+
+"Shift_Logic": "DCT_Gearbox",
+
+"Shift_Logic": "CVT_Gearbox",
+
+
+// ESC and DSE
+"Camso_DSE": "Hybrid_DSE_01",
+
+"Camso_TC": "Hybrid_TC_AWD",
+"Camso_ESC": "Hybrid_ESC_AWD",
+
+"Camso_TC": "Hybrid_TC_FWD",
+"Camso_ESC": "Hybrid_ESC_FWD",
+
+"Camso_TC": "Hybrid_TC_RWD",
+"Camso_ESC": "Hybrid_ESC_RWD",

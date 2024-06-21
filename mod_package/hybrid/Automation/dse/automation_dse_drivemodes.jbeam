@@ -1,0 +1,234 @@
+{
+	"Hybrid_DriveModes_01": {
+		"information": {
+			"value": 250,
+			"name": "Hybrid Drive Modes",
+		},
+
+		"slotType": "Camso_DriveModes"
+
+		"slots": [
+			["type", "default", "description"],
+			["Camso_DriveModes_default", "Camso_DriveModes_default_comfort", "Default Mode", {"coreSlot": true}],
+			["Camso_DriveModes_offroad", "Camso_DriveModes_offroad", "Offroad Mode"],
+			["Camso_DriveModes_off2wd", "", "2WD ESC & TC Off Mode"],
+			["Camso_DriveModes_mod", "", "Additional Mode"]
+		],
+		
+		"driveModes": {
+			"modes": {
+				"offroad": {
+					"order": 30,
+					"name": "Off-Road",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU", "uiDisplayData.simplePowertrainApp.activeColor": "F5A442"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "off"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "off"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.7,
+										"tractionControl.isEnabled": true,
+										"tractionControl.wheelGroupSettings.mainEngine.minimumThrottleLimit": 0.2,
+										"yawControl.isEnabled": false,
+										"controllerName": "motorTorqueControl"}],
+						["controller", {"yawControl.isEnabled": false,
+										"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.4,
+										"controllerName": "brakeControl",
+										"tractionControl.isEnabled": true}],
+						["transmission", {"defaultForwardMode": "D"}],
+						["controller", {"controllerName": "advawd","mode": "locked"}]
+					]
+				},
+				"off": {
+					"order": 50,
+					"name": "Off",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "DCDCDC"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "motorTorqueControl"}],
+						["controller", {"controllerName": "brakeControl"}],
+						["transmission", {"defaultForwardMode": "S"}],
+						["controller", {"controllerName": "tractionControl","isEnabled": false}],
+						["controller", {"controllerName": "yawControl","isEnabled": false}],
+						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 2}],
+						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 2}],
+						["controller", {"controllerName": "advawd"}]
+					]
+				},
+				"off2wd": {
+					"order": 45,
+					"name": "2WD Off",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "CC1111"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "motorTorqueControl"}],
+						["controller", {"controllerName": "brakeControl"}],
+						["transmission", {"defaultForwardMode": "S"}],
+						["controller", {"controllerName": "tractionControl","isEnabled": false}],
+						["controller", {"controllerName": "yawControl","isEnabled": false}],
+						["controller", {"output": 1, "controllerName": "advawd","mode": "2wd"}]
+					]
+				},
+				"comfort": {
+					"order": 10,
+					"name": "Comfort",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "238BE6"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "soft"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "soft"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.125,
+										"tractionControl.isEnabled": true,
+										"tractionControl.wheelGroupSettings.mainEngine.minimumThrottleLimit": 0.1,
+										"yawControl.yawAvThreshold": 0.6,
+										"yawControl.isEnabled": false,
+										"controllerName": "motorTorqueControl"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.125,
+										"controllerName": "brakeControl",
+										"yawControl.slipAngleThreshold": 0.1,
+										"yawControl.yawAvThreshold": 0.4,
+										"yawControl.isEnabled": true,
+										"tractionControl.isEnabled": true}],
+						["transmission", {"defaultForwardMode": "D"}],
+						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 3}],
+						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 3}],
+						["controller", {"controllerName": "advawd"}]
+					]
+				},
+				"sport": {
+					"order": 20,
+					"name": "Sport",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "FFFF00"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.35,
+										"tractionControl.isEnabled": true,
+										"tractionControl.wheelGroupSettings.mainEngine.minimumThrottleLimit": 0.2,
+										"yawControl.slipAngleThreshold": 0.1,
+										"yawControl.yawAvThreshold": 0.6,
+										"yawControl.isEnabled": true,
+										"controllerName": "motorTorqueControl"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.4,
+										"controllerName": "brakeControl",
+										"yawControl.slipAngleThreshold": 0.4,
+										"yawControl.yawAvThreshold": 0.5,
+										"yawControl.isEnabled": true,
+										"tractionControl.isEnabled": true}],
+						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 2}],
+						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 2}],
+						["transmission", {"defaultForwardMode": "S"}],
+						["controller", {"controllerName": "advawd"}]
+					]
+				}
+			},
+			"enabledModes": ["comfort", "sport", "off"],
+			"defaultMode": "sport",
+			"defaultSettings": [
+				["type"],
+				["controller", {"controllerName": "tractionControl","isEnabled": true}],
+				["controller", {"controllerName": "yawControl","isEnabled": true}],
+				["controller", {"controllerName": "adaptiveBrakeLights","isEnabled": true}],
+				["controller", {"controllerName": "motorTorqueControl","isEnabled": true}],
+				["controller", {"controllerName": "brakeControl","isEnabled": true}]
+			]
+		},
+		"controller": [
+			["fileName"],
+			["driveModes"]
+		],
+	},
+
+	// Default Modes
+
+	"Camso_DriveModes_default_offroad": {
+		"driveModes": {
+			"defaultMode": "offroad"
+		},
+		"information": {
+			"value": 500,
+			"name": "Off-Road Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_default"
+	},
+
+	"Camso_DriveModes_default_comfort": {
+		"driveModes": {
+			"defaultMode": "comfort"
+		},
+		"information": {
+			"value": 500,
+			"name": "Comfort Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_default"
+	},
+
+	"Camso_DriveModes_default_off2wd": {
+		"driveModes": {
+			"defaultMode": "off2wd"
+		},
+		"information": {
+			"value": 500,
+			"name": "2WD ESC & TC Off Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_default"
+	},
+
+	"Camso_DriveModes_default_sport": {
+		"driveModes": {
+			"defaultMode": "sport"
+		},
+		"information": {
+			"value": 500,
+			"name": "Sport Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_default"
+	},
+
+	"Camso_DriveModes_default_off": {
+		"driveModes": {
+			"defaultMode": "off"
+		},
+		"information": {
+			"value": 500,
+			"name": "ESC & TC Off Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_default"
+	},
+
+	// Additional Modes
+
+	"Camso_DriveModes_offroad": {
+		"driveModes": {
+			"enabledModes_offroad": ["offroad"]
+		},
+		"information": {
+			"value": 500,
+			"name": "Off-Road Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_offroad"
+	},
+
+	"Camso_DriveModes_off2wd": {
+		"driveModes": {
+			"enabledModes_off2wd": ["off2wd"]
+		},
+		"information": {
+			"value": 500,
+			"name": "2WD ESC & TC Off Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_off2wd"
+	},
+
+}
