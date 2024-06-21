@@ -16,6 +16,18 @@
 
 "Hybrid_Configure": "Hybrid_Configure_RWD",
 
+"Front_Torque_Table": "Front_Torque_Table_220NM",
+"Rear_Torque_Table": "Rear_Torque_Table_300NM",
+
+
+"Rear_ElectricMotor": "Rear_Single_ElectricMotor",
+
+"Rear_ElectricMotor": "Rear_Dual_ElectricMotor",
+
+"Front_ElectricMotor": "Front_Single_ElectricMotor",
+
+"Front_ElectricMotor": "Front_Dual_ElectricMotor",
+
 
 // gearbox type
 "Shift_Logic": "Automatic_Gearbox",
