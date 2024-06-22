@@ -1,7 +1,7 @@
 -- signleMotors.lua - 2024.3.18 21:52 - Control single motors
 -- by NZZ
 -- version 0.0.3 alpha
--- final edit - 2024.5.12 23:28
+-- final edit - 2024.6.22 12:56
 
 local M = {}
 
@@ -81,6 +81,14 @@ local function updateGFX(dt)
     else
         for _, v in ipairs(motors) do
             v.motorDirection = motorDirection
+        end
+    end
+
+    local regenLevel = controller.getControllerSafe('hybridControl').getRegenLevel()
+    -- log("", "", "" .. regenLevel)
+    for _, v in ipairs(motors) do
+        if v then
+            v.maxWantedRegenTorque = v.originalRegenTorque * regenLevel
         end
     end
 

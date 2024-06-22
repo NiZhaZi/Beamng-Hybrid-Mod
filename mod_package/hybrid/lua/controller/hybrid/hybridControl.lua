@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.21 alpha
--- final edit - 2024.6.18 11:25
+-- version 0.0.22 alpha
+-- final edit - 2024.6.22 12:11
 
 local M = {}
 
@@ -70,6 +70,10 @@ local function enhanceRegen()
         regenLevel = regenLevel + 1
     end
 
+end
+
+local function getRegenLevel()
+    return regenLevel
 end
 
 local function getGear()
@@ -625,6 +629,7 @@ M.rollingMode = rollingMode
 
 M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
+M.getRegenLevel = getRegenLevel
 
 M.enhanceDriveMode = enhanceDriveMode
 
