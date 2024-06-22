@@ -33,9 +33,9 @@
 		}
 	},
 
-	"Automatic_Gearbox": {
+	"AT_Gearbox": {
 		"information":{
-			"name":"Shift Logic Automatic Gearbox",
+			"name":"Shift Logic AT Gearbox",
 			"value": 0
 		},
         "slots": [
@@ -75,6 +75,36 @@
 
 		"vehicleController":{
 			"shiftLogicName": "cvtGearbox",
+		},
+	},
+
+	"MT_Gearbox": {
+		"information":{
+			"name":"Shift Logic MT Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "manualGearbox",
+		},
+	},
+
+	"AMT_Gearbox": {
+		"information":{
+			"name":"Shift Logic AMT Gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Shift_Logic",
+
+		"vehicleController":{
+			"shiftLogicName": "sequentialGearbox",
 		},
 	},
 
