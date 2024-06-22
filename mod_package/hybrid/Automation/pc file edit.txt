@@ -30,11 +30,15 @@
 
 
 // gearbox type
-"Shift_Logic": "Automatic_Gearbox",
+"Shift_Logic": "AT_Gearbox",
 
 "Shift_Logic": "DCT_Gearbox",
 
 "Shift_Logic": "CVT_Gearbox",
+
+"Shift_Logic": "MT_Gearbox",
+
+"Shift_Logic": "AMT_Gearbox",
 
 
 // ESC and DSE
