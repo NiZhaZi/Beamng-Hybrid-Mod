@@ -99,7 +99,7 @@
 			["fileName"],
 			["hybrid/hybridControl", {"name": "hybridControl",}],
 		],
-		
+
 		"hybridControl":{
 			//get all motors Names
 			"motorNames": ["rearDriveShaft"],
@@ -109,6 +109,49 @@
 			"ondemandMaxRPM" : 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
+			"defaultMode" : "hybrid",
+			//ratio1 for hybrid mode, ratio2 for EV mode
+			"motorRatio1": 1.05,
+			"motorRatio2": 2.50,
+			//comfortable regen settings
+			"ifComfortRegen": true,
+			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
+			"comfortRegenEnd": 0.15,
+			//auto mode settings
+			"startVelocity" : 36,
+			"connectVelocity" : 41,
+			"lowSpeed": 0.5, // km/h
+			//REEV mode settings
+			"REEVRPM": 1500,
+			"REEVMutiplier": 2.0,
+			"REEVRPMProtect": 200,
+		},
+	},
+
+	"Hybrid_Control_Parallel": {
+		"information":{
+			"name":"Hybrid Control Parallel",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Hybrid_Control_Configure",
+
+		"controller": [
+			["fileName"],
+			["hybrid/hybridControl", {"name": "hybridControl",}],
+		],
+		
+		"hybridControl":{
+			//get all motors Names
+			"motorNames": [],
+			//EV ondemand AWD settings
+			"mainMotorNames": [],
+			"subMotorNames": [],
+			"ondemandMaxRPM" : 50,
+			//mode settings
+			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
 			"motorRatio1": 1.05,

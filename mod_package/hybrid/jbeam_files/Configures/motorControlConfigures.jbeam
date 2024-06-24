@@ -53,9 +53,29 @@
 			["fileName"],
 			["hybrid/motorControl", {"name": "motorControl",}],
 		],
-		
+
 		"motorControl":{
 			"motorNames": ["rearDriveShaft", "gearbox", "frontMotor", "frontMotor_L", "frontMotor_R"],
+		},
+	},
+
+	"Motor_Control_Parallel": {
+		"information":{
+			"name":"Motor Control Parallel",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Motor_Control_Configure",
+
+		"controller": [
+			["fileName"],
+			["hybrid/motorControl", {"name": "motorControl",}],
+		],
+		
+		"motorControl":{
+			"motorNames": ["frontMotor", "frontMotor_L", "frontMotor_R", "rearMotor", "rearMotor_L", "rearMotor_R"],
 		},
 	},
 
