@@ -17,9 +17,6 @@
 		"controller": [
 			["fileName"],
 			["AVAS"],
-			["hybrid/hybridControl", {"name": "hybridControl",}],
-			["hybrid/motorControl", {"name": "motorControl",}],
-			["hybrid/powerGenerator", {"name": "powerGenerator"}],
 		],
 
 		"AVAS": {
