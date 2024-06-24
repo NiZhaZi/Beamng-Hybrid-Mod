@@ -9,6 +9,11 @@
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
+		"controller": [
+			["fileName"],
+			["hybrid/hybridControl", {"name": "hybridControl",}],
+		],
+
 		"hybridControl":{
 			//get all motors Names
 			"motorNames": ["frontDriveShaft", "rearDriveShaft"],
@@ -46,6 +51,11 @@
 			["type", "default", "description"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
+
+		"controller": [
+			["fileName"],
+			["hybrid/hybridControl", {"name": "hybridControl",}],
+		],
 
 		"hybridControl":{
 			//get all motors Names
@@ -85,6 +95,11 @@
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
+		"controller": [
+			["fileName"],
+			["hybrid/hybridControl", {"name": "hybridControl",}],
+		],
+		
 		"hybridControl":{
 			//get all motors Names
 			"motorNames": ["rearDriveShaft"],

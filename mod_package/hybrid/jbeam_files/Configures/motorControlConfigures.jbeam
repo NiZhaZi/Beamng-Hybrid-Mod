@@ -9,6 +9,11 @@
 		],
 		"slotType" : "Motor_Control_Configure",
 
+		"controller": [
+			["fileName"],
+			["hybrid/motorControl", {"name": "motorControl",}],
+		],
+
 		"motorControl":{
 			"motorNames": ["frontDriveShaft", "rearDriveShaft", "gearbox"],
 		},
@@ -23,6 +28,11 @@
 			["type", "default", "description"],
 		],
 		"slotType" : "Motor_Control_Configure",
+
+		"controller": [
+			["fileName"],
+			["hybrid/motorControl", {"name": "motorControl",}],
+		],
 
 		"motorControl":{
 			"motorNames": ["frontDriveShaft", "gearbox", "rearMotor", "rearMotor_L", "rearMotor_R"],
@@ -39,6 +49,11 @@
 		],
 		"slotType" : "Motor_Control_Configure",
 
+		"controller": [
+			["fileName"],
+			["hybrid/motorControl", {"name": "motorControl",}],
+		],
+		
 		"motorControl":{
 			"motorNames": ["rearDriveShaft", "gearbox", "frontMotor", "frontMotor_L", "frontMotor_R"],
 		},

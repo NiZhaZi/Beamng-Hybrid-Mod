@@ -10,6 +10,11 @@
 		],
 		"slotType" : "Power_Generator_Control_Configure",
 
+		"controller": [
+			["fileName"],
+			["hybrid/powerGenerator", {"name": "powerGenerator"}],
+		],
+
 		"powerGenerator":{
 			"powerGeneratorName": "gearbox",
 			"SOC": 80,
