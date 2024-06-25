@@ -51,4 +51,21 @@
 		],
 	},
 
+	"Hybrid_Configure_Parallel": {
+		"information":{
+			"name":"Hybrid Configure AWD",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+			["Hybrid_Control_Configure", "Hybrid_Control_Parallel", "Hybrid Control Configure", {"coreSlot":true}],
+			["Motor_Control_Configure", "Motor_Control_Parallel", "Motor Control Configure", {"coreSlot":true}],
+			["Power_Generator_Control_Configure", "", "Power Generator Control Configure"],
+		],
+		"slotType" : "Hybrid_Configure",
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+	},
+
 }
