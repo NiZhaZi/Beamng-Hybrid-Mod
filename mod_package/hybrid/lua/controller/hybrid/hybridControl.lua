@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.22 alpha
--- final edit - 2024.6.22 12:11
+-- version 0.0.23 alpha
+-- final edit - 2024.7.1 17:34
 
 local M = {}
 
@@ -481,6 +481,9 @@ end
 
 local function init(jbeamData)
 
+    proxyEngine = powertrain.getDevice("mainEngine")
+    gearbox = powertrain.getDevice("gearbox")
+    
     enableModes = jbeamData.enableModes or {"hybrid", "fuel", "electric", "auto", "reev"}
     -- auto      自动选择
     -- reev      增程模式
@@ -491,6 +494,7 @@ local function init(jbeamData)
     for _, u in ipairs(enableModes) do
         if u == "reev" then
             ifREEVEnable = true
+            proxyEngine.electricsThrottleName = "reevThrottle"
             break
         end
     end
@@ -515,9 +519,6 @@ local function init(jbeamData)
     ifComfortRegen = jbeamData.ifComfortRegen or true
     comfortRegenBegine = jbeamData.comfortRegenBegine or 0.75
     comfortRegenEnd = jbeamData.comfortRegenEnd or 0.15
-
-    proxyEngine = powertrain.getDevice("mainEngine")
-    gearbox = powertrain.getDevice("gearbox")
 
     ifGearMotorDrive = ifGearMotorDrive and (gearbox.type == "eatGearbox" or gearbox.type == "ectGearbox" or gearbox.type == "edtGearbox" or gearbox.type == "emtGearbox" or gearbox.type == "estGearbox")
     if enhanceDrive then
