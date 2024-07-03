@@ -7,7 +7,7 @@
         "slots": [
 			["type", "default", "description"],
             ["Auto_Control", "Auto_Control", "Auto Control"],
-            ["Dynamic_System", "Dynamic_System", "dynamic system"],
+            ["Dynamic_System", "", "dynamic system"],
 			["Rear_Wheel_Steering", "", "Rear Wheel Steering"],
 			["Suspension_Lift", "", "Suspension Lift"],
 		],
