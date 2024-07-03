@@ -55,7 +55,7 @@
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"energyStorage": "mainBattery",
 			//"electricsThrottleFactorName": "throttleFactorEmotor",
-			"electricsThrottleName": "subThrottle",
+			//"electricsThrottleName": "subThrottle",
 			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)"
 	
 			//node beam interface
@@ -133,7 +133,7 @@
 			"torqueReactionNodes":["engine1", "engine2", "engine3"],
 			"energyStorage": "mainBattery",
 			//"electricsThrottleFactorName": "throttleFactorEmotor",
-			"electricsThrottleName": "subThrottle",
+			//"electricsThrottleName": "subThrottle",
 			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)"
 	
 			//node beam interface
