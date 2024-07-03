@@ -52,3 +52,36 @@
 
 "Camso_TC": "Hybrid_TC_RWD",
 "Camso_ESC": "Hybrid_ESC_RWD",
+
+// AWD 
+"digidash_screen_logic": "digidash_screen_logic_bng_cus",
+"digidash_cells_top_left0": "digidash_cells_top_left0_evVolume",
+"Camso_differential_center": "Camso_differential_center",
+"Hybrid_Configure": "Hybrid_Configure_AWD",
+"Front_Torque_Table": "Front_Torque_Table_220NM",
+"Rear_Torque_Table": "Rear_Torque_Table_300NM",
+"Shift_Logic": "",
+"Camso_TC": "Hybrid_TC_AWD",
+"Camso_ESC": "Hybrid_ESC_AWD",
+
+// FWD 
+"digidash_screen_logic": "digidash_screen_logic_bng_cus",
+"digidash_cells_top_left0": "digidash_cells_top_left0_evVolume",
+"Camso_TransferCase": "Camso_TransferCase_FWD",
+"Hybrid_Configure": "Hybrid_Configure_FWD",
+"Front_Torque_Table": "Front_Torque_Table_220NM",
+"Rear_ElectricMotor": "Rear_Single_ElectricMotor",
+"Shift_Logic": "",
+"Camso_TC": "Hybrid_TC_FWD",
+"Camso_ESC": "Hybrid_ESC_FWD",
+
+// RWD 
+"digidash_screen_logic": "digidash_screen_logic_bng_cus",
+"digidash_cells_top_left0": "digidash_cells_top_left0_evVolume",
+"Camso_TransferCase": "Camso_TransferCase_RWD",
+"Hybrid_Configure": "Hybrid_Configure_RWD",
+"Rear_Torque_Table": "Rear_Torque_Table_300NM",
+"Front_ElectricMotor": "Front_Single_ElectricMotor",
+"Shift_Logic": "",
+"Camso_TC": "Hybrid_TC_RWD",
+"Camso_ESC": "Hybrid_ESC_RWD",
