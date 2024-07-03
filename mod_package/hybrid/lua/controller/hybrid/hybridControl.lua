@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.24 alpha
--- final edit - 2024.7.3 10:12
+-- version 0.0.25 alpha
+-- final edit - 2024.7.3 17:23
 
 local M = {}
 
@@ -30,6 +30,8 @@ local detN = nil
 local detM = nil
 local detO = nil
 
+local defaultSVelocity = nil
+local defaultCVelocity = nil
 local startVelocity = nil
 local connectVelocity = nil
 
@@ -141,6 +143,21 @@ local function enhanceDriveMode()
             guihooks.message("Enhance Drive off", 5, "")
         end
     end
+end
+
+local function changeAutoVelocity(num)
+    if num then
+        startVelocity = startVelocity + num * 0.2778
+        connectVelocity = connectVelocity + num * 0.2778
+        if startVelocity <= 0 then
+            startVelocity = 0
+            connectVelocity = defaultCVelocity - defaultSVelocity
+        end
+    else
+        startVelocity = defaultSVelocity
+        connectVelocity = defaultCVelocity
+    end
+    guihooks.message("Engine Intervention Velocity is " .. math.floor(startVelocity * 3.6) .. " km/h" , 5, "")
 end
 
 local function gearboxMode(state)
@@ -511,6 +528,8 @@ local function init(jbeamData)
     motorRatio2 = jbeamData.motorRatio2 or 1
     startVelocity = (jbeamData.startVelocity or 36) * 0.2778
     connectVelocity = (jbeamData.connectVelocity or (startVelocity + 5)) * 0.2778
+    defaultSVelocity = startVelocity
+    defaultCVelocity = connectVelocity
     directRPM1 = jbeamData.directRPM1 or 1000
     directRPM2 = jbeamData.directRPM2 or 3000
 
@@ -600,6 +619,9 @@ local function reset(jbeamData)
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     ifComfortRegen = jbeamData.ifComfortRegen or true
 
+    startVelocity = defaultSVelocity
+    connectVelocity = defaultCVelocity
+
     REEVMode = "off"
 
     if jbeamData.defaultMode then
@@ -632,6 +654,8 @@ M.rollingMode = rollingMode
 M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
 M.getRegenLevel = getRegenLevel
+
+M.changeAutoVelocity = changeAutoVelocity
 
 M.enhanceDriveMode = enhanceDriveMode
 
