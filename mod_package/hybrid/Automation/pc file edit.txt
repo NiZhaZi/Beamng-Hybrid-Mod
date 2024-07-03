@@ -53,6 +53,17 @@
 "Camso_TC": "Hybrid_TC_RWD",
 "Camso_ESC": "Hybrid_ESC_RWD",
 
+// other functions
+"Auto_Control": "Auto_Control",
+
+"Dynamic_System": "Dynamic_System",
+"Dynamic_awd": "Dynamic_awd",
+"Dynamic_lsd": "Dynamic_lsd",
+
+"Rear_Wheel_Steering": "Rear_Wheel_Steering",
+
+"Suspension_Lift": "Suspension_Lift",
+
 // AWD 
 "digidash_screen_logic": "digidash_screen_logic_bng_cus",
 "digidash_cells_top_left0": "digidash_cells_top_left0_evVolume",
