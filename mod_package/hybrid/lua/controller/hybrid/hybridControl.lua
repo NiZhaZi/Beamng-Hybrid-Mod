@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.25 alpha
--- final edit - 2024.7.3 17:23
+-- version 0.0.26 alpha
+-- final edit - 2024.7.3 19:41
 
 local M = {}
 
@@ -632,6 +632,18 @@ local function reset(jbeamData)
 
     enhanceDrive = false
     ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
+
+    for _, u in ipairs(enableModes) do
+        if u == "reev" then
+            ifREEVEnable = true
+            proxyEngine.electricsThrottleName = "reevThrottle"
+            break
+        end
+    end
+
+    for _, v in ipairs(subMotors) do
+        v.electricsThrottleName = "subThrottle"
+    end
 end
 
 local function onReset(jbeamData)
