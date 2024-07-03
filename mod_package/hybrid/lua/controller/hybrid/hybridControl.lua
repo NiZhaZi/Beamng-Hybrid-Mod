@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.23 alpha
--- final edit - 2024.7.1 17:34
+-- version 0.0.24 alpha
+-- final edit - 2024.7.3 10:12
 
 local M = {}
 
@@ -547,6 +547,7 @@ local function init(jbeamData)
             if subMotor then
                 table.insert(subMotors, subMotor)
                 subMotor.originalRegenTorque = subMotor.maxWantedRegenTorque
+                subMotor.electricsThrottleName = "subThrottle"
             end
         end
     end
