@@ -59,10 +59,10 @@
 
 		"hybridControl":{
 			//get all motors Names
-			"motorNames": ["frontDriveShaft"],
+			"motorNames": ["frontDriveShaft", "rearMotor", "rearMotor_L", "rearMotor_R"],
 			//EV ondemand AWD settings
-			"mainMotorNames": [],
-			"subMotorNames": [],
+			"mainMotorNames": ["frontDriveShaft"],
+			"subMotorNames": ["rearMotor", "rearMotor_L", "rearMotor_R"],
 			"ondemandMaxRPM" : 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
@@ -102,10 +102,10 @@
 
 		"hybridControl":{
 			//get all motors Names
-			"motorNames": ["rearDriveShaft"],
+			"motorNames": ["rearDriveShaft", "frontMotor", "frontMotor_L", "frontMotor_R"],
 			//EV ondemand AWD settings
-			"mainMotorNames": [],
-			"subMotorNames": [],
+			"mainMotorNames": ["rearDriveShaft"],
+			"subMotorNames": ["frontMotor", "frontMotor_L", "frontMotor_R"],
 			"ondemandMaxRPM" : 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
