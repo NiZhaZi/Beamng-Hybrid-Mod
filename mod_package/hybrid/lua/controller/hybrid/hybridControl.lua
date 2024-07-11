@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.26 alpha
--- final edit - 2024.7.3 19:41
+-- version 0.0.27 alpha
+-- final edit - 2024.7.11 12:24
 
 local M = {}
 
@@ -115,21 +115,30 @@ end
 local function motorMode(state)
     if state == "on1" then -- hybrid drive ratio
         for _, v in ipairs(motors) do
-            v:setmotorRatio(motorRatio1)
-            v:setMode("connected")
-            ifMotorOn = true
+            if v.type == "motorShaft" then
+                v:setmotorRatio(motorRatio1)
+                v:setMode("connected")
+                ifMotorOn = true
+            else
+            end
         end
     elseif state == "on2" then -- EV drive ratio
         for _, v in ipairs(motors) do
-            v:setmotorRatio(motorRatio2)
-            v:setMode("disconnected")
-            ifMotorOn = true         
+            if v.type == "motorShaft" then
+                v:setmotorRatio(motorRatio2)
+                v:setMode("disconnected")
+                ifMotorOn = true
+            else
+            end         
         end
     elseif state == "off" then
         for _, v in ipairs(motors) do
-            v:setmotorRatio(0)
-            v:setMode("connected")
-            ifMotorOn = false  
+            if v.type == "motorShaft" then
+                v:setmotorRatio(0)
+                v:setMode("connected")
+                ifMotorOn = false
+            else
+            end     
         end
     end
 end
@@ -316,6 +325,11 @@ local function updateGFX(dt)
 
     --log("", "hybrid", "hybrid" .. 3)
     getGear()
+    for _, v in ipairs(motors) do
+        if v.type == "electricMotor" then
+            v.motorDirection = electrics.values.motorDirection or 0
+        end     
+    end
 
     if electrics.values.hybridMode == "electric" then
         proxyEngine:setIgnition(0)
