@@ -4,7 +4,7 @@
 
 
 // powertrain system
-"Camso_differential_center": "Camso_differential_center",
+"Camso_TransferCase": "Camso_TransferCase_AWD",
 "Camso_TransferCase": "Camso_TransferCase_FWD",
 "Camso_TransferCase": "Camso_TransferCase_RWD",
 
@@ -30,15 +30,15 @@
 
 
 // gearbox type
-"Shift_Logic": "AT_Gearbox",
+"Camso_Transmission": "Automatic_Gearbox_E_Transmission",
 
-"Shift_Logic": "DCT_Gearbox",
+"Camso_Transmission": "DCT_Gearbox_E_Transmission",
 
-"Shift_Logic": "CVT_Gearbox",
+"Camso_Transmission": "CVT_E_Transmission",
 
-"Shift_Logic": "MT_Gearbox",
+"Camso_Transmission": "MT_Gearbox_E_Transmission",
 
-"Shift_Logic": "AMT_Gearbox",
+"Camso_Transmission": "AMT_Gearbox_E_Transmission",
 
 
 // ESC and DSE
@@ -71,7 +71,7 @@
 "Hybrid_Configure": "Hybrid_Configure_AWD",
 "Front_Torque_Table": "Front_Torque_Table_220NM",
 "Rear_Torque_Table": "Rear_Torque_Table_300NM",
-"Shift_Logic": "",
+"Camso_Transmission": "",
 "Camso_TC": "Hybrid_TC_AWD",
 "Camso_ESC": "Hybrid_ESC_AWD",
 
@@ -82,7 +82,7 @@
 "Hybrid_Configure": "Hybrid_Configure_FWD",
 "Front_Torque_Table": "Front_Torque_Table_220NM",
 "Rear_ElectricMotor": "Rear_Single_ElectricMotor",
-"Shift_Logic": "",
+"Camso_Transmission": "",
 "Camso_TC": "Hybrid_TC_FWD",
 "Camso_ESC": "Hybrid_ESC_FWD",
 
@@ -93,6 +93,6 @@
 "Hybrid_Configure": "Hybrid_Configure_RWD",
 "Rear_Torque_Table": "Rear_Torque_Table_300NM",
 "Front_ElectricMotor": "Front_Single_ElectricMotor",
-"Shift_Logic": "",
+"Camso_Transmission": "",
 "Camso_TC": "Hybrid_TC_RWD",
 "Camso_ESC": "Hybrid_ESC_RWD",
