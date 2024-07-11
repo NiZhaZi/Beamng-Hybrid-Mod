@@ -32,8 +32,8 @@
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 36,
-			"connectVelocity" : 41,
+			"startVelocity" : 35,
+			"connectVelocity" : 40,
 			"lowSpeed": 0.5, // km/h
 			//REEV mode settings
 			"REEVRPM": 1500,
@@ -68,15 +68,15 @@
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 1.05,
-			"motorRatio2": 2.50,
+			"motorRatio1": 2.55,
+			"motorRatio2": 2.55,
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 36,
-			"connectVelocity" : 41,
+			"startVelocity" : 35,
+			"connectVelocity" : 40,
 			"lowSpeed": 0.5, // km/h
 			//REEV mode settings
 			"REEVRPM": 1500,
@@ -111,15 +111,15 @@
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 1.05,
-			"motorRatio2": 2.50,
+			"motorRatio1": 2.55,
+			"motorRatio2": 2.55,
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 36,
-			"connectVelocity" : 41,
+			"startVelocity" : 35,
+			"connectVelocity" : 40,
 			"lowSpeed": 0.5, // km/h
 			//REEV mode settings
 			"REEVRPM": 1500,
@@ -154,15 +154,15 @@
 			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 1.05,
-			"motorRatio2": 2.50,
+			"motorRatio1": 2.55,
+			"motorRatio2": 2.55,
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 36,
-			"connectVelocity" : 41,
+			"startVelocity" : 35,
+			"connectVelocity" : 40,
 			"lowSpeed": 0.5, // km/h
 			//REEV mode settings
 			"REEVRPM": 1500,
