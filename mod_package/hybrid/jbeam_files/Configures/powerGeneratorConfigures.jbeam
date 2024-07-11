@@ -6,7 +6,7 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			["Shift_Logic", "", "Shift Logic", {"coreSlot":true}],
+			// ["Shift_Logic", "", "Shift Logic", {"coreSlot":true}],
 		],
 		"slotType" : "Power_Generator_Control_Configure",
 
