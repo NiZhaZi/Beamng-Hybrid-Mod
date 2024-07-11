@@ -1,4 +1,15 @@
 {
+	"Camso_TransferCase_AWD": {
+		"information":{
+			"name":"Advanced AWD Transfer Case",
+			"value":1000
+		},
+		"slots": [
+			["type", "default", "description"],
+			["Camso_differential_center", "Camso_differential_center", "Center Differential", {"coreSlot":true}]
+		],
+		"slotType" : "Camso_TransferCase"
+	},
 	"Camso_differential_center": {
 		"information":{
 			"name":"Advanced Center Differential",
