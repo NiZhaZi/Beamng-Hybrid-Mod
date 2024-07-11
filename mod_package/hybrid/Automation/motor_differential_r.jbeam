@@ -7,8 +7,8 @@
 		"slotType" : "Rear_ElectricMotor",
 		"slots": [
 			["type", "default", "description"],
-			["Single_Motors_Control", "Single_Motors_Control", "Single Motors Control"],
-			["Single_Motors_Configure","Rear_Single_Motor","Single Motors Configure"],
+			// ["Single_Motors_Control", "Single_Motors_Control", "Single Motors Control"],
+			// ["Single_Motors_Configure","Rear_Single_Motor","Single Motors Configure"],
 		],
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
@@ -93,8 +93,8 @@
 		"slotType" : "Rear_ElectricMotor",
 		"slots": [
 			["type", "default", "description"],
-			["Single_Motors_Control", "Single_Motors_Control", "Single Motors Control"],
-			["Single_Motors_Configure","Rear_Dual_Motor","Single Motors Configure"],
+			// ["Single_Motors_Control", "Single_Motors_Control", "Single Motors Control"],
+			// ["Single_Motors_Configure","Rear_Dual_Motor","Single Motors Configure"],
 		],
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
