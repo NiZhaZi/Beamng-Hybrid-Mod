@@ -21,6 +21,9 @@
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontDriveShaft"],
 			"ondemandMaxRPM" : 50,
+			"defaultEAWDMode": "partTime",
+			"AdvanceAWD": false,
+			"AdAWDDiffRPM": 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
 			"defaultMode" : "hybrid",
@@ -64,12 +67,15 @@
 			"mainMotorNames": ["frontDriveShaft"],
 			"subMotorNames": ["rearMotor", "rearMotor_L", "rearMotor_R"],
 			"ondemandMaxRPM" : 50,
+			"defaultEAWDMode": "partTime",
+			"AdvanceAWD": false,
+			"AdAWDDiffRPM": 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.55,
-			"motorRatio2": 2.55,
+			"motorRatio1": 2.05,
+			"motorRatio2": 2.05,
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
@@ -107,12 +113,15 @@
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontMotor", "frontMotor_L", "frontMotor_R"],
 			"ondemandMaxRPM" : 50,
+			"defaultEAWDMode": "partTime",
+			"AdvanceAWD": false,
+			"AdAWDDiffRPM": 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.55,
-			"motorRatio2": 2.55,
+			"motorRatio1": 2.05,
+			"motorRatio2": 2.05,
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
@@ -150,12 +159,15 @@
 			"mainMotorNames": [],
 			"subMotorNames": [],
 			"ondemandMaxRPM" : 50,
+			"defaultEAWDMode": "partTime",
+			"AdvanceAWD": false,
+			"AdAWDDiffRPM": 50,
 			//mode settings
 			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
 			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.55,
-			"motorRatio2": 2.55,
+			"motorRatio1": 2.05,
+			"motorRatio2": 2.05,
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
