@@ -486,11 +486,11 @@ local function updateGFX(dt)
         end
         
         if math.abs(rpm1) - math.abs(rpm2) >= AdAWDDiffRPM then
-            electrics.values.subThrottle1 = electrics.values.subThrottle
-            electrics.values.subThrottle2 = 0
-        elseif math.abs(rpm2) - math.abs(rpm1) >= AdAWDDiffRPM then
             electrics.values.subThrottle1 = 0
             electrics.values.subThrottle2 = electrics.values.subThrottle
+        elseif math.abs(rpm2) - math.abs(rpm1) >= AdAWDDiffRPM then
+            electrics.values.subThrottle1 = electrics.values.subThrottle
+            electrics.values.subThrottle2 = 0
         else
             electrics.values.subThrottle1 = electrics.values.subThrottle
             electrics.values.subThrottle2 = electrics.values.subThrottle
@@ -577,7 +577,7 @@ local function init(jbeamData)
 
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     AdvanceAWD = jbeamData.AdvanceAWD or false
-    AdAWDDiffRPM = jbeamData.AdAWDDiffRPM or 50
+    AdAWDDiffRPM = jbeamData.AdAWDDiffRPM or 250
     lowSpeed = (jbeamData.lowSpeed or 0.08) * 0.2778
     ifComfortRegen = jbeamData.ifComfortRegen or true
     comfortRegenBegine = jbeamData.comfortRegenBegine or 0.75
