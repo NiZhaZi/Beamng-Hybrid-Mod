@@ -30,11 +30,13 @@
 
 
 // gearbox type
+"Camso_Transmission": "E-CVT_Gearbox_E_Transmission",
+
 "Camso_Transmission": "Automatic_Gearbox_E_Transmission",
 
 "Camso_Transmission": "DCT_Gearbox_E_Transmission",
 
-"Camso_Transmission": "CVT_E_Transmission",
+"Camso_Transmission": "CVT_Gearbox_E_Transmission",
 
 "Camso_Transmission": "MT_Gearbox_E_Transmission",
 
