@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.27 alpha
--- final edit - 2024.7.11 12:24
+-- version 0.0.28 alpha
+-- final edit - 2024.7.14 18:23
 
 local M = {}
 
@@ -36,6 +36,8 @@ local startVelocity = nil
 local connectVelocity = nil
 
 local edriveMode = nil
+local AdvanceAWD = nil
+local AdAWDDiffRPM = nil
 local regenLevel = 5
 local ifComfortRegen = nil
 local comfortRegenBegine = nil
@@ -469,6 +471,32 @@ local function updateGFX(dt)
         electrics.values.subThrottle = 0
     end
 
+    if AdvanceAWD then
+        local rpm1 = nil
+        local rpm2 = nil
+        for _, v in ipairs(subMotors) do
+            if v.outputAV1 then
+                if rpm1 == nil then
+                    rpm1 = v.outputAV1 * avToRPM
+                else
+                    rpm2 = v.outputAV1 * avToRPM
+                end
+            end
+            -- log("", "", "" .. v.outputAV1 * avToRPM)
+        end
+        
+        if math.abs(rpm1) - math.abs(rpm2) >= AdAWDDiffRPM then
+            electrics.values.subThrottle1 = electrics.values.subThrottle
+            electrics.values.subThrottle2 = 0
+        elseif math.abs(rpm2) - math.abs(rpm1) >= AdAWDDiffRPM then
+            electrics.values.subThrottle1 = 0
+            electrics.values.subThrottle2 = electrics.values.subThrottle
+        else
+            electrics.values.subThrottle1 = electrics.values.subThrottle
+            electrics.values.subThrottle2 = electrics.values.subThrottle
+        end  
+    end
+
 
 
     --comfortable regen
@@ -548,6 +576,8 @@ local function init(jbeamData)
     directRPM2 = jbeamData.directRPM2 or 3000
 
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
+    AdvanceAWD = jbeamData.AdvanceAWD or false
+    AdAWDDiffRPM = jbeamData.AdAWDDiffRPM or 50
     lowSpeed = (jbeamData.lowSpeed or 0.08) * 0.2778
     ifComfortRegen = jbeamData.ifComfortRegen or true
     comfortRegenBegine = jbeamData.comfortRegenBegine or 0.75
@@ -580,9 +610,22 @@ local function init(jbeamData)
             if subMotor then
                 table.insert(subMotors, subMotor)
                 subMotor.originalRegenTorque = subMotor.maxWantedRegenTorque
-                subMotor.electricsThrottleName = "subThrottle"
             end
         end
+
+        local num = 1
+        for _, v in ipairs(subMotors) do
+            if AdvanceAWD and #subMotors == 2 then
+                local numStr = tostring(num)
+                v.electricsThrottleName = "subThrottle" .. numStr
+                num = num + 1
+            else
+                AdvanceAWD = false
+                v.electricsThrottleName = "subThrottle"
+            end
+        end
+
+        -- log("", "", "" .. subMotorNames)
     end
 
     ondemandMaxRPM = jbeamData.ondemandMaxRPM or 50
@@ -631,6 +674,10 @@ end
 
 local function reset(jbeamData)
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
+    AdvanceAWD = jbeamData.AdvanceAWD or false
+    if AdvanceAWD and #subMotors ~= 2 then
+        AdvanceAWD = false
+    end
     ifComfortRegen = jbeamData.ifComfortRegen or true
 
     startVelocity = defaultSVelocity
