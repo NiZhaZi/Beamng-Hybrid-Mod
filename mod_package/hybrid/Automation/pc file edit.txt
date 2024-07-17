@@ -32,6 +32,8 @@
 // gearbox type
 "Camso_Transmission": "E-CVT_Gearbox_E_Transmission",
 
+"Camso_Transmission": "DHT_Gearbox_E_Transmission",
+
 "Camso_Transmission": "Automatic_Gearbox_E_Transmission",
 
 "Camso_Transmission": "DCT_Gearbox_E_Transmission",
