@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.28 alpha
--- final edit - 2024.7.14 18:23
+-- version 0.0.29 alpha
+-- final edit - 2024.8.6 21:45
 
 local M = {}
 
@@ -51,6 +51,9 @@ local PreRMode = nil
 local REEVRPM = nil
 local REEVMutiplier = nil
 local REEVRPMProtect = nil
+local lastEnergy = 1
+local REEVAV = nil
+local REEVSOC = nil
 local reevThrottle = 0
 
 local ifGearMotorDrive = false
@@ -428,11 +431,28 @@ local function updateGFX(dt)
     end
 
     if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
-        local REEVAV = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ (2.37 * REEVMutiplier))
-        if REEVAV > proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV then
-            REEVAV = proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV
+        -- local REEVAV = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ (2.37 * REEVMutiplier))
+        -- if REEVAV > proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV then
+        --     REEVAV = proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV
+        -- end
+        if electrics.values.remainingpower < lastEnergy then
+            REEVAV = REEVAV + 5 * rpmToAV
+        else
+            if electrics.values.remainingpower > REEVSOC then
+                REEVAV = REEVAV - 5 * rpmToAV
+                if REEVAV < 0 then
+                    REEVAV = 0
+                end
+            end
         end
-        proxyEngine:setTempRevLimiter(REEVAV)
+        REEVAV = math.min(proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV, REEVAV)
+        lastEnergy = electrics.values.remainingpower
+        -- log("D", "lastEnergy", lastEnergy)
+
+        proxyEngine:setTempRevLimiter(REEVAV or (REEVRPM * rpmToAV))
+        if electrics.values.engineRunning == 0 and REEVAV > (proxyEngine.idleRPM * rpmToAV) then
+            proxyEngine:activateStarter()
+        end
         reevThrottle = 1
     else
         reevThrottle = electrics.values.throttle
@@ -560,6 +580,8 @@ local function init(jbeamData)
 
     REEVMode = "off"
     REEVRPM = jbeamData.REEVRPM or 3000
+    REEVAV = REEVRPM * rpmToAV
+    REEVSOC = (jbeamData.REEVSOC or 80) / 100
     REEVMutiplier = jbeamData.REEVMutiplier or 1.00
     REEVRPMProtect = jbeamData.REEVRPMProtect or 0
     ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
@@ -684,6 +706,7 @@ local function reset(jbeamData)
     connectVelocity = defaultCVelocity
 
     REEVMode = "off"
+    REEVAV = REEVRPM * rpmToAV
 
     if jbeamData.defaultMode then
         setMode(jbeamData.defaultMode)
