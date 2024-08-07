@@ -9,7 +9,30 @@
 			["Camso_differential_center", "Camso_differential_center", "Center Differential", {"coreSlot":true}]
 		],
 		"slotType" : "Camso_TransferCase"
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["differential", "transferCase", "gearbox", 1, {"diffType": "lsd", "lsdLockCoef": 0.40, "lsdRevLockCoef": 0.40, "lsdPreload": 10.00, "uiName": "Center Differential", "defaultVirtualInertia":0.25, "friction": 0}],
+		],
 	},
+
+	"Camso_TransferCase_AWD_EShaft": {
+		"information":{
+			"name":"Advanced AWD Transfer Case EShaft",
+			"value":1000
+		},
+		"slots": [
+			["type", "default", "description"],
+			["Camso_differential_center", "Camso_differential_center", "Center Differential", {"coreSlot":true}],
+			["EShaft_Torque_Table", "EShaft_Table_120NM", "EShaft Torque Table", {"coreSlot":true}]
+		],
+		"slotType" : "Camso_TransferCase"
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["motorShaft", "EShaft", "gearbox", 1],
+			["differential", "transferCase", "EShaft", 1, {"diffType": "lsd", "lsdLockCoef": 0.40, "lsdRevLockCoef": 0.40, "lsdPreload": 10.00, "uiName": "Center Differential", "defaultVirtualInertia":0.25, "friction": 0}],
+		],
+	},
+
 	"Camso_differential_center": {
 		"information":{
 			"name":"Advanced Center Differential",
@@ -33,7 +56,6 @@
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
 			//https://wiki.beamng.com/Differential
-			["differential", "transferCase", "gearbox", 1, {"diffType": "lsd", "lsdLockCoef": 0.40, "lsdRevLockCoef": 0.40, "lsdPreload": 10.00, "uiName": "Center Differential", "defaultVirtualInertia":0.25, "friction": 0}],
 			["motorShaft", "rearDriveShaft", "transferCase", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
 			["motorShaft", "frontDriveShaft", "transferCase", 2, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 2
 			
@@ -80,5 +102,79 @@
 			//["shaft", "rearDriveShaft", "gearbox", 1, {"friction": 0}]
 			["motorShaft", "rearDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
 		]
+	},
+
+	"EShaft_Table_120NM": {
+		"information":{
+			"name":"EShaft 120NM Torque Table",
+			"value":0
+		},
+		"slotType" : "EShaft_Torque_Table",
+		"EShaft":{
+			"torque":[
+				["rpm", "torque"],
+				[0, 120.00],
+				[500, 120.00],
+				[1000, 120.00],
+				[1500, 120.00],
+				[2000, 120.00],
+				[2500, 120.00],
+				[3000, 120.00],
+				[3500, 120.00],
+				[4000, 120.00],
+				[4500, 120.00],
+				[5000, 120.00],
+				[5500, 120.00],
+				[6000, 120.00],
+				[6500, 120.00],
+				[7000, 115.95],
+				[7500, 108.22],
+				[8000, 101.46],
+				[8500, 95.49],
+				[9000, 90.18],
+				[9500, 85.44],
+				[10000, 81.17],
+				[10500, 77.30],
+				[11000, 73.79],
+				[11500, 70.58],
+				[12000, 67.64],
+				[12500, 64.93],
+				[13000, 62.44],
+				[13500, 60.12],
+				[14000, 57.98],
+				[14500, 55.98],
+				[15000, 54.11],
+				[15500, 52.37],
+				[16000, 50.73],
+				[16500, 49.19],
+				[17000, 47.74],
+				[17500, 46.38],
+				[18000, 45.09],
+
+			],
+	
+			"maxRPM":20000,
+			"inertia":0.10,
+			"electricalEfficiency":0.99,
+			//"torqueReactionNodes:":["e1l","e1r","tra1"],
+			"torqueReactionNodes":["engine1", "engine2", "engine3"],
+			"energyStorage": "mainBattery",
+			//"electricsThrottleFactorName": "throttleFactorEmotor",
+			//"electricsThrottleName": "subThrottle",
+			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)"
+	
+			//node beam interface
+			"waterDamage": {"[engineGroup]:":["front_motor_waterdamage"]},
+			"engineBlock": {"[engineGroup]:":["front_motor_block"]},
+			"breakTriggerBeam":"front_motor",
+	
+			"soundConfig": "soundConfigFront",
+		},
+
+		"soundConfigFront": {
+			"sampleName": "ElectricMotor_03",
+			"mainGain": 5
+		}
+
 	},
 }
