@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.30 alpha
--- final edit - 2024.8.11 19:11
+-- version 0.0.31 alpha
+-- final edit - 2024.8.11 20:50
 
 local M = {}
 
@@ -15,6 +15,10 @@ local mainMotors = nil
 local subMotors = nil
 local motors = nil
 local directMotors = nil 
+
+local motorDirection = 0
+local velocityRangeBegin = nil
+local velocityRangEnd = nil
 
 local ondemandMaxRPM = nil
 local controlLogicModule = nil
@@ -84,7 +88,27 @@ local function getRegenLevel()
 end
 
 local function getGear()
-    if ifMotorOn == true then
+    local rangeSign
+    if velocityRangeBegin and velocityRangEnd then
+        rangeSign = false
+        if electrics.values.airspeed >= velocityRangeBegin * 0.2778 and electrics.values.airspeed <= velocityRangEnd * 0.2778 then
+            rangeSign = true
+        end
+    elseif velocityRangeBegin and not velocityRangEnd then
+        rangeSign = false
+        if electrics.values.airspeed >= velocityRangeBegin * 0.2778 then
+            rangeSign = true
+        end
+    elseif not velocityRangeBegin and velocityRangEnd then
+        rangeSign = false
+        if electrics.values.airspeed <= velocityRangEnd * 0.2778 then
+            rangeSign = true
+        end
+    else
+        rangeSign = true
+    end
+
+    if ifMotorOn and rangeSign then
         -- if gearbox.mode then
         --     electrics.values.gearName = gearbox.mode
         --     if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
@@ -99,15 +123,17 @@ local function getGear()
         -- else
         --     electrics.values.motorDirection = gearbox.gearIndex
         -- end
-        if gearbox.gearRatio ~= 0 then
-            electrics.values.motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
-        else
+        if gearbox.gearRatio == 0 then
             electrics.values.motorDirection = 0
+            motorDirection = 0
+        else
+            electrics.values.motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
+            motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
         end
-    elseif ifMotorOn == false then
+    elseif not ifMotorOn or not rangeSign then
         electrics.values.motorDirection = 0
+        motorDirection = 0
     end
-    
 end
 
 local function engineMode(state)
@@ -128,28 +154,28 @@ local function motorMode(state)
             if v.type == "motorShaft" then
                 v:setmotorRatio(motorRatio1)
                 v:setMode("connected")
-                ifMotorOn = true
             else
             end
         end
+        ifMotorOn = true
     elseif state == "on2" then -- EV drive ratio
         for _, v in ipairs(motors) do
             if v.type == "motorShaft" then
                 v:setmotorRatio(motorRatio2)
                 v:setMode("disconnected")
-                ifMotorOn = true
             else
             end         
         end
+        ifMotorOn = true
     elseif state == "off" then
         for _, v in ipairs(motors) do
             if v.type == "motorShaft" then
                 v:setmotorRatio(0)
                 v:setMode("connected")
-                ifMotorOn = false
             else
             end     
         end
+        ifMotorOn = false
     end
 end
 
@@ -337,7 +363,7 @@ local function updateGFX(dt)
     getGear()
     for _, v in ipairs(motors) do
         if v.type == "electricMotor" then
-            v.motorDirection = electrics.values.motorDirection or 0
+            v.motorDirection = motorDirection or 0
         end     
     end
 
@@ -583,6 +609,10 @@ local function init(jbeamData)
         end
     end
 
+    motorDirection = 0
+    velocityRangeBegin = jbeamData.velocityRangeBegin or nil
+    velocityRangEnd = jbeamData.velocityRangEnd or nil
+
     REEVMode = "off"
     REEVRPM = jbeamData.REEVRPM or 3000
     REEVAV = REEVRPM * rpmToAV
@@ -700,6 +730,7 @@ local function onInit()
 end
 
 local function reset(jbeamData)
+    motorDirection = 0
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     AdvanceAWD = jbeamData.AdvanceAWD or false
     if AdvanceAWD and #subMotors ~= 2 then
