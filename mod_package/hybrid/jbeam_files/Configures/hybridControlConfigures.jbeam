@@ -154,7 +154,7 @@
 		
 		"hybridControl":{
 			//get all motors Names
-			"motorNames": [],
+			"motorNames": ["rearMotor", "rearMotor_L", "rearMotor_R", "frontMotor", "frontMotor_L", "frontMotor_R"],
 			//EV ondemand AWD settings
 			"mainMotorNames": [],
 			"subMotorNames": [],
