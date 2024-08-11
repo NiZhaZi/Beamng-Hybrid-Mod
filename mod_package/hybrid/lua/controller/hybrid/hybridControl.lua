@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.29 alpha
--- final edit - 2024.8.6 21:45
+-- version 0.0.30 alpha
+-- final edit - 2024.8.11 19:11
 
 local M = {}
 
@@ -85,24 +85,29 @@ end
 
 local function getGear()
     if ifMotorOn == true then
-        if gearbox.mode then
-            electrics.values.gearName = gearbox.mode
-            if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
-                electrics.values.motorDirection = gearbox.gearIndex
-            elseif gearbox.mode == "reverse" then -- CVT R gear
-                electrics.values.motorDirection = -1
-            elseif gearbox.mode == "neutral" then -- N gear
-                electrics.values.motorDirection = 0
-            elseif gearbox.mode == "park" then -- P gear
-                electrics.values.motorDirection = 0
-            end
+        -- if gearbox.mode then
+        --     electrics.values.gearName = gearbox.mode
+        --     if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
+        --         electrics.values.motorDirection = gearbox.gearIndex
+        --     elseif gearbox.mode == "reverse" then -- CVT R gear
+        --         electrics.values.motorDirection = -1
+        --     elseif gearbox.mode == "neutral" then -- N gear
+        --         electrics.values.motorDirection = 0
+        --     elseif gearbox.mode == "park" then -- P gear
+        --         electrics.values.motorDirection = 0
+        --     end
+        -- else
+        --     electrics.values.motorDirection = gearbox.gearIndex
+        -- end
+        if gearbox.gearRatio ~= 0 then
+            electrics.values.motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
         else
-            electrics.values.motorDirection = gearbox.gearIndex
+            electrics.values.motorDirection = 0
         end
     elseif ifMotorOn == false then
         electrics.values.motorDirection = 0
     end
-
+    
 end
 
 local function engineMode(state)

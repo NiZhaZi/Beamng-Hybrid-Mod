@@ -1,7 +1,7 @@
 -- signleMotors.lua - 2024.3.18 21:52 - Control single motors
 -- by NZZ
--- version 0.0.3 alpha
--- final edit - 2024.6.22 12:56
+-- version 0.0.4 alpha
+-- final edit - 2024.8.11 19:11
 
 local M = {}
 
@@ -47,22 +47,28 @@ local function updateGFX(dt)
     end
 
     if electrics.values.ignitionLevel == 2 then
-        if gearbox.mode then
-            if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
-                motorDirection = gearbox.gearIndex
-            elseif gearbox.mode == "reverse" then -- CVT R gear
-                motorDirection = -1
-            elseif gearbox.mode == "neutral" then -- N gear
-                motorDirection = 0
-            elseif gearbox.mode == "park" then -- P gear
-                motorDirection = 0
-            end
+        -- if gearbox.mode then
+        --     if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
+        --         motorDirection = gearbox.gearIndex
+        --     elseif gearbox.mode == "reverse" then -- CVT R gear
+        --         motorDirection = -1
+        --     elseif gearbox.mode == "neutral" then -- N gear
+        --         motorDirection = 0
+        --     elseif gearbox.mode == "park" then -- P gear
+        --         motorDirection = 0
+        --     end
+        -- else
+        --     motorDirection = gearbox.gearIndex
+        -- end
+        if gearbox.gearRatio ~= 0 then
+            motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
         else
-            motorDirection = gearbox.gearIndex
+            motorDirection = 0
         end
     else
         motorDirection = 0
     end
+    log("D", "", motorDirection)
 
     motorDirection = motorDirection * typeDirection
 
