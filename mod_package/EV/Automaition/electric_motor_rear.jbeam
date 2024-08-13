@@ -1,0 +1,216 @@
+{
+	"Single_ElectricMotor_R": {
+		"information":{
+			"name":"Single Rear Electric Motor",
+			"value": 4000
+		}
+		"slotType" : "Camso_ElectricMotor_R",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["electricMotor", "rearMotor", "dummy", 0],
+			["shaft", "rearDriveShaft", "rearMotor", 1, {"gearRatio":"$FinalDriveRatioRear"}]
+		],
+		"rearMotor": {
+			"torque":[
+				["rpm", "torque"],
+				[0, 400.00],
+				[500, 400.00],
+				[1000, 400.00],
+				[1500, 400.00],
+				[2000, 400.00],
+				[2500, 400.00],
+				[3000, 400.00],
+				[3500, 400.00],
+				[4000, 400.00],
+				[4500, 400.00],
+				[5000, 400.00],
+				[5500, 400.00],
+				[6000, 400.00],
+				[6500, 378.14],
+				[7000, 351.13],
+				[7500, 327.72],
+				[8000, 307.24],
+				[8500, 289.17],
+				[9000, 273.10],
+				[9500, 258.73],
+				[10000, 245.79],
+				[10500, 234.09],
+				[11000, 223.45],
+				[11500, 213.73],
+				[12000, 204.83],
+				[12500, 196.63],
+				[13000, 189.07],
+				[13500, 182.07],
+				[14000, 175.57],
+				[14500, 169.51],
+				[15000, 163.86],
+				[15500, 158.58],
+				[16000, 153.62],
+				[16500, 148.96],
+				[17000, 144.58],
+				[17500, 140.45],
+				[18000, 136.55],
+
+			],
+			"maxRPM":18000,
+			"inertia":0.40,
+			"friction":4,
+			"dynamicFriction":0.0005,
+			"electricalEfficiency":0.85,
+			"electricsThrottleFactorName": "throttleFactorRear",
+			"electricsThrottleName": "throttle",
+			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
+			"soundConfig": "soundConfigRear",
+			"energyStorage": "mainBattery", //Name of the fuel tank
+			"torqueReactionNodes":["engine1", "engine2", "engine3"],
+			"maximumWantedRegenTorque": 400
+		},
+	    "vehicleController": {
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
+		},
+
+		"soundConfigRear": {
+			"sampleName": "ElectricMotor_02",
+			"mainGain": 15
+		}
+	},
+
+	"Dual_ElectricMotor_R": {
+		"information":{
+			"name":"Dual Rear Electric Motor",
+			"value": 4000
+		}
+		"slotType" : "Camso_ElectricMotor_R",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["electricMotor", "rearMotor", "dummy", 0],
+			["electricMotor", "rearMotor_R", "dummy", 0],
+		],
+		"rearMotor": {
+			"torque":[
+				["rpm", "torque"],
+				[0, 400.00],
+				[500, 400.00],
+				[1000, 400.00],
+				[1500, 400.00],
+				[2000, 400.00],
+				[2500, 400.00],
+				[3000, 400.00],
+				[3500, 400.00],
+				[4000, 400.00],
+				[4500, 400.00],
+				[5000, 400.00],
+				[5500, 400.00],
+				[6000, 400.00],
+				[6500, 378.14],
+				[7000, 351.13],
+				[7500, 327.72],
+				[8000, 307.24],
+				[8500, 289.17],
+				[9000, 273.10],
+				[9500, 258.73],
+				[10000, 245.79],
+				[10500, 234.09],
+				[11000, 223.45],
+				[11500, 213.73],
+				[12000, 204.83],
+				[12500, 196.63],
+				[13000, 189.07],
+				[13500, 182.07],
+				[14000, 175.57],
+				[14500, 169.51],
+				[15000, 163.86],
+				[15500, 158.58],
+				[16000, 153.62],
+				[16500, 148.96],
+				[17000, 144.58],
+				[17500, 140.45],
+				[18000, 136.55],
+
+			],
+			"maxRPM":18000,
+			"inertia":0.40,
+			"friction":4,
+			"dynamicFriction":0.0005,
+			"electricalEfficiency":0.85,
+			"electricsThrottleFactorName": "throttleFactorRear",
+			"electricsThrottleName": "throttle_L",
+			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
+			"soundConfig": "soundConfigRear",
+			"energyStorage": "mainBattery", //Name of the fuel tank
+			"torqueReactionNodes":["engine1", "engine2", "engine3"],
+			"maximumWantedRegenTorque": 400
+		},
+		"rearMotor_R": {
+			"torque":[
+				["rpm", "torque"],
+				[0, 400.00],
+				[500, 400.00],
+				[1000, 400.00],
+				[1500, 400.00],
+				[2000, 400.00],
+				[2500, 400.00],
+				[3000, 400.00],
+				[3500, 400.00],
+				[4000, 400.00],
+				[4500, 400.00],
+				[5000, 400.00],
+				[5500, 400.00],
+				[6000, 400.00],
+				[6500, 378.14],
+				[7000, 351.13],
+				[7500, 327.72],
+				[8000, 307.24],
+				[8500, 289.17],
+				[9000, 273.10],
+				[9500, 258.73],
+				[10000, 245.79],
+				[10500, 234.09],
+				[11000, 223.45],
+				[11500, 213.73],
+				[12000, 204.83],
+				[12500, 196.63],
+				[13000, 189.07],
+				[13500, 182.07],
+				[14000, 175.57],
+				[14500, 169.51],
+				[15000, 163.86],
+				[15500, 158.58],
+				[16000, 153.62],
+				[16500, 148.96],
+				[17000, 144.58],
+				[17500, 140.45],
+				[18000, 136.55],
+
+			],
+			"maxRPM":18000,
+			"inertia":0.40,
+			"friction":4,
+			"dynamicFriction":0.0005,
+			"electricalEfficiency":0.85,
+			"electricsThrottleFactorName": "throttleFactorRear",
+			"electricsThrottleName": "throttle_R",
+			"breakTriggerBeam":"engine", //Engine breaks if beam with this name is broken
+			"soundConfig": "soundConfigRear",
+			"energyStorage": "mainBattery", //Name of the fuel tank
+			"torqueReactionNodes":["engine1", "engine2", "engine3"],
+			"maximumWantedRegenTorque": 400
+		},
+	    "vehicleController": {
+			"shiftLogicName":"electricMotor",
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
+		},
+
+		"soundConfigRear": {
+			"sampleName": "ElectricMotor_02",
+			"mainGain": 15
+		}
+	}
+}

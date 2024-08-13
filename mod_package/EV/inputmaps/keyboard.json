@@ -1,0 +1,35 @@
+{
+"bindings" :   [
+     {
+          "control": "alt b",
+          "action":  "switvh advance brake mode"
+     },
+
+     {
+          "control": "alt x",
+          "action":  "switvh sport brake mode"
+     },
+
+     {
+          "control": "shift alt i",
+          "action":  "switvh to on-demand AWD"
+     },
+
+     {
+          "control": "shift alt o",
+          "action":  "switvh to full-time AWD"
+     },
+
+     {
+          "control": "shift alt p",
+          "action":  "switvh to 2WD"
+     }
+     
+],
+
+"name"              : "Keyboard"          , 
+"version"           : 1                   , 
+"devicetype"        : "keyboard"          , 
+"vidpid"            : "6F1D2B61"          , 
+"guid"              : "{6F1D2B61-D5A0-11CF-BFC7-444553540000}"
+}

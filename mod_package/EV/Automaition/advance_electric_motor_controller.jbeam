@@ -1,0 +1,63 @@
+{
+	"Advance_Engine_ElectricController": {
+		"information": {
+			"authors": "Camshaft Software",
+			"name": "Advance Electric Motor Controller",
+			"value": 50
+		}
+		"slotType": "Camso_Engine",
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"]
+			["$EngineOffsetX", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Engine Offset X", "Lateral engine offset", {"stepDis":0.01, "subCategory":"Engine Offset"}],
+			["$EngineOffsetY", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Engine Offset Y", "Longitudinal engine offset", {"stepDis":0.01, "subCategory":"Engine Offset"}],
+			["$EngineOffsetZ", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Engine Offset Z", "Vertical engine offset", {"stepDis":0.01, "subCategory":"Engine Offset"}],
+			["$EngineOffsetXVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Engine Offset X", "Visual lateral engine offset", {"stepDis":0.01, "subCategory":"Engine Offset"}],
+			["$EngineOffsetYVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Engine Offset Y", "Visual longitudinal engine offset", {"stepDis":0.01, "subCategory":"Engine Offset"}],
+			["$EngineOffsetZVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Engine Offset Z", "Visual vertical engine offset", {"stepDis":0.01, "subCategory":"Engine Offset"}],
+			["$ExhaustOffsetX", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Exhaust Offset X", "Lateral exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
+			["$ExhaustOffsetY", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Exhaust Offset Y", "Longitudinal exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
+			["$ExhaustOffsetZ", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Exhaust Offset Z", "Vertical exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
+			["$ExhaustOffsetXVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Exhaust Offset X", "Visual lateral exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
+			["$ExhaustOffsetYVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Exhaust Offset Y", "Visual longitudinal exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
+			["$ExhaustOffsetZVis", "range", "+m", "Vehicle Advanced Settings", 0, -4, 4, "Visual Exhaust Offset Z", "Visual vertical exhaust offset", {"stepDis":0.01, "subCategory":"Exhaust Offset"}],
+			// ["$torquesplitE", "range", "", "Motor Controller", 0.6700000166893, 0, 1, "Torque Split", "Power to Rear", {"stepDis": 0.01, "minDis":0, "maxDis":100}],
+			["$regenTorqueModRear", "range", "", "Motor Controller", 0.6, 0, 3, "Rear motor regenerative braking torque", "Maximum regenerative braking torque", {"stepDis": 1, "minDis":0, "maxDis":300}],
+			["$regenTorqueModFront", "range", "", "Motor Controller", 1, 0, 3, "Front motor regenerative braking torque", "Maximum regenerative braking torque", {"stepDis": 1, "minDis":0, "maxDis":300}],
+
+			["$FinalDriveRatioFront", "range", ":1", "Motor Controller", 5.25, 0, 100, "Front Motor Final Drive Ratio", "Final Drive Ratio Front", {"stepDis": 0.01, "minDis":0, "maxDis":100}],
+			["$FinalDriveRatioRear",  "range", ":1", "Motor Controller", 5.25, 0, 100, "Rear Motor Final Drive Ratio",  "Final Drive Ratio Rear",  {"stepDis": 0.01, "minDis":0, "maxDis":100}],
+			["$assistSteeringSpeed",  "range", "km/h", "Motor Controller", 75, 0, 600, "Assist Steering Speed",  "speed of when Assist Steering intervene",  {"stepDis": 1, "minDis":0, "maxDis":600}],
+		],
+
+		"controller": [
+	        ["fileName"],
+			["advanceEV/evdrive", {"name": "evdrive"}],
+	    ],
+
+		"evdrive": {
+			"mainMotorNames": ["rearMotor", "rearMotor_R"],
+			"subMotorNames": ["frontMotor"],
+
+			"leftMotorNames": ["rearMotor"],
+			"rightMotorNames": ["rearMotor_R"],
+
+			"defaultEAWDMode": "partTime",
+			"ifAdvanceBrake": true,
+			"ifSportBrake": false,
+			"ifAssistSteering": true,
+			"assistSteeringSpeed": "$assistSteeringSpeed",
+		},
+
+		"vehicleController": {
+			"motorNames": ["frontMotor", "rearMotor", "rearMotor_R"],
+		},
+		
+		"slots": [
+			["type", "default", "description"],
+			["Camso_engine_structure", "", "Engine Structure", {"coreSlot": true}],
+			["Camso_ElectricMotor_F", "", "Front Motor"],
+			["Camso_ElectricMotor_R", "", "Rear Motor"],
+			["Camso_SpeedLimiter", "", "Speed Limiter", {"coreSlot": true}]
+		]
+	}
+}

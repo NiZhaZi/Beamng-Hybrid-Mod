@@ -1,0 +1,162 @@
+{
+	"Camso_TransferCase_AWD": {
+		"information":{
+			"name":"Advanced AWD Transfer Case",
+			"value":1000
+		},
+		"slots": [
+			["type", "default", "description"],
+			["Camso_differential_center", "Camso_differential_center", "Center Differential", {"coreSlot":true}]
+		],
+		"slotType" : "Camso_TransferCase"
+	},
+	"Camso_differential_center": {
+		"information":{
+			"name":"Advanced Center Differential",
+			"value":300
+		},
+		"slotType" : "Camso_differential_center",
+		"slots": [
+			["type", "default", "description"],
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
+			["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}]
+		],
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+		"controller": [
+			["fileName"],
+
+		],
+
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//https://wiki.beamng.com/Differential
+			["differential", "transferCase", "gearbox", 1, {"diffType": "lsd", "lsdLockCoef": 0.40, "lsdRevLockCoef": 0.40, "lsdPreload": 10.00, "uiName": "Center Differential", "defaultVirtualInertia":0.25, "friction": 0}],
+			["motorShaft", "rearDriveShaft", "transferCase", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
+			["motorShaft", "frontDriveShaft", "transferCase", 2, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 2
+			
+		],
+		"transferCase":{
+		}
+	},
+	"Camso_differential_center_hybrid_gearbox": {
+		"information":{
+			"name":"Advanced Center Differential for hybrid gearbox",
+			"value":300
+		},
+		"slotType" : "Camso_differential_center",
+		"slots": [
+			["type", "default", "description"],
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			// ["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
+			// ["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}]
+		],
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+		"controller": [
+			["fileName"],
+
+		],
+
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//https://wiki.beamng.com/Differential
+			["motorShaft", "awdmotor", "gearbox", 2, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}],
+			["differential", "transferCase", "awdmotor", 1, {"diffType": "lsd", "lsdLockCoef": 0.40, "lsdRevLockCoef": 0.40, "lsdPreload": 10.00, "uiName": "Center Differential", "defaultVirtualInertia":0.25, "friction": 0}],
+			["shaft", "rearDriveShaft", "transferCase", 1, {"uiSimpleModeControl": false, "canDisconnect": false, "gearRatio": 1, "friction": 1}] // 1
+			["shaft", "frontDriveShaft", "transferCase", 2, {"uiSimpleModeControl": false, "canDisconnect": false, "gearRatio": 1, "friction": 1}] // 2
+			
+		],
+		"transferCase":{
+		}
+	},
+
+	"Camso_TransferCase_FWD": {
+		"information":{
+			"name":"Advanced FWD Transfer Case",
+			"value":500
+		},
+		"slots": [
+			["type", "default", "description"],
+			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
+			["Rear_ElectricMotor", "", "Rear ElectricMotor"],
+		],
+		"slotType" : "Camso_TransferCase",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//["shaft", "frontDriveShaft", "gearbox", 1, {"friction": 0}]
+			["motorShaft", "frontDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 2
+		]
+	},
+
+	"Camso_TransferCase_RWD": {
+		"information":{
+			"name":"Advanced RWD Transfer Case",
+			"value":500
+		},
+		"slots": [
+			["type", "default", "description"],
+			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}],
+			["Front_ElectricMotor", "", "Front ElectricMotor"],
+		],
+		"slotType" : "Camso_TransferCase",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//["shaft", "rearDriveShaft", "gearbox", 1, {"friction": 0}]
+			["motorShaft", "rearDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
+		]
+	},
+
+	"Camso_TransferCase_Parallel_FWD": {
+		"information":{
+			"name":"Advanced Parallel FWD Transfer Case",
+			"value":500
+		},
+		"slots": [
+			["type", "default", "description"],
+			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			//["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
+			["Rear_ElectricMotor", "", "Rear ElectricMotor"],
+
+			["Camso_driveshaft_front", "Camso_driveshaft_front", "Front Driveshaft"]
+		],
+		"slotType" : "Camso_TransferCase",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//["shaft", "frontDriveShaft", "gearbox", 1, {"friction": 0}]
+			//["motorShaft", "frontDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 2
+			["shaft", "transferCase", "gearbox", 1, {"friction": 0}]
+		]
+	},
+
+	"Camso_TransferCase_Parallel_RWD": {
+		"information":{
+			"name":"Advanced Parallel RWD Transfer Case",
+			"value":500
+		},
+		"slots": [
+			["type", "default", "description"],
+			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			//["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}],
+			["Front_ElectricMotor", "", "Front ElectricMotor"],
+
+			["Camso_driveshaft_rear", "Camso_driveshaft_rear", "Rear Driveshaft"]
+		],
+		"slotType" : "Camso_TransferCase",
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//["shaft", "rearDriveShaft", "gearbox", 1, {"friction": 0}]
+			//["motorShaft", "rearDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
+			["shaft", "transferCase", "gearbox", 1, {"friction": 0}]
+		]
+	},
+}

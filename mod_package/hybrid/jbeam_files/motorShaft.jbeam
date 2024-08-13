@@ -1,0 +1,32 @@
+{
+	"Drive_Motor_Shaft": {
+		"information":{
+			"name":"Shaft driven by electric motor",
+			"value":3000
+		},
+		"slotType" : "drive_motor_shaft",
+		"slots": [
+			["type", "default", "description"],
+			["Battery", "Lithium_Titanate_Battery", "Battery"],
+			["Hybrid_Configure", "", "Hybrid Configure", {"coreSlot":true}],
+			
+		],
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+		"controller": [
+			["fileName"],
+			["AVAS"],
+		],
+
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
+            "forwardSoundNode:":["a61"],
+            "reverseSoundNode:":["a1"],
+            "warningMaxSpeed": 14,
+            "warningVolume": 0.5
+        }
+	},
+
+}

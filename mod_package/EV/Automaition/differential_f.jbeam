@@ -1,0 +1,46 @@
+{
+	"Single_motor_differential_front": {
+		"information":{
+			"name":"Single Motor Electric Front Differential",
+			"value":500
+		},
+		"slotType" : "Camso_differential_front",
+		"slots": [
+			["type", "default", "description"],
+
+		],
+		"controller": [
+			["fileName"],
+
+		],
+		"powertrain" : [
+		["type", "name", "inputName", "inputIndex"],
+		//https://wiki.beamng.com/Differential
+		["differential", "frontDiff", "frontDriveShaft", 1, {"diffType": "torqueVectoring", "uiName": "Front Differential"}],
+		["shaft", "halfshaftFL", "frontDiff", 1, {"breakTriggerBeam": "axle_FL", "uiName": "Front Left Halfshaft", "friction": 1}],
+		["shaft", "halfshaftFR", "frontDiff", 2, {"breakTriggerBeam": "axle_FR", "uiName": "Front Right Halfshaft", "friction": 1}]
+		]
+	},
+
+	"Dual_motor_differential_front": {
+		"information":{
+			"name":"Dual Motor Electric Front Differential",
+			"value":500
+		},
+		"slotType" : "Camso_differential_front",
+		"slots": [
+			["type", "default", "description"],
+			
+		],
+		"controller": [
+			["fileName"],
+
+		],
+		"powertrain" : [
+		["type", "name", "inputName", "inputIndex"],
+		//https://wiki.beamng.com/Differential
+		["shaft", "halfshaftFL", "frontMotor", 1, {"gearRatio":"$FinalDriveRatioFront", "breakTriggerBeam": "axle_FL", "uiName": "Front Left Halfshaft", "friction": 1}],
+		["shaft", "halfshaftFR", "frontMotor_R", 1, {"gearRatio":"$FinalDriveRatioFront", "breakTriggerBeam": "axle_FR", "uiName": "Front Right Halfshaft", "friction": 1}]
+		]
+	}
+}
