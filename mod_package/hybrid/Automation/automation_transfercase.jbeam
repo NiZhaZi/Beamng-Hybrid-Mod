@@ -50,8 +50,7 @@
 		"slots": [
 			["type", "default", "description"],
 			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
-			// ["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
-			// ["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}]
+			["driveshaft_awd", "driveshaft_awd_motor", "AWD Driveshaft", {"coreSlot":true}],
 		],
 		"variables": [
 			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
