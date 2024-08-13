@@ -47,30 +47,8 @@
 				[18000, 79.50],
 
 			],
-	
 			"maxRPM":20000,
-			"inertia":0.10,
-			"electricalEfficiency":0.99,
-			//"torqueReactionNodes:":["e1l","e1r","tra1"],
-			"torqueReactionNodes":["engine1", "engine2", "engine3"],
-			"energyStorage": "mainBattery",
-			//"electricsThrottleFactorName": "throttleFactorEmotor",
-			//"electricsThrottleName": 0,
-			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)"
-	
-			//node beam interface
-			"waterDamage": {"[engineGroup]:":["front_motor_waterdamage"]},
-			"engineBlock": {"[engineGroup]:":["front_motor_block"]},
-			"breakTriggerBeam":"front_motor",
-	
-			"soundConfig": "soundConfigFront",
 		},
-
-		"soundConfigFront": {
-			"sampleName": "ElectricMotor_03",
-			"mainGain": 5
-		}
-
 	},
 
 	"Rear_Torque_Table_300NM": {
@@ -125,29 +103,7 @@
 				[20000, 100.16],
 
 			],
-	
 			"maxRPM":20000,
-			"inertia":0.10,
-			"electricalEfficiency":0.99,
-			//"torqueReactionNodes:":["e1l","e1r","tra1"],
-			"torqueReactionNodes":["engine1", "engine2", "engine3"],
-			"energyStorage": "mainBattery",
-			//"electricsThrottleFactorName": "throttleFactorEmotor",
-			//"electricsThrottleName": 0,
-			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)"
-	
-			//node beam interface
-			"waterDamage": {"[engineGroup]:":["front_motor_waterdamage"]},
-			"engineBlock": {"[engineGroup]:":["front_motor_block"]},
-			"breakTriggerBeam":"front_motor",
-	
-			"soundConfig": "soundConfigFront",
 		},
-
-		"soundConfigFront": {
-			"sampleName": "ElectricMotor_03",
-			"mainGain": 5
-		}
-
 	},
 }
