@@ -45,6 +45,52 @@
 		},
 	},
 
+	"Hybrid_Control_AWD_hybrid_gearbox": {
+		"information":{
+			"name":"Hybrid Control AWD for hybrid gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Hybrid_Control_Configure",
+
+		"controller": [
+			["fileName"],
+			["hybrid/hybridControl", {"name": "hybridControl",}],
+		],
+
+		"hybridControl":{
+			//get all motors Names
+			"motorNames": ["awdmotor"],
+			//EV ondemand AWD settings
+			"mainMotorNames": ["awdmotor"],
+			"subMotorNames": [],
+			"ondemandMaxRPM" : 50,
+			"defaultEAWDMode": "partTime",
+			"AdvanceAWD": false,
+			"AdAWDDiffRPM": 250,
+			//mode settings
+			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
+			"defaultMode" : "hybrid",
+			//ratio1 for hybrid mode, ratio2 for EV mode
+			"motorRatio1": 2.05,
+			"motorRatio2": 2.05,
+			//comfortable regen settings
+			"ifComfortRegen": true,
+			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
+			"comfortRegenEnd": 0.15,
+			//auto mode settings
+			"startVelocity" : 35,
+			"connectVelocity" : 40,
+			"lowSpeed": 0.5, // km/h
+			//REEV mode settings
+			"REEVRPM": 1500,
+			"REEVMutiplier": 2.0,
+			"REEVRPMProtect": 200,
+		},
+	},
+
 	"Hybrid_Control_FWD": {
 		"information":{
 			"name":"Hybrid Control FWD",

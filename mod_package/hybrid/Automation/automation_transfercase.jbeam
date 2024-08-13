@@ -1,4 +1,5 @@
 {
+	// AWD
 	"Camso_TransferCase_AWD": {
 		"information":{
 			"name":"Advanced AWD Transfer Case",
@@ -18,7 +19,7 @@
 		"slotType" : "Camso_differential_center",
 		"slots": [
 			["type", "default", "description"],
-			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["Hybrid_Main", "hybrid_main", "Main Hybrid Slot", {"coreSlot":true}],
 			["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
 			["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}]
 		],
@@ -49,7 +50,7 @@
 		"slotType" : "Camso_differential_center",
 		"slots": [
 			["type", "default", "description"],
-			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["Hybrid_Main", "hybrid_main", "Main Hybrid Slot", {"coreSlot":true}],
 			["driveshaft_awd", "driveshaft_awd_motor", "AWD Driveshaft", {"coreSlot":true}],
 		],
 		"variables": [
@@ -73,6 +74,7 @@
 		}
 	},
 
+	// FWD
 	"Camso_TransferCase_FWD": {
 		"information":{
 			"name":"Advanced FWD Transfer Case",
@@ -80,19 +82,18 @@
 		},
 		"slots": [
 			["type", "default", "description"],
-			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
-			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["Hybrid_Main", "hybrid_main", "Main Hybrid Slot", {"coreSlot":true}],
 			["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
 			["Rear_ElectricMotor", "", "Rear ElectricMotor"],
 		],
 		"slotType" : "Camso_TransferCase",
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-			//["shaft", "frontDriveShaft", "gearbox", 1, {"friction": 0}]
 			["motorShaft", "frontDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 2
 		]
 	},
 
+	// RWD
 	"Camso_TransferCase_RWD": {
 		"information":{
 			"name":"Advanced RWD Transfer Case",
@@ -100,19 +101,18 @@
 		},
 		"slots": [
 			["type", "default", "description"],
-			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
-			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			["Hybrid_Main", "hybrid_main", "Main Hybrid Slot", {"coreSlot":true}],
 			["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}],
 			["Front_ElectricMotor", "", "Front ElectricMotor"],
 		],
 		"slotType" : "Camso_TransferCase",
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-			//["shaft", "rearDriveShaft", "gearbox", 1, {"friction": 0}]
 			["motorShaft", "rearDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
 		]
 	},
 
+	// Parallel
 	"Camso_TransferCase_Parallel_FWD": {
 		"information":{
 			"name":"Advanced Parallel FWD Transfer Case",
@@ -120,9 +120,7 @@
 		},
 		"slots": [
 			["type", "default", "description"],
-			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
-			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
-			//["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
+			["Hybrid_Main", "hybrid_main", "Main Hybrid Slot", {"coreSlot":true}],
 			["Rear_ElectricMotor", "", "Rear ElectricMotor"],
 
 			["Camso_driveshaft_front", "Camso_driveshaft_front", "Front Driveshaft"]
@@ -130,8 +128,6 @@
 		"slotType" : "Camso_TransferCase",
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-			//["shaft", "frontDriveShaft", "gearbox", 1, {"friction": 0}]
-			//["motorShaft", "frontDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 2
 			["shaft", "transferCase", "gearbox", 1, {"friction": 0}]
 		]
 	},
@@ -143,9 +139,7 @@
 		},
 		"slots": [
 			["type", "default", "description"],
-			//["Camso_differential_front", "Camso_differential_front", "Front Differential", {"coreSlot": true}]
-			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
-			//["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}],
+			["Hybrid_Main", "hybrid_main", "Main Hybrid Slot", {"coreSlot":true}],
 			["Front_ElectricMotor", "", "Front ElectricMotor"],
 
 			["Camso_driveshaft_rear", "Camso_driveshaft_rear", "Rear Driveshaft"]
@@ -153,8 +147,6 @@
 		"slotType" : "Camso_TransferCase",
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-			//["shaft", "rearDriveShaft", "gearbox", 1, {"friction": 0}]
-			//["motorShaft", "rearDriveShaft", "gearbox", 1, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}] // 1
 			["shaft", "transferCase", "gearbox", 1, {"friction": 0}]
 		]
 	},

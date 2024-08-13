@@ -1,10 +1,10 @@
 {
-	"Drive_Motor_Shaft": {
+	"Hybrid_Main": {
 		"information":{
-			"name":"Shaft driven by electric motor",
+			"name":"Hybrid Main",
 			"value":3000
 		},
-		"slotType" : "drive_motor_shaft",
+		"slotType" : "hybrid_main",
 		"slots": [
 			["type", "default", "description"],
 			["Battery", "Lithium_Titanate_Battery", "Battery"],
