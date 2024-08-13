@@ -19,6 +19,26 @@
 		},
 	},
 
+	"Motor_Control_AWD_hybrid_gearbox": {
+		"information":{
+			"name":"Motor Control AWD for hybrid gearbox",
+			"value": 0
+		},
+        "slots": [
+			["type", "default", "description"],
+		],
+		"slotType" : "Motor_Control_Configure",
+
+		"controller": [
+			["fileName"],
+			["hybrid/motorControl", {"name": "motorControl",}],
+		],
+
+		"motorControl":{
+			"motorNames": ["awdmotor", "gearbox"],
+		},
+	},
+
 	"Motor_Control_FWD": {
 		"information":{
 			"name":"Motor Control FWD",
