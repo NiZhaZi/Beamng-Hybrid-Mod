@@ -41,6 +41,38 @@
 		"transferCase":{
 		}
 	},
+	"Camso_differential_center_hybrid_gearbox": {
+		"information":{
+			"name":"Advanced Center Differential for hybrid gearbox",
+			"value":300
+		},
+		"slotType" : "Camso_differential_center",
+		"slots": [
+			["type", "default", "description"],
+			["drive_motor_shaft", "Drive_Motor_Shaft", "Motor Shaft", {"coreSlot":true}],
+			// ["driveshaft_front", "driveshaft_front_motor", "Front Driveshaft", {"coreSlot":true}],
+			// ["driveshaft_rear", "driveshaft_rear_motor", "Rear Driveshaft", {"coreSlot":true}]
+		],
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+		"controller": [
+			["fileName"],
+
+		],
+
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			//https://wiki.beamng.com/Differential
+			["motorShaft", "awdmotor", "gearbox", 2, {"uiSimpleModeControl": false, "canDisconnect": true, "gearRatio": 1, "friction": 1}],
+			["differential", "transferCase", "awdmotor", 1, {"diffType": "lsd", "lsdLockCoef": 0.40, "lsdRevLockCoef": 0.40, "lsdPreload": 10.00, "uiName": "Center Differential", "defaultVirtualInertia":0.25, "friction": 0}],
+			["shaft", "rearDriveShaft", "transferCase", 1, {"uiSimpleModeControl": false, "canDisconnect": false, "gearRatio": 1, "friction": 1}] // 1
+			["shaft", "frontDriveShaft", "transferCase", 2, {"uiSimpleModeControl": false, "canDisconnect": false, "gearRatio": 1, "friction": 1}] // 2
+			
+		],
+		"transferCase":{
+		}
+	},
 
 	"Camso_TransferCase_FWD": {
 		"information":{
