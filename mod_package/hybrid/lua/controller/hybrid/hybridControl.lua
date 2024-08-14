@@ -1,6 +1,6 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.31 alpha
+-- version 0.0.32 alpha
 -- final edit - 2024.8.14 19:32
 
 local M = {}
