@@ -4,7 +4,7 @@
 			"name":"Hybrid Main",
 			"value":3000
 		},
-		"slotType" : "hybrid_main",
+		"slotType" : "Hybrid_Main",
 		"slots": [
 			["type", "default", "description"],
 			["Battery", "Lithium_Titanate_Battery", "Battery"],
