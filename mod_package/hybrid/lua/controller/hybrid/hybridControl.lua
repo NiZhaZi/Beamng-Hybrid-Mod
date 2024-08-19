@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.32 alpha
--- final edit - 2024.8.14 19:32
+-- version 0.0.33 alpha
+-- final edit - 2024.8.19 23:23
 
 local M = {}
 
@@ -144,7 +144,7 @@ local function getGear()
             else
                 electrics.values.motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
                 motorDirection = gearbox.gearRatio / abs(gearbox.gearRatio)
-                log("D", "", gearbox.gearRatio)
+                -- log("D", "", gearbox.gearRatio)
             end
         end
     elseif not ifMotorOn or not rangeSign then
