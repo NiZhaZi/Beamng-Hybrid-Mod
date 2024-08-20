@@ -96,8 +96,8 @@
             "configuration_top_left0": {
                 "cells":{
                     "top_left0": {
-                        "label": "EV FUEL",
-                        "unit":"",
+                        "label": "BATTERY",
+                        "unit":"%",
                         "path":"electrics.evfuel",
                         "tenPrecision":0
                     }
