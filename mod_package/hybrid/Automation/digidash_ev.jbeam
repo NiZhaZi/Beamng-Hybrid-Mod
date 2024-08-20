@@ -97,7 +97,7 @@
                 "cells":{
                     "top_left0": {
                         "label": "BATTERY",
-                        "unit":"%",
+                        "unit":"",
                         "path":"electrics.evfuel",
                         "tenPrecision":0
                     }
