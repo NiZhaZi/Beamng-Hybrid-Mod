@@ -1,6 +1,7 @@
---autoContrl version 0.0.8alpha
---Final Edit 2024年3月17日12点48分
---by NZZ
+-- autoContrl.lua - 2024.3.17 12:48 - auto functions control
+-- by NZZ
+-- version 0.0.9 alpha
+-- final edit - 2024.8.25 00:10
 
 local M = {}
 local debugTime = 0
@@ -27,6 +28,11 @@ local function switchAutoHold()
         mode.autoHold = "on"
     else
         gui.message({ txt = "Auto Hold Disabled" }, 5, "", "")
+    end
+    if mode.autoHold == "on" then
+        electrics.values.autohold = 1
+    else
+        electrics.values.autohold = 0
     end
 end
 
@@ -114,8 +120,10 @@ local function updateGFX(dt)
     if autoHoldMode == "on" then
         if input.throttle <= 0 and electrics.values.airspeed <= 0.08 then
             brake = 1
+            electrics.values.autoholdActive = 1
         else
             brake = input.brake
+            electrics.values.autoholdActive = 0
         end
     end
 
@@ -182,6 +190,7 @@ local function updateGFX(dt)
 end
 
 local function init(jbeamData)
+
     proxyEngine = powertrain.getDevice("mainEngine")
     motors = {}
     local motorNames = jbeamData.motorNames or {"mainMotor"}
@@ -200,6 +209,33 @@ local function init(jbeamData)
 
     brake = 0
     throttle = 0
+
+    if mode.autoHold == "on" then
+        electrics.values.autohold = 1
+    else
+        electrics.values.autohold = 0
+    end
+    electrics.values.autoholdActive = 0
+
+end
+
+local function reset(jbeamData)
+    
+    mode.autoHold = jbeamData.defaultAutoHold or "off"
+    mode.autoStart = jbeamData.defaultAutoStart or "off"
+    mode.hillDescentControl = jbeamData.HDC or "off"
+    mode.ecrawl = jbeamData.defaultECrawl or "off"
+
+    brake = 0
+    throttle = 0
+
+    if mode.autoHold == "on" then
+        electrics.values.autohold = 1
+    else
+        electrics.values.autohold = 0
+    end
+    electrics.values.autoholdActive = 0
+    
 end
 
 M.switchAutoHold = switchAutoHold
@@ -208,7 +244,8 @@ M.switchHDC = switchHDC
 M.switchECrawl = switchECrawl
 
 M.init = init
-M.onReset = init
+M.reset = reset
+M.onReset = reset
 M.onInit = init
 M.updateGFX = updateGFX
 
