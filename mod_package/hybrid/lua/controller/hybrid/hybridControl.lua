@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.33 alpha
--- final edit - 2024.8.19 23:23
+-- version 0.0.34 alpha
+-- final edit - 2024.8.26 13:18
 
 local M = {}
 
@@ -58,6 +58,7 @@ local REEVRPMProtect = nil
 local lastEnergy = 1
 local REEVAV = nil
 local REEVSOC = nil
+local highEfficentAV = nil
 local reevThrottle = 0
 
 local ifGearMotorDrive = false
@@ -484,12 +485,16 @@ local function updateGFX(dt)
         --     REEVAV = proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV
         -- end
         if electrics.values.remainingpower < lastEnergy then
-            REEVAV = REEVAV + 5 * rpmToAV
+            REEVAV = REEVAV + 2 * rpmToAV
         else
             if electrics.values.remainingpower > REEVSOC then
-                REEVAV = REEVAV - 5 * rpmToAV
-                if REEVAV < 0 then
-                    REEVAV = 0
+                REEVAV = REEVAV - 2 * rpmToAV
+                REEVAV = math.max(0, REEVAV)
+            else
+                if REEVAV > highEfficentAV then
+                    REEVAV = REEVAV - 2 * rpmToAV
+                else
+                    REEVAV = REEVAV + 2 * rpmToAV
                 end
             end
         end
@@ -634,6 +639,7 @@ local function init(jbeamData)
     REEVRPM = jbeamData.REEVRPM or 3000
     REEVAV = REEVRPM * rpmToAV
     REEVSOC = (jbeamData.REEVSOC or 80) / 100
+    highEfficentAV = (jbeamData.highEfficentRPM or 3500) * rpmToAV
     REEVMutiplier = jbeamData.REEVMutiplier or 1.00
     REEVRPMProtect = jbeamData.REEVRPMProtect or 0
     ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
