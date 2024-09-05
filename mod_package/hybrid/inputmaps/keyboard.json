@@ -121,6 +121,11 @@
      },
 
      {
+          "control": "shift ctrl l",
+          "action":  "switchLockMode"
+     },
+
+     {
           "control": "ctrl alt =",
           "action":  "set SOC increase"
      },
