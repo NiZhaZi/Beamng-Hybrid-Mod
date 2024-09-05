@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.34 alpha
--- final edit - 2024.8.26 13:18
+-- version 0.0.35 alpha
+-- final edit - 2024.9.5 12:20
 
 local M = {}
 
@@ -63,6 +63,8 @@ local reevThrottle = 0
 
 local ifGearMotorDrive = false
 local enhanceDrive = false
+
+local ecrawlMode = false
 
 local function reduceRegen()
 
@@ -352,6 +354,14 @@ local function cauculateRegen(percentage)
     end
 end
 
+local function setecrawlMode(m)
+    if type(m) == "bool" then
+        ecrawlMode = m
+    else
+        ecrawlMode = not ecrawlMode
+    end
+end
+
 local function setPartTimeDriveMode(mode)
     if mode == "partTime" then
         gui.message({ txt = "EV part-time drive on" }, 5, "", "")
@@ -571,6 +581,22 @@ local function updateGFX(dt)
     end
 
 
+    -- ecrawl
+    local ifecrawl = false
+    if ecrawlMode and hybridMode == "electric" and electrics.values.ignitionLevel == 2 and input.throttle == 0 then
+        if electrics.values.wheelspeed < (5 / 3.6)  then
+            electrics.values.mainThrottle = electrics.values.mainThrottle + 0.01
+            electrics.values.mainThrottle = math.min(electrics.values.mainThrottle, 0.2)
+        elseif electrics.values.wheelspeed > (6 / 3.6) then
+            electrics.values.mainThrottle = electrics.values.mainThrottle - 0.05
+            if electrics.values.wheelspeed < (10 / 3.6) then
+                electrics.values.mainThrottle = math.max(electrics.values.mainThrottle, 0.01)
+            end
+        end
+        ifecrawl = true
+    else
+        electrics.values.mainThrottle = electrics.values.throttle
+    end
 
     --comfortable regen
     if ifComfortRegen then
@@ -583,7 +609,7 @@ local function updateGFX(dt)
 
         for _, v in ipairs(subMotors) do
             if v then
-                if electrics.values.throttle > 0 then
+                if electrics.values.throttle > 0 or ifecrawl then
                     v.maxWantedRegenTorque = 0
                 else
                     v.maxWantedRegenTorque = v.originalRegenTorque * cauculateRegen( v.outputAV1 * avToRPM / v.maxRPM ) * regenLevel
@@ -600,7 +626,7 @@ local function updateGFX(dt)
 
         for _, v in ipairs(subMotors) do
             if v then
-                if electrics.values.throttle > 0 then
+                if electrics.values.throttle > 0 or ifecrawl then
                     v.maxWantedRegenTorque = 0
                 else
                     v.maxWantedRegenTorque = v.originalRegenTorque * regenLevel
@@ -678,9 +704,11 @@ local function init(jbeamData)
             if mainMotor then
                 table.insert(mainMotors, mainMotor)
                 mainMotor.originalRegenTorque = mainMotor.maxWantedRegenTorque
+                mainMotor.electricsThrottleName = "mainThrottle"
             end
         end
     end
+    electrics.values.mainThrottle = 0
 
     subMotors = {}
     local subMotorNames = jbeamData.subMotorNames or {"subMotor"}
@@ -744,6 +772,8 @@ local function init(jbeamData)
         setMode("hybrid")
     end
     
+    ecrawlMode = jbeamData.ecrawlMode or false
+
 end
 
 local function new()
@@ -787,6 +817,10 @@ local function reset(jbeamData)
     for _, v in ipairs(subMotors) do
         v.electricsThrottleName = "subThrottle"
     end
+
+    electrics.values.mainThrottle = 0
+    ecrawlMode = jbeamData.ecrawlMode or false
+
 end
 
 local function onReset(jbeamData)
@@ -805,6 +839,8 @@ end
 M.setMode = setMode
 M.setPartTimeDriveMode = setPartTimeDriveMode
 M.rollingMode = rollingMode
+
+M.setecrawlMode = setecrawlMode
 
 M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
