@@ -591,7 +591,7 @@ local function updateGFX(dt)
 
     -- ecrawl
     local ifecrawl = false
-    if ecrawlMode and hybridMode == "electric" and electrics.values.ignitionLevel == 2 and input.throttle == 0 then
+    if ecrawlMode and ifMotorOn and electrics.values.ignitionLevel == 2 and input.throttle == 0 then
         if electrics.values.wheelspeed < (5 / 3.6)  then
             electrics.values.mainThrottle = electrics.values.mainThrottle + 0.01
             electrics.values.mainThrottle = math.min(electrics.values.mainThrottle, 0.2)
