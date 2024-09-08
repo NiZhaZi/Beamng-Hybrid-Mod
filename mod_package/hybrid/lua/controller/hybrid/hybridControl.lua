@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.35 alpha
--- final edit - 2024.9.5 12:20
+-- version 0.0.36 alpha
+-- final edit - 2024.9.8 16:34
 
 local M = {}
 
@@ -263,7 +263,7 @@ local function setMode(mode)
         if mode == u then
             hybridMode = mode
             electrics.values.hybridMode = mode
-            guihooks.message("Switch to " .. mode .. " mode" , 5, "")
+            guihooks.message("Switch to " .. mode .. " mode." , 5, "")
 
             if mode == "hybrid" then
                 trig(mode)
@@ -294,8 +294,9 @@ local function setMode(mode)
                     v:setMode("disconnected")
                 end
             end
-
+            break
         end
+        guihooks.message( mode .. " mode does not available." , 5, "")
     end
 
     local PGMode = nil
@@ -360,6 +361,13 @@ local function setecrawlMode(m)
     else
         ecrawlMode = not ecrawlMode
     end
+    local state
+    if ecrawlMode then
+        state = "On"
+    else
+        state = "Off"
+    end
+    gui.message({ txt = "E-Crawl " .. state }, 5, "", "")
 end
 
 local function setPartTimeDriveMode(mode)
