@@ -1,7 +1,7 @@
 -- motorShaft.lua - 2024.3.8 14:45 - Shaft with electric motor
 -- by NZZ
--- version 0.0.8 alpha
--- final edit - 2024.5.30 11:51
+-- version 0.0.9 alpha
+-- final edit - 2024.9.10 16:23
 
 local M = {}
 
@@ -244,6 +244,7 @@ local function motorTorque(device, dt)
   frictionTorque = min(frictionTorque, abs(engineAV) * device.inertia * 2000) * avSign
 
   local timeSign = 1
+  device.motorTorque = (actualTorque - frictionTorque) * timeSign
   return (actualTorque - frictionTorque) * device.motorRatio * timeSign
 end
 
@@ -748,6 +749,7 @@ local function new(jbeamData)
     updateSimpleControlButtons = updateSimpleControlButtons,
 
     --insert0
+    motorTorque = 0,
     visualType = "electricMotor",
     outputAV1 = 0,
     torqueDiff = 0,
