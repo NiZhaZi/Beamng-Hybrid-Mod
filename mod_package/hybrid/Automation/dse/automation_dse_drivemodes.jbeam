@@ -35,7 +35,9 @@
 										"controllerName": "brakeControl",
 										"tractionControl.isEnabled": true}],
 						["transmission", {"defaultForwardMode": "D"}],
-						["controller", {"controllerName": "advawd","mode": "locked"}]
+						["controller", {"controllerName": "advawd","mode": "locked"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": 0.1}],
 					]
 				},
 				"off": {
@@ -53,7 +55,9 @@
 						["controller", {"controllerName": "yawControl","isEnabled": false}],
 						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 2}],
 						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 2}],
-						["controller", {"controllerName": "advawd"}]
+						["controller", {"controllerName": "advawd"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": 0}],
 					]
 				},
 				"off2wd": {
@@ -69,7 +73,9 @@
 						["transmission", {"defaultForwardMode": "S"}],
 						["controller", {"controllerName": "tractionControl","isEnabled": false}],
 						["controller", {"controllerName": "yawControl","isEnabled": false}],
-						["controller", {"output": 1, "controllerName": "advawd","mode": "2wd"}]
+						["controller", {"output": 1, "controllerName": "advawd","mode": "2wd"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": 0}],
 					]
 				},
 				"comfort": {
@@ -95,7 +101,9 @@
 						["transmission", {"defaultForwardMode": "D"}],
 						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 3}],
 						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 3}],
-						["controller", {"controllerName": "advawd"}]
+						["controller", {"controllerName": "advawd"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": 0}],
 					]
 				},
 				"sport": {
@@ -122,7 +130,9 @@
 						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 2}],
 						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 2}],
 						["transmission", {"defaultForwardMode": "S"}],
-						["controller", {"controllerName": "advawd"}]
+						["controller", {"controllerName": "advawd"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": -0.1}],
 					]
 				}
 			},

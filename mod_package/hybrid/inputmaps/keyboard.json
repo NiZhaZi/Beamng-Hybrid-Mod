@@ -91,6 +91,11 @@
      },
 
      {
+          "control": "alt 7",
+          "action":  "Chassis Adjust Mode"
+     },
+
+     {
           "control": "alt 8",
           "action":  "Chassis Lift"
      },
