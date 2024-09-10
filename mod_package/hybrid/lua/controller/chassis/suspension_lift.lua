@@ -1,7 +1,7 @@
 -- suspension_lift.lua - 2024.4.19 18:30 - suspension lift control
 -- by NZZ
--- version 0.0.2 alpha
--- final edit - 2024.9.10 18:48
+-- version 0.0.3 alpha
+-- final edit - 2024.9.10 22:16
 
 local M = {}
 
@@ -21,6 +21,7 @@ local function onInit(jbeamData)
     lift0 = 0
     electrics.values['lift0'] = lift0
 
+    highSpeed = jbeamData.liftVelocity or 80
     mode = jbeamData.defaultMode or "auto"
     autoLevel = 0
 
@@ -73,7 +74,7 @@ end
 local function updateGFX(dt)
 
     local finalLevel = autoLevel
-    if autoLevel == 0 and electrics.values.wheelspeed >= 80 / 3.6 then
+    if autoLevel == 0 and electrics.values.wheelspeed >= highSpeed / 3.6 then
         finalLevel = -0.1
     end
     if mode == "auto" then
