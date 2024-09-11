@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.36 alpha
--- final edit - 2024.9.8 16:34
+-- version 0.0.37 alpha
+-- final edit - 2024.9.11 16:01
 
 local M = {}
 
@@ -21,6 +21,7 @@ local velocityRangeBegin = nil
 local velocityRangEnd = nil
 
 local ondemandMaxRPM = nil
+local AWDMultiplier = nil
 local controlLogicModule = nil
 local hybridMode = nil
 local isCrawl = 0
@@ -551,7 +552,7 @@ local function updateGFX(dt)
     subRPM = subRPM / #subMotors
 
     if edriveMode == "partTime" then
-        if (abs(mianRPM - subRPM) >= ondemandMaxRPM) or ifLowSpeed() then
+        if (abs(mianRPM - subRPM * AWDMultiplier) >= ondemandMaxRPM) or ifLowSpeed() then
             electrics.values.subThrottle = electrics.values.throttle
         else
             electrics.values.subThrottle = 0
@@ -745,6 +746,7 @@ local function init(jbeamData)
     end
 
     ondemandMaxRPM = jbeamData.ondemandMaxRPM or 50
+    AWDMultiplier = jbeamData.AWDMultiplier or 1
     
     motors = {}
     local motorNames = jbeamData.motorNames
