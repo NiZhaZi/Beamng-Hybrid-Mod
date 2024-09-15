@@ -1,7 +1,7 @@
 -- suspension_lift.lua - 2024.4.19 18:30 - suspension lift control
 -- by NZZ
--- version 0.0.4 alpha
--- final edit - 2024.9.15 20:11
+-- version 0.0.5 alpha
+-- final edit - 2024.9.15 21:21
 
 local M = {}
 
@@ -18,7 +18,22 @@ local autoLevel = nil
 local otSign = nil
 local mode = nil
 
+local function getSign(num)
+    if type(num) == "number" then
+        if num == 0 or num == -0 then
+            return 0
+        elseif num > 0 then
+            return 1
+        else
+            return -1
+        end
+    else
+        error("typeError")
+    end
+end
+
 local function onInit(jbeamData)
+    
     lift0 = 0
     electrics.values['lift0'] = lift0
 
@@ -43,7 +58,10 @@ local function adjustChassis(para)
             end
         end
 
-        local level = floor(lift0 / para)
+        local level = getSign(lift0) * floor(lift0 / para)
+        if level == -0 then
+            level = 0
+        end
         guihooks.message("Chassis Height is now on level " .. level .. ".", 5, "")
 
         if lift0 > liftLevel then
@@ -90,7 +108,7 @@ local function updateGFX(dt)
         finalLevel = math.min(math.max(electrics.values['lift0'] + otSign * dt, dropLevel), liftLevel)
         electrics.values['lift0'] = finalLevel
         lift0 = finalLevel
-    end
+    end 
     
 end
 
