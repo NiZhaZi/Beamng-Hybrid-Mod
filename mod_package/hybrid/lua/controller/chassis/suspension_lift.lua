@@ -87,7 +87,9 @@ local function updateGFX(dt)
         elseif electrics.values['lift0'] == dropLevel then
             otSign = 1
         end
-        electrics.values['lift0'] = math.min(math.max(electrics.values['lift0'] + otSign * dt, dropLevel), liftLevel)
+        finalLevel = math.min(math.max(electrics.values['lift0'] + otSign * dt, dropLevel), liftLevel)
+        electrics.values['lift0'] = finalLevel
+        lift0 = finalLevel
     end
     
 end
