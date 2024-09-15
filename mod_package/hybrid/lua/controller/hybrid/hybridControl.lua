@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.37 alpha
--- final edit - 2024.9.11 16:01
+-- version 0.0.38 alpha
+-- final edit - 2024.9.15 23:34
 
 local M = {}
 
@@ -398,9 +398,15 @@ local function updateGFX(dt)
 
     --log("", "hybrid", "hybrid" .. 3)
     getGear()
+    local tempIgn
+    if electrics.values.ignitionLevel == 2 then
+        tempIgn = 1
+    else
+        tempIgn = 0
+    end
     for _, v in ipairs(motors) do
         if v.type == "electricMotor" then
-            v.motorDirection = motorDirection or 0
+            v.motorDirection = motorDirection * tempIgn or 0
         end     
     end
 
