@@ -1,7 +1,7 @@
 -- suspension_lift.lua - 2024.4.19 18:30 - suspension lift control
 -- by NZZ
--- version 0.0.3 alpha
--- final edit - 2024.9.10 22:16
+-- version 0.0.4 alpha
+-- final edit - 2024.9.15 20:11
 
 local M = {}
 
@@ -15,6 +15,7 @@ local dropLevel = nil
 local highSpeed = nil
 
 local autoLevel = nil
+local otSign = nil
 local mode = nil
 
 local function onInit(jbeamData)
@@ -74,12 +75,19 @@ end
 local function updateGFX(dt)
 
     local finalLevel = autoLevel
-    if autoLevel == 0 and electrics.values.wheelspeed >= highSpeed / 3.6 then
-        finalLevel = -0.1
+    if mode ~= "outTrouble" and autoLevel == 0 and electrics.values.wheelspeed >= highSpeed / 3.6 then
+        finalLevel = dropLevel
     end
     if mode == "auto" then
         electrics.values['lift0'] = finalLevel
         lift0 = finalLevel
+    elseif mode == "outTrouble" then
+        if electrics.values['lift0'] == liftLevel then
+            otSign = -1
+        elseif electrics.values['lift0'] == dropLevel then
+            otSign = 1
+        end
+        electrics.values['lift0'] = math.min(math.max(electrics.values['lift0'] + otSign * dt, dropLevel), liftLevel)
     end
     
 end
@@ -91,14 +99,19 @@ local function setParameters(parameters)
 end
 
 local function switchMode(Mode)
-    if Mode == "auto" or Mode == "manual" then
+    if Mode == "auto" or Mode == "manual" or Mode == "outTrouble" then
         mode = Mode
     else
         if mode == "auto" then
             mode = "manual"
         elseif mode == "manual" then
             mode = "auto"
+        else
+            mode = "auto"
         end
+    end
+    if Mode == "outTrouble" then
+        otSign = -1
     end
     guihooks.message("Chassis Adjust Mode is now " .. mode .. " mode." , 5, "")
 end

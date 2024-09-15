@@ -96,6 +96,11 @@
      },
 
      {
+          "control": "alt 6",
+          "action":  "Out Of Trouble Mode"
+     },
+
+     {
           "control": "alt 8",
           "action":  "Chassis Lift"
      },
