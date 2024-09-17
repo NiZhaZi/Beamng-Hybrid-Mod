@@ -18,17 +18,17 @@
 		"nodes": [
 			["id", "posX", "posY", "posZ"],
 			{"nodeWeight":11.5466},
-			["a9", -0.2, 1.1653, 0.567499],
-			["a10", 0.2, 1.1653, 0.567499],
+			["a9", -0.2, 1.226, 0.6021],
+			["a10", 0.2, 1.226, 0.6021],
 			//trailing arm pivot
 			{"nodeWeight":6.0},
-			["4wr",-0.4206, 1.1206, 0.6021, {"group":["susp_R","4ws_R"]}],
-			["4wl", 0.4206, 1.1206, 0.6021, {"group":["susp_R","4ws_R"]}],
+			["4wr",-0.3946, 1.0949, 0.6021, {"group":["susp_R","4ws_R"]}],
+			["4wl", 0.3946, 1.0949, 0.6021, {"group":["susp_R","4ws_R"]}],
 			{"group":""},
 			//rail nodes
 			{"nodeWeight":5.5},
-			["rx3rr",-0.51, 1.0758, 0.6021, {"group":"4ws_R"}],
-			["rx3ll", 0.51, 1.0758, 0.6021, {"group":"4ws_R"}],
+			["rx3rr",-0.459, 1.0228, 0.6021, {"group":"4ws_R"}],
+			["rx3ll", 0.459, 1.0228, 0.6021, {"group":"4ws_R"}],
 			//move original subframe nodes
 			["rx1r", -0.3311, 1.1653, 0.6021, {"group":["susp_R","subframe_R"]}],
 			["rx1l", 0.3311, 1.1653, 0.6021, {"group":["susp_R","subframe_R"]}],
@@ -53,26 +53,26 @@
           	{"beamSpring":7001000,"beamDamp":150},
           	{"beamDeform":25000,"beamStrength":"FLT_MAX"},
 		 
-          	["rx1r","f4l"],
-          	["rx1l","f4r"],
+          	["rx1r","a14"],
+          	["rx1l","a13"],
 		 
-          	["rx1r","f9r"],
-          	["rx1l","f9l"],
+          	["rx1r","a5"],
+          	["rx1l","a6"],
 		 
-          	["rx2r","f4r"],
-          	["rx2l","f4l"],
+          	["rx2r","a13"],
+          	["rx2l","a14"],
 		 
-          	["rx2r","f9r"],
-          	["rx2l","f9l"],
-          	["rx2r","f9l"],
-          	["rx2l","f9r"],
+          	["rx2r","a5"],
+          	["rx2l","a6"],
+          	["rx2r","a6"],
+          	["rx2l","a5"],
 		 
           	{"beamSpring":5001000,"beamDamp":150},
-          	["rx1r","f3r"],
-          	["rx1l","f3l"],
+          	["rx1r","a17"],
+          	["rx1l","a18"],
 		 
-          	["rx1r","f8r"],
-          	["rx1l","f8l"],
+          	["rx1r","a1"],
+          	["rx1l","a2"],
 		 
           	["rx2r","r1ll"],
           	["rx2l","r1rr"],
@@ -130,15 +130,15 @@
 
 			//--REAR INDEPENDENT SUSPENSION--
           	{"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
-          	{"beamDeform":22000,"beamStrength":375000},
+          	{"beamDeform":22000,"beamStrength":37500000},
           	{"beamSpring":5001000,"beamDamp":150},
           	//attach rail nodes to floor
           	["rx3rr","rx1r"],
           	["rx3ll","rx1l"],
-          	["rx3rr","f4rr"],
-          	["rx3rr","f4r"],
-          	["rx3ll","f4l"],
-          	["rx3ll","f4ll"],
+          	["rx3rr","a15"],
+          	["rx3rr","a14"],
+          	["rx3ll","a13"],
+          	["rx3ll","a12"],
 		 
           	["rx3rr","rx2r"],
           	["rx3ll","rx2l"],
@@ -146,10 +146,10 @@
           	["rx3ll","rx1"],
 		 
           	{"beamDeform":11000,"beamStrength":375000},
-          	["rx3rr","f3rr"],
-          	["rx3ll","f3ll"],
-          	["rx3rr","f3r"],
-          	["rx3ll","f3l"],
+          	["rx3rr","a19"],
+          	["rx3ll","a16"],
+          	["rx3rr","a18"],
+          	["rx3ll","a17"],
 			//trailing arm
 			{"beamSpring":90010.00,"beamDamp":150},
 			{"beamDeform":59400,"beamStrength":317000},
