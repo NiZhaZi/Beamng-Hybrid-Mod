@@ -1,7 +1,7 @@
 -- powerGenerator.lua - 2024.4.29 17:27 - powerGenerator control for hybrid Transmissions
 -- by NZZ
--- version 0.0.4 alpha
--- final edit - 2024.5.29 18:59
+-- version 0.0.5 alpha
+-- final edit - 2024.9.17 14:13
 
 local M = {}
 
@@ -104,4 +104,5 @@ M.updateGFX = updateGFX
 M.reset = reset
 M.init = init
 
+rawset(_G, "powerGenerator", M)
 return M

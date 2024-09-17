@@ -1,9 +1,7 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
---NZZ hybrid Traction Control
---22点40分2024年4月19日
+-- HybridTC.lua - 2024.4.19 22:40 - hybrid Traction Control
+-- by NZZ
+-- version 0.0.2 alpha
+-- final edit - 2024.9.17 14:13
 
 local M = {}
 M.type = "auxiliary"
@@ -302,4 +300,5 @@ M.sendConfigData = sendConfigData
 
 M.updateMotor = updateMotor
 
+rawset(_G, "HybridTC", M)
 return M

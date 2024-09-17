@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.38 alpha
--- final edit - 2024.9.15 23:34
+-- version 0.0.39 alpha
+-- final edit - 2024.9.17 14:13
 
 local M = {}
 
@@ -302,7 +302,7 @@ local function setMode(mode)
 
     local PGMode = nil
     if mode == "reev" then
-        PGMode = controller.getControllerSafe('powerGenerator').getFunctionMode()
+        PGMode = powerGenerator.getFunctionMode()
         PreRMode = PGMode
     end
     if mode ~= "reev" then
@@ -312,10 +312,10 @@ local function setMode(mode)
         REEVMode = "on"
     end
     if ifREEVEnable and mode == "reev" then
-        controller.getControllerSafe('powerGenerator').setMode('on')
+        powerGenerator.setMode('on')
     else
         if PreRMode then
-            controller.getControllerSafe('powerGenerator').setMode(PreRMode)
+            powerGenerator.setMode(PreRMode)
         end
     end
 
@@ -498,8 +498,8 @@ local function updateGFX(dt)
 
     --reev mode begin
     if ifREEVEnable and detO == 1 then
-        if controller.getControllerSafe('tractionControl') or false then
-            controller.getControllerSafe('tractionControl').updateMotor(REEVMode)
+        if HybridTC or false then
+            HybridTC.updateMotor(REEVMode)
         end
         detO = 0
     end
@@ -874,5 +874,5 @@ M.onReset = onReset
 M.new = new
 M.updateGFX = updateGFX
 
-
+rawset(_G, "hybridControl", M)
 return M
