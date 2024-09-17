@@ -1,0 +1,204 @@
+{
+    "Rear_Wheel_Steering_V2": {
+		"information":{
+			"authors":"",
+			"name":"Rear Wheel Steering Version 2",
+		}
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+			["$switchVelocity", "range", "km/h", "Suspension", 45, 0, 650, "Rear Steering Switch Velocity", "Adjusts the Rear Steering Switch Velocity"{"subCategory":"", "minDis": 0, "maxDis": 650}],
+			["$rwsAngle", "range", "Angle", "Suspension", 0.35, 0, 1, "Rear Steering Angle", "Adjusts the Rear Steering Angle"{"subCategory":"", "minDis": 0.01, "maxDis": 50}],
+		],
+		"slotType" : "Rear_Wheel_Steering",
+		"controller": [
+			["fileName"],
+			["chassis/4wsAdvance", {"name": "4wsAdvance"}],
+			["chassis/rwsControl", {"name": "rwsControl"}],
+		],
+		"nodes": [
+			["id", "posX", "posY", "posZ"],
+			{"nodeWeight":11.5466},
+			["a9", -0.2, 1.1653, 0.567499],
+			["a10", 0.2, 1.1653, 0.567499],
+			//trailing arm pivot
+			{"nodeWeight":6.0},
+			["4wr",-0.4206, 1.1206, 0.6021, {"group":["susp_R","4ws_R"]}],
+			["4wl", 0.4206, 1.1206, 0.6021, {"group":["susp_R","4ws_R"]}],
+			{"group":""},
+			//rail nodes
+			{"nodeWeight":5.5},
+			["rx3rr",-0.51, 1.0758, 0.6021, {"group":"4ws_R"}],
+			["rx3ll", 0.51, 1.0758, 0.6021, {"group":"4ws_R"}],
+			//move original subframe nodes
+			["rx1r", -0.3311, 1.1653, 0.6021, {"group":["susp_R","subframe_R"]}],
+			["rx1l", 0.3311, 1.1653, 0.6021, {"group":["susp_R","subframe_R"]}],
+			{"group":""},
+	    ],
+	    "beams": [
+			["id1:", "id2:"],
+          	//--REAR RUNNING GEAR--
+          	{"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          	{"beamSpring":8001000,"beamDamp":150},
+          	{"beamDeform":35000,"beamStrength":"FLT_MAX"},
+          	//rear suspension axis points
+          	{"deformLimitExpansion":1.1},
+          	["rx1r","rx1l"],
+		 
+          	["rx1r","rx2l"],
+          	["rx1l","rx2r"],
+		 
+          	["rx2r","rx2l"],
+		 
+          	{"deformLimitExpansion":""},
+          	{"beamSpring":7001000,"beamDamp":150},
+          	{"beamDeform":25000,"beamStrength":"FLT_MAX"},
+		 
+          	["rx1r","f4l"],
+          	["rx1l","f4r"],
+		 
+          	["rx1r","f9r"],
+          	["rx1l","f9l"],
+		 
+          	["rx2r","f4r"],
+          	["rx2l","f4l"],
+		 
+          	["rx2r","f9r"],
+          	["rx2l","f9l"],
+          	["rx2r","f9l"],
+          	["rx2l","f9r"],
+		 
+          	{"beamSpring":5001000,"beamDamp":150},
+          	["rx1r","f3r"],
+          	["rx1l","f3l"],
+		 
+          	["rx1r","f8r"],
+          	["rx1l","f8l"],
+		 
+          	["rx2r","r1ll"],
+          	["rx2l","r1rr"],
+          	["rx2r","r1rr"],
+          	["rx2l","r1ll"],
+		 
+          	{"beamDeform":15000,"beamStrength":"FLT_MAX"},
+          	["rx1","rx1l"],
+          	["rx1","rx1r"],
+          	["rx1","rx2r"],
+          	["rx1","rx2l"],
+		 
+          	["rx1","r2"],
+          	["rx1","r2rr"],
+          	["rx1","r2ll"],
+		 
+          	["rx1r","r1rr"],
+          	["rx1l","r1ll"],
+		 
+          	["rx1r","f4rr"],
+          	["rx1l","f4ll"],
+		 
+          	{"beamSpring":4001000,"beamDamp":150},
+          	{"beamDeform":7500,"beamStrength":"FLT_MAX"},
+          	["rx1r","r2rr"],
+          	["rx1l","r2ll"],
+		 
+          	["rx1r","r2"],
+          	["rx1l","r2"],
+          	["rx2r","r2"],
+          	["rx2l","r2"],
+		 
+          	["rx1r","f3rr"],
+          	["rx1l","f3ll"],
+		 
+          	["rx1r","rx2r"],
+          	["rx1l","rx2l"],
+		 
+          	["rx2r","f4rr"],
+          	["rx2l","f4ll"],
+		 
+          	["rx2r","r2rr"],
+          	["rx2l","r2ll"],
+		 
+          	["rx2r","r1"],
+          	["rx2l","r1"],
+		 
+          	["rx1r","r1"],
+          	["rx1l","r1"],
+		 
+          	["rx1r","r3rr"],
+          	["rx1l","r3ll"],
+          	["rx1r","r3"],
+          	["rx1l","r3"],
+
+			//--REAR INDEPENDENT SUSPENSION--
+          	{"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          	{"beamDeform":22000,"beamStrength":375000},
+          	{"beamSpring":5001000,"beamDamp":150},
+          	//attach rail nodes to floor
+          	["rx3rr","rx1r"],
+          	["rx3ll","rx1l"],
+          	["rx3rr","f4rr"],
+          	["rx3rr","f4r"],
+          	["rx3ll","f4l"],
+          	["rx3ll","f4ll"],
+		 
+          	["rx3rr","rx2r"],
+          	["rx3ll","rx2l"],
+          	["rx3rr","rx1"],
+          	["rx3ll","rx1"],
+		 
+          	{"beamDeform":11000,"beamStrength":375000},
+          	["rx3rr","f3rr"],
+          	["rx3ll","f3ll"],
+          	["rx3rr","f3r"],
+          	["rx3ll","f3l"],
+			//trailing arm
+			{"beamSpring":90010.00,"beamDamp":150},
+			{"beamDeform":59400,"beamStrength":317000},
+			["4wr","rh1r"],
+			["4wl","rh1l"],
+			["4wr","rh2r"],
+			["4wl","rh2l"],
+   
+			//attach to wheel
+			{"beamSpring":7501000,"beamDamp":150},
+			{"beamDeform":78000,"beamStrength":275000},
+			{"optional":true},
+			{"breakGroup":"wheel_RR"},
+			["rw1r","4wr"],
+			["rw1rr","4wr"],
+   
+			{"breakGroup":"wheel_RL"},
+			["rw1l","4wl"],
+			["rw1ll","4wl"],
+			{"breakGroup":""},
+			{"optional":false},
+   	    ],
+		"rails": 
+			{"4ws":{"links:":["rx3rr", "rx1r", "rx1l", "rx3ll"], "broken:":[], "looped":false, "capped":true},
+		},
+		"slidenodes": [
+			["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+			["4wr", "4ws", true, true, 0.0, 10001000, 190000, 190000],
+			["4wl", "4ws", true, true, 0.0, 10001000, 190000, 190000],
+		],
+		"hydros": [
+			["id1:","id2:"],
+			{"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+			{"beamSpring":1800600,"beamDamp":500,"beamDeform":44550,"beamStrength":83250},
+			["a9","4wr", {"factor":"$=-$rwsAngle","inputSource":"4wsAdvance","beamPrecompression":"$toe_RR","beamPrecompressionTime":0.5}],
+			["a10","4wl", {"factor":"$rwsAngle","inputSource":"4wsAdvance","beamPrecompression":"$toe_RR","beamPrecompressionTime":0.5}],
+			{"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+		],
+		"pressureWheels": [
+			["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+			//cancel out brake properties
+			{"brakeTorque":0},
+			{"parkingTorque":0},
+			{"enableBrakeThermals":false},
+			{"brakeDiameter":false},
+			{"brakeMass":false},
+			{"brakeType":false},
+			{"rotorMaterial":false},
+			{"brakeVentingCoef":false},
+		],
+	},
+}
