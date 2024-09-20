@@ -1,7 +1,7 @@
 -- suspension_lift.lua - 2024.4.19 18:30 - suspension lift control
 -- by NZZ
--- version 0.0.5 alpha
--- final edit - 2024.9.15 21:21
+-- version 0.0.6 alpha
+-- final edit - 2024.9.20 11:57
 
 local M = {}
 
@@ -48,28 +48,17 @@ end
 local function adjustChassis(para)
 
     if mode == "manual" then
-        if para > 0 then
-            if lift0 < liftLevel then
-                lift0 = lift0 + para
-            end
-        elseif para < 0 then
-            if lift0 > dropLevel then
-                lift0 = lift0 + para
-            end
+
+        lift0 = math.max(math.min(lift0 + para, liftLevel), dropLevel)
+        if math.abs(lift0) < 0.0001 then
+            lift0 = 0
         end
 
-        local level = getSign(lift0) * floor(lift0 / para)
+        local level = getSign(lift0) * math.abs(lift0 / para)
         if level == -0 then
             level = 0
         end
         guihooks.message("Chassis Height is now on level " .. level .. ".", 5, "")
-
-        if lift0 > liftLevel then
-            lift0 = liftLevel
-        end
-        if lift0 < dropLevel then
-            lift0 = dropLevel
-        end
 
         electrics.values['lift0'] = lift0
     else
