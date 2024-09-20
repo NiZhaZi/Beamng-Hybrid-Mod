@@ -127,6 +127,7 @@ local function getGear()
         else
             electrics.values.motorDirection = gearbox.gearIndex
         end
+        motorDirection = electrics.values.motorDirection
         -- if gearbox.type == "cvtGearbox" or gearbox.type == "ectGearbox" then
         --     if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
         --         electrics.values.motorDirection = gearbox.gearIndex
