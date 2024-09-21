@@ -1,6 +1,7 @@
---motorControl version 0.0.8alpha
---Final Edit 2024年3月3日22点21分
---by NZZ
+-- motorControl.lua - 2024.3.3 22:21 - motor control for hybrid Vehicles
+-- by NZZ
+-- version 0.0.9 alpha
+-- final edit - 2024.9.21 18:28
 
 local M = {}
 
@@ -14,6 +15,7 @@ local constants = {rpmToAV = 0.104719755, avToRPM = 9.549296596425384}
 
 local nsmotors = nil
 local motors = nil
+local gearbox
 
 M.smoothedValues = nil
 
@@ -208,8 +210,18 @@ end
 local function updateGFX(dt)
   activeRegen(dt)
   for _, v in ipairs(nsmotors) do
-    v.motorDirection = electrics.values.motorDirection or 0
+    -- v.motorDirection = electrics.values.motorDirection or 0
   end
+
+  -- for _, v in ipairs(motors) do
+  --   if gearbox.mode then
+  --     if gearbox.mode == "P" then
+  --       motors.brake = 1
+  --     end
+  --   else
+  --     motors.brake = 0
+  --   end
+  -- end
 
   local storage = energyStorage.getStorage(battery)
   electrics.values.remainingpower = storage.remainingRatio
@@ -224,6 +236,7 @@ end
 
 local function init(jbeamData)
   battery =  jbeamData.energyStorage or "mainBattery"
+  gearbox =  powertrain.getDevice("gearbox")
 
   nsmotors = {}
   local nsmotorNames = jbeamData.nsmotorNames or {"mainMotor"}
@@ -307,4 +320,5 @@ M.updateGFX = updateGFX
 
 M.smoothedAvgAVInput = 1
 
+rawset(_G, "motorControl", M)
 return M

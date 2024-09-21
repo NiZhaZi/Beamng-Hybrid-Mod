@@ -1,12 +1,13 @@
 -- autoContrl.lua - 2024.3.17 12:48 - auto functions control
 -- by NZZ
--- version 0.0.9 alpha
--- final edit - 2024.8.25 00:10
+-- version 0.0.10 alpha
+-- final edit - 2024.9.21 18:40
 
 local M = {}
 local debugTime = 0
 
 local proxyEngine = nil
+local gearbox = nil
 local motors = nil 
 
 local brake = nil
@@ -168,11 +169,14 @@ local function updateGFX(dt)
     elseif throttle < 0 then
         throttle = 0
     end
-    if brake > 1 then
-        brake = 1
-    elseif brake < 0 then
-        brake = 0
+
+    if gearbox then
+        if gearbox.mode == "park" then
+            brake = 1
+        end
     end
+
+    brake = math.max(math.min(brake, 1), 0)
 
     --if throttle ~= electrics.values.throttle then
     --    electrics.values.throttle = throttle
@@ -192,6 +196,7 @@ end
 local function init(jbeamData)
 
     proxyEngine = powertrain.getDevice("mainEngine")
+    gearbox =  powertrain.getDevice("gearbox")
     motors = {}
     local motorNames = jbeamData.motorNames or {"mainMotor"}
     for _, v in ipairs(motorNames) do
