@@ -1,0 +1,16 @@
+{
+	"Camso_SpeedLimiter": {
+		"information":{
+			"name":"Speed Limiter",
+			"value":2500
+		},
+		"slotType": "Camso_SpeedLimiter"
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+			["$speedLimit", "range", "km/h", "Power", 250, -1, 1000, "Max Limited Velocity (km/h)", "Adjusts Max Limited Velocity", {"subCategory":"","stepDis": 1, "minDis": -1, "maxDis": 1000}],
+		],
+		"vehicleController": {
+			"topSpeedLimit": "$=$speedLimit / 3.6"
+		}
+	}
+}
