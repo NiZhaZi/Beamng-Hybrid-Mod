@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.40 alpha
--- final edit - 2024.9.20 19:00
+-- version 0.0.41 alpha
+-- final edit - 2024.9.24 14:46
 
 local M = {}
 
@@ -113,21 +113,24 @@ local function getGear()
     end
 
     if ifMotorOn and rangeSign then
+        local directFlag = 0
         if gearbox.mode then
             electrics.values.gearName = gearbox.mode
             if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
-                electrics.values.motorDirection = gearbox.gearIndex
+                directFlag = gearbox.gearIndex
             elseif gearbox.mode == "reverse" then -- CVT R gear
-                electrics.values.motorDirection = -1
+                directFlag = -1
             elseif gearbox.mode == "neutral" then -- N gear
-                electrics.values.motorDirection = 0
+                directFlag = 0
             elseif gearbox.mode == "park" then -- P gear
-                electrics.values.motorDirection = 0
+                directFlag = 0
             end
         else
-            electrics.values.motorDirection = gearbox.gearIndex
+            directFlag = gearbox.gearIndex
         end
-        motorDirection = electrics.values.motorDirection
+        directFlag = math.max(-1, math.min(1, directFlag))
+        electrics.values.motorDirection = directFlag
+        motorDirection = directFlag
         -- if gearbox.type == "cvtGearbox" or gearbox.type == "ectGearbox" then
         --     if gearbox.mode == "drive" then -- D gear , S gear , R gear or M gear
         --         electrics.values.motorDirection = gearbox.gearIndex

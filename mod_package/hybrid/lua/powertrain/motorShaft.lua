@@ -1,7 +1,7 @@
 -- motorShaft.lua - 2024.3.8 14:45 - Shaft with electric motor
 -- by NZZ
--- version 0.0.9 alpha
--- final edit - 2024.9.10 16:23
+-- version 0.0.10 alpha
+-- final edit - 2024.9.24 14:42
 
 local M = {}
 
@@ -223,6 +223,11 @@ local function motorTorque(device, dt)
   device.instantMaxRegenTorque = rawRegenTorque
 
   local actualTorque = throttle > 0 and torque or regenTorque
+
+  -- device.consoleNum0 = 
+  device.motorOutputRPM = torqueRPM
+  device.motorOutputTorque = torque
+  device.motorRegenTorque = regenTorque
 
   local maxCurrentTorque = (torqueCurve[torqueRPM] or torqueCurve[0]) - friction - (dynamicFriction * abs(device.outputRPM) * 0.1047197177)
   local instantEngineLoad = clamp(actualTorque / (maxCurrentTorque + 1e-30), -1, 1)
@@ -749,7 +754,12 @@ local function new(jbeamData)
     updateSimpleControlButtons = updateSimpleControlButtons,
 
     --insert0
+    motorOutputRPM = 0,
     motorTorque = 0,
+    motorOutputTorque = 0,
+    motorRegenTorque = 0,
+    consoleNum0 = 0,
+
     visualType = "electricMotor",
     outputAV1 = 0,
     torqueDiff = 0,
