@@ -1,5 +1,7 @@
---dynamic AWD ver 1.0.4
---final edit 2024/1/14 15:54
+-- dynamicLSD.lua - 2024.1.14 15:54 - LSD control for dynamic system
+-- by NZZ
+-- version 0.0.5 alpha
+-- final edit - 2024.9.24 19:07
 
 local M = {}
 
@@ -22,6 +24,9 @@ local maxRatio = nil
 local minRatio = nil
 local maxrpmDifference = nil
 local stepping = nil
+
+local frontLockMode = nil
+local rearLockMode = nil
 
 local function getRPM(diff)
 	AV1 = abs(diff.outputAV1)
@@ -52,44 +57,92 @@ local function shaftToDiff(diff)
 	--log("W", "DAWD", "test DAWD" .. 3)
 end
 
+local function switchLockMode(diff)
+	local lockMode
+	if diff == "front" then
+		if frontDiff then
+			if frontDiff.mode ~= "open" and frontDiff.mode ~= "locked" and frontDiff.mode ~= "dually" then
+				frontLockMode = not frontLockMode
+				if frontLockMode then
+					lockMode = "locked"
+				else
+					lockMode = "unlocked"
+				end
+			else
+				lockMode = false
+			end
+		else
+			lockMode = false
+		end
+	elseif diff == "rear" then
+		if rearDiff then
+			if rearDiff.mode ~= "open" and rearDiff.mode ~= "locked" and rearDiff.mode ~= "dually" then
+				rearLockMode = not rearLockMode
+				if rearLockMode then
+					lockMode = "locked"
+				else
+					lockMode = "unlocked"
+				end
+			else
+				lockMode = false
+			end
+		else
+			lockMode = false
+		end
+	end
+	if lockMode then
+		gui.message({ txt = diff .. " differential has " .. lockMode }, 5, "", "")
+	else
+		gui.message({ txt = "can not find " .. diff .. " differential"}, 5, "", "")
+	end
+end
+
 local function updateGFX(dt)
 	for _, v in ipairs(diffs) do
-		getRPM(v)
-		diffToShaft(v)
 
-		if abs(AV1 - AV2) * AVtoRPM >= maxrpmDifference then --1打滑
-			if shaftA >= minRatio and shaftA <= maxRatio then --2未达到最大分配比例
-				if AV1 > AV2 then --3主轴打滑 向副轴分配动力
-					shaftA = shaftA - stepping
-				elseif AV1 < AV2 then --3副轴打滑 向主轴分配动力
-					shaftA = shaftA + stepping
+		if (v == frontDiff and not frontLockMode) or (v == rearDiff and not rearLockMode) then
+			getRPM(v)
+			diffToShaft(v)
+
+			if abs(AV1 - AV2) * AVtoRPM >= maxrpmDifference then --1打滑
+				if shaftA >= minRatio and shaftA <= maxRatio then --2未达到最大分配比例
+					if AV1 > AV2 then --3主轴打滑 向副轴分配动力
+						shaftA = shaftA - stepping
+					elseif AV1 < AV2 then --3副轴打滑 向主轴分配动力
+						shaftA = shaftA + stepping
+					end
+				end
+			elseif abs(AV1 - AV2) * AVtoRPM < maxrpmDifference then --1不打滑
+				if shaftA ~= 0.5 then --2主轴输出是否等于默认输出
+					if shaftA > 0.5 then --3主轴输出大于默认输出 减少主轴输出
+						shaftA = shaftA - stepping
+					elseif shaftA < 0.5 then --3主轴输出小于默认输出 增加主轴输出
+						shaftA = shaftA + stepping
+					end
 				end
 			end
-		elseif abs(AV1 - AV2) * AVtoRPM < maxrpmDifference then --1不打滑
-			if shaftA ~= 0.5 then --2主轴输出是否等于默认输出
-				if shaftA > 0.5 then --3主轴输出大于默认输出 减少主轴输出
-					shaftA = shaftA - stepping
-				elseif shaftA < 0.5 then --3主轴输出小于默认输出 增加主轴输出
-					shaftA = shaftA + stepping
-				end
+
+			if shaftA < minRatio then
+				shaftA = minRatio
 			end
-		end
+			if shaftA > maxRatio then
+				shaftA = maxRatio
+			end
 
-		if shaftA < minRatio then
-			shaftA = minRatio
-		end
-		if shaftA > maxRatio then
-			shaftA = maxRatio
-		end
+			shaftB = 1 - shaftA
+			shaftToDiff(v)
 
-		shaftB = 1 - shaftA
-		shaftToDiff(v)
-
-		if direct1 ~= direct2 then
+			if direct1 ~= direct2 then
+				shaftA = 0.50
+				shaftB = 0.50
+				shaftToDiff(v)
+			end
+		else
 			shaftA = 0.50
-			shaftA = 0.50
+			shaftB = 0.50
 			shaftToDiff(v)
 		end
+
 	end	
 
 end
@@ -103,6 +156,9 @@ local function reset()
 	if rearDiff then
 		shaftToDiff(rearDiff)
 	end
+
+	frontLockMode = false
+	rearLockMode = false
 end
 
 local function init(jbeamData)
@@ -131,10 +187,15 @@ local function init(jbeamData)
 	if rearDiff then
 		shaftToDiff(rearDiff)
 	end
+
+	frontLockMode = false
+	rearLockMode = false
 end
 
 M.init = init
 M.reset = reset
 M.updateGFX = updateGFX
+
+M.switchLockMode = switchLockMode
 
 return M

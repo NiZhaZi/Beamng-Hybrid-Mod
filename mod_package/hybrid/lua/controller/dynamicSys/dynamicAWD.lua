@@ -1,5 +1,7 @@
---dynamic AWD ver 1.0.8a
---final edit 2024年3月12日12点38分
+-- dynamicAWD.lua - 2024.3.12 12:38 - center differential control for dynamic system
+-- by NZZ
+-- version 0.0.8 alpha
+-- final edit - 2024.3.12 12:38
 
 local M = {}
 

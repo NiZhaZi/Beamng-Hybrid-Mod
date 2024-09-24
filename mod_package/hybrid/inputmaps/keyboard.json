@@ -136,6 +136,16 @@
      },
 
      {
+          "control": "shift ctrl f",
+          "action":  "switchFrontDifferential"
+     },
+
+     {
+          "control": "shift ctrl g",
+          "action":  "switchRearDifferential"
+     },
+
+     {
           "control": "ctrl alt =",
           "action":  "set SOC increase"
      },

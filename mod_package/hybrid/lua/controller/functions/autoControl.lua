@@ -1,7 +1,7 @@
 -- autoContrl.lua - 2024.3.17 12:48 - auto functions control
 -- by NZZ
--- version 0.0.10 alpha
--- final edit - 2024.9.21 18:40
+-- version 0.0.11 alpha
+-- final edit - 2024.9.24 18:57
 
 local M = {}
 local debugTime = 0
@@ -81,7 +81,8 @@ local function updateGFX(dt)
     else
         ign = 0
     end
-    electrics.values.brakewithign = input.brake * ign
+
+    electrics.values.brakewithign = input.brake * electrics.values.brakelights * ign
 
     local hybridMode = electrics.values.hybridMode
 

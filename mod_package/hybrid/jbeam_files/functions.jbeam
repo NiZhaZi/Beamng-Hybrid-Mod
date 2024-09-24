@@ -161,6 +161,7 @@
         "controller": [
         	["fileName"],
 			["dynamicSys/dynamicLSD"{
+				"name" : "dynamicLSD"
 				"maxRatio" : 0.90,
 				"maxrpmDifference" : 50,
 				"stepping" : 0.01,
