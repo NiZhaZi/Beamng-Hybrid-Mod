@@ -62,6 +62,8 @@
 			["$inLimit", "range", "number", "Suspension", 1.20, 0, 1.20, "Suspension In Limit", "Adjusts the Suspension In Limit"{"subCategory":"", "minDis": 0.00, "maxDis": 1.20}],
 			["$outLimit", "range", "number", "Suspension", 1.20, 0, 1.20, "Suspension Out Limit", "Adjusts the Suspension Out Limit"{"subCategory":"", "minDis": 0.00, "maxDis": 1.20}],
 			["$liftVelocity", "range", "km/h", "Suspension", 80, 1, 1000, "Suspension Fall Velocity", "Velocity of when suspension fall"{"subCategory":"", "minDis": 1, "maxDis": 1000}],
+			["$liftLevel", "range", "level", "Suspension", 0.10, 0, 1, "Suspension Max Lift Level", "Max level of suspension lift"{"subCategory":"", "minDis": 1, "maxDis": 1000}],
+			["$dropLevel", "range", "level", "Suspension", 0.10, 0, 1, "Suspension Max Fall Level", "Max level of suspension fall"{"subCategory":"", "minDis": 1, "maxDis": 1000}],
 		],
 		"slotType" : "Suspension_Lift",
 		"controller": [
@@ -70,8 +72,8 @@
 				"name": "suspensionLift",
 				"defaultMode": "auto",
 				"liftVelocity": "$liftVelocity",
-				"liftLevel": 0.10,
-				"dropLevel": -0.10,
+				"liftLevel": "$liftLevel",
+				"dropLevel": "$=-$dropLevel",
 			}],
 		],
 
