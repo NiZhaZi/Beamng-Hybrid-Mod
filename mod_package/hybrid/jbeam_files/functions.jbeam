@@ -29,7 +29,7 @@
 		"variables": [
 			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
 			["$switchVelocity", "range", "km/h", "Suspension", 45, 0, 650, "Rear Steering Switch Velocity", "Adjusts the Rear Steering Switch Velocity"{"subCategory":"", "minDis": 0, "maxDis": 650}],
-			["$rwsAngle", "range", "Angle", "Suspension", 0.35, 0, 1, "Rear Steering Angle", "Adjusts the Rear Steering Angle"{"subCategory":"", "minDis": 0.01, "maxDis": 50}],
+			["$rwsAngle", "range", "Angle", "Suspension", 0.35, 0, 1, "Rear Steering Angle", "Adjusts the Rear Steering Angle"{"subCategory":"", "minDis": 0.00, "maxDis": 1.00, "stepDis": 0.01}],
 		],
 		"slotType" : "Rear_Wheel_Steering",
 		"controller": [
@@ -58,14 +58,21 @@
 		}
 		"variables": [
 			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
-			["$suspensionLift", "range", "class", "Suspension", -0.80, -1.20, 1.20, "Suspension Lift Range", "Adjusts the Suspension Lift Range"{"subCategory":"", "minDis": 0.01, "maxDis": 50}],
-			["$inLimit", "range", "number", "Suspension", 1.20, 0, 1.20, "Suspension In Limit", "Adjusts the Suspension In Limit"{"subCategory":"", "minDis": 0.01, "maxDis": 50}],
-			["$outLimit", "range", "number", "Suspension", 1.20, 0, 1.20, "Suspension Out Limit", "Adjusts the Suspension Out Limit"{"subCategory":"", "minDis": 0.01, "maxDis": 50}],
+			["$suspensionLift", "range", "class", "Suspension", -0.80, -1.20, 1.20, "Suspension Lift Range", "Adjusts the Suspension Lift Range"{"subCategory":"", "minDis": -1.20, "maxDis": 1.20, "stepDis": 0.01}],
+			["$inLimit", "range", "number", "Suspension", 1.20, 0, 1.20, "Suspension In Limit", "Adjusts the Suspension In Limit"{"subCategory":"", "minDis": 0.00, "maxDis": 1.20}],
+			["$outLimit", "range", "number", "Suspension", 1.20, 0, 1.20, "Suspension Out Limit", "Adjusts the Suspension Out Limit"{"subCategory":"", "minDis": 0.00, "maxDis": 1.20}],
+			["$liftVelocity", "range", "km/h", "Suspension", 80, 1, 1000, "Suspension Fall Velocity", "Velocity of when suspension fall"{"subCategory":"", "minDis": 1, "maxDis": 1000}],
 		],
 		"slotType" : "Suspension_Lift",
 		"controller": [
 			["fileName"],
-			["chassis/suspension_lift", {"name": "suspensionLift"}],
+			["chassis/suspension_lift", {
+				"name": "suspensionLift",
+				"defaultMode": "auto",
+				"liftVelocity": "$liftVelocity",
+				"liftLevel": 0.10,
+				"dropLevel": -0.10,
+			}],
 		],
 
 		"hydros": [
