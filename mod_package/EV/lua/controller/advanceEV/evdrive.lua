@@ -1,7 +1,7 @@
 -- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
 -- by NZZ
--- version 0.0.4 alpha
--- final edit - 2024.5.7 13:36
+-- version 0.0.5 alpha
+-- final edit - 2024.10.7 17:27
 
 local M = {}
 
@@ -28,9 +28,9 @@ local ondemandMaxRPM = nil
 local function onInit(jbeamData)
     battery =  jbeamData.energyStorage or "mainBattery"
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
-    ifAdvanceBrake = jbeamData.ifAdvanceBrake or true
+    ifAdvanceBrake = jbeamData.ifAdvanceBrake or false
     ifSportBrake = jbeamData.ifSportBrake or false
-    ifAssistSteering = jbeamData.ifAssistSteering or true
+    ifAssistSteering = jbeamData.ifAssistSteering or false
     assistSteeringSpeed = jbeamData.assistSteeringSpeed or 75
 
     motors = {}
@@ -44,6 +44,7 @@ local function onInit(jbeamData)
                 table.insert(mainMotors, mainMotor)
                 table.insert(motors, mainMotor)
                 mainMotor.originalRegenTorque = mainMotor.maxWantedRegenTorque
+                mainMotor.electricsThrottleName = "mainThrottle"
             end
         end
     end
@@ -57,6 +58,7 @@ local function onInit(jbeamData)
                 table.insert(subMotors, subMotor)
                 table.insert(motors, subMotor)
                 subMotor.originalRegenTorque = subMotor.maxWantedRegenTorque
+                subMotor.electricsThrottleName = "subThrottle"
             end
         end
     end
@@ -88,6 +90,15 @@ local function onInit(jbeamData)
     end
 
     ondemandMaxRPM = jbeamData.ondemandMaxRPM or 50
+end
+
+local function ifLowSpeed()
+    if input.throttle > 0.8 and electrics.values.airspeed <= 5 * 3.6 then
+        return true
+    else
+        return false
+    end
+    return false
 end
 
 local function switchAdvanceBrake()
@@ -137,6 +148,7 @@ local function switchAWDMode(mode)
 end
 
 local function updateGFX(dt)
+    -- log("D", "", electrics.values.ignitionLevel)
     -- battery begin
     local storage = energyStorage.getStorage(battery)
     electrics.values.remainingpower = storage.remainingRatio
@@ -159,8 +171,10 @@ local function updateGFX(dt)
     end
     subRPM = subRPM / #subMotors
 
+
+    electrics.values.mainThrottle = electrics.values.throttle
     if edriveMode == "partTime" then
-        if abs(mianRPM - subRPM) >= ondemandMaxRPM then
+        if abs(mianRPM - subRPM) >= ondemandMaxRPM or ifLowSpeed() then
             electrics.values.subThrottle = electrics.values.throttle
         else
             electrics.values.subThrottle = 0
@@ -170,6 +184,7 @@ local function updateGFX(dt)
     else
         electrics.values.subThrottle = 0
     end
+    local direction = electrics.values.subThrottle
     -- ev part time drive end
 
 
@@ -180,7 +195,7 @@ local function updateGFX(dt)
                 if v then
                     v.maxWantedRegenTorque = v.originalRegenTorque * input.brake
                 end
-                electrics.values.brake = input.brake
+                -- electrics.values.brake = input.brake
             else
                 if v then
                     v.maxWantedRegenTorque = v.originalRegenTorque * input.brake * 2
@@ -199,7 +214,7 @@ local function updateGFX(dt)
                 v.maxWantedRegenTorque = v.originalRegenTorque
             end
         end
-        electrics.values.brake = input.brake
+        -- electrics.values.brake = input.brake
     end
 
     local ign

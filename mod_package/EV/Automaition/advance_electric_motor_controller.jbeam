@@ -42,14 +42,19 @@
 			"rightMotorNames": ["rearMotor_R"],
 
 			"defaultEAWDMode": "partTime",
-			"ifAdvanceBrake": true,
+			"ifAdvanceBrake": false,
 			"ifSportBrake": false,
-			"ifAssistSteering": true,
+			"ifAssistSteering": false,
 			"assistSteeringSpeed": "$assistSteeringSpeed",
 		},
 
 		"vehicleController": {
+			"shiftLogicName":"electricMotor",
 			"motorNames": ["frontMotor", "rearMotor", "rearMotor_R"],
+			"topSpeedLimitReverse": 15,
+			//"defaultRegen": 0.5,
+			//"brakeRegenCoef": 1,
+			"onePedalRegenCoef": 0.85
 		},
 		
 		"slots": [
