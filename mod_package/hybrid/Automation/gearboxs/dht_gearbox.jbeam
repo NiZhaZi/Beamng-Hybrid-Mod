@@ -70,7 +70,7 @@
 			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
 
 			["$gear_R", "range", ":1", "Gearing", 2.25, 0.1, 17, "Gear R", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
-			["$gear_1", "range", ":1", "Gearing", 0.62, 0.1, 17, "Gear 1", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}]
+			["$gear_d", "range", ":1", "Gearing", 0.62, 0.1, 17, "Gear 1", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}]
 		],
 
 		"controller": [
@@ -79,7 +79,7 @@
 		],
 		"gearbox": {
 			//https://wiki.beamng.com/DctGearbox
-			"gearRatios": ["$=-$gear_R", 0, "$gear_1"],
+			"gearRatios": ["$=-$gear_R", 0, "$gear_d"],
 			"friction": 10.730325932535, //Constant friction torque on input shaft
 			"parkLockTorque": 1000, //Maximum holding torque of park mode
 		},
@@ -87,7 +87,7 @@
 		"vehicleController": {
 			//dct useful values
 			"shiftDownRPMOffsetCoef":1.2,
-			"automaticModes": "PRNDSM", //Add or remove P,R,N,D,S,M,L,1,2 from the string to customize modes
+			"automaticModes": "PRND", //Add or remove P,R,N,D,S,M,L,1,2 from the string to customize modes
 			"clutchLaunchStartRPM": 1400, //RPM where launching behavior starts
 			"clutchLaunchTargetRPM": 1900, //RPM it tries to maintain while launching
 			"revMatchThrottle": 0.65, //Controls shift rev match assist. Reduce this value to as much as 0.25 for high powered engines

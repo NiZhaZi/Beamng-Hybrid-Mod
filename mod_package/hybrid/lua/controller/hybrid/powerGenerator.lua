@@ -1,7 +1,7 @@
 -- powerGenerator.lua - 2024.4.29 17:27 - powerGenerator control for hybrid Transmissions
 -- by NZZ
--- version 0.0.5 alpha
--- final edit - 2024.9.17 14:13
+-- version 0.0.6 alpha
+-- final edit - 2024.10.7 12:53
 
 local M = {}
 
@@ -58,10 +58,12 @@ local function updateGFX(dt)
     elseif functionMode == "off" then
         powerGeneratorMode = "off"
     elseif functionMode == "auto" then
-        if electrics.values.evfuel <= lowValue and powerGeneratorMode ~= "on" then
-            powerGeneratorMode = "on"
-        elseif electrics.values.evfuel >= highValue and powerGeneratorMode ~= "off" then
-            powerGeneratorMode = "off"
+        if electrics.values.evfuel then
+            if electrics.values.evfuel <= lowValue and powerGeneratorMode ~= "on" then
+                powerGeneratorMode = "on"
+            elseif electrics.values.evfuel >= highValue and powerGeneratorMode ~= "off" then
+                powerGeneratorMode = "off"
+            end
         end
     end
 
