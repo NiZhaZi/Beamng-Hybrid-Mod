@@ -1,7 +1,7 @@
 -- autoContrl.lua - 2024.3.17 12:48 - auto functions control
 -- by NZZ
--- version 0.0.11 alpha
--- final edit - 2024.9.24 18:57
+-- version 0.0.12 alpha
+-- final edit - 2024.10.11 19:38
 
 local M = {}
 local debugTime = 0
@@ -19,6 +19,14 @@ local mode = {
     hillDescentControl = nil,
     ecrawl = nil,
 }
+
+local function vehicleHold()
+    if electrics.values.wheelspeed < 0.05 * 3.6 then
+        return true
+    else
+        return false
+    end
+end
 
 local function switchAutoHold()
     if mode.autoHold == "on" then
@@ -108,7 +116,7 @@ local function updateGFX(dt)
     end
 
     if autoStartMode == "on" and electrics.values.ignitionLevel == 2 then
-        if input.throttle == 0 and electrics.values.airspeed <= 0.08 then
+        if input.throttle == 0 and vehicleHold() then
             proxyEngine:setIgnition(0)
         elseif input.throttle > 0 then
             proxyEngine:activateStarter()
@@ -120,7 +128,7 @@ local function updateGFX(dt)
     end
 
     if autoHoldMode == "on" then
-        if input.throttle <= 0 and electrics.values.airspeed <= 0.08 then
+        if input.throttle <= 0 and vehicleHold() then
             brake = 1
             electrics.values.autoholdActive = 1
         else

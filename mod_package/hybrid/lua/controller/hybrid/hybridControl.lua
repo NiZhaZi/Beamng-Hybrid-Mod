@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.41 alpha
--- final edit - 2024.9.24 14:46
+-- version 0.0.42 alpha
+-- final edit - 2024.10.11 19:28
 
 local M = {}
 
@@ -66,6 +66,14 @@ local ifGearMotorDrive = false
 local enhanceDrive = false
 
 local ecrawlMode = false
+
+local function ifMotorGearbox()
+    if (gearbox.type == "eatGearbox" or gearbox.type == "ectGearbox" or gearbox.type == "edtGearbox" or gearbox.type == "emtGearbox" or gearbox.type == "estGearbox") then
+        return true
+    else
+        return false
+    end
+end
 
 local function reduceRegen()
 
@@ -192,6 +200,19 @@ local function motorMode(state)
             end         
         end
         ifMotorOn = true
+    elseif state == "on3" then -- EV drive ratio
+        if ifMotorGearbox then
+            for _, v in ipairs(motors) do
+                if v.type == "motorShaft" then
+                    v:setmotorRatio(motorRatio2)
+                    v:setMode("connected")
+                else
+                end         
+            end
+            ifMotorOn = true
+        else
+            motorMode("on2")
+        end
     elseif state == "off" then
         for _, v in ipairs(motors) do
             if v.type == "motorShaft" then
@@ -246,19 +267,19 @@ local function trig(signal)
     if signal == "hybrid" then
         engineMode("on")
         motorMode("on1")
-        gearboxMode("drive")
+        -- gearboxMode("drive")
     elseif signal == "fuel" then
         engineMode("on")
         motorMode("off")
-        gearboxMode("powerGenerator")
+        -- gearboxMode("powerGenerator")
     elseif signal == "electric" then
         engineMode("off")
-        motorMode("on2")
-        gearboxMode("drive")
+        motorMode("on3")
+        -- gearboxMode("drive")
     elseif signal == "reev" then
         engineMode("on")
         motorMode("on2")
-        gearboxMode("powerGenerator")
+        -- gearboxMode("powerGenerator")
     end
 end
 
@@ -433,7 +454,7 @@ local function updateGFX(dt)
     if electrics.values.hybridMode == "auto" then
         if (electrics.values.airspeed < startVelocity - 5 and not(ifLowSpeed())) and detN ~= 1 then
             engineMode("off")
-            motorMode("on2")
+            motorMode("on3")
             detN = 1
         elseif electrics.values.airspeed >= startVelocity and electrics.values.airspeed < connectVelocity and detN ~= 2 then
             detN = 2
@@ -444,6 +465,7 @@ local function updateGFX(dt)
         end
     
         if electrics.values.airspeed < startVelocity - 5 and not(ifLowSpeed()) then
+            motorMode("on2")
             if electrics.values.engineRunning == 1 and powerGeneratorOff then  
                 engineMode("off")
             elseif not powerGeneratorOff then
@@ -708,7 +730,7 @@ local function init(jbeamData)
     comfortRegenBegine = jbeamData.comfortRegenBegine or 0.75
     comfortRegenEnd = jbeamData.comfortRegenEnd or 0.15
 
-    ifGearMotorDrive = ifGearMotorDrive and (gearbox.type == "eatGearbox" or gearbox.type == "ectGearbox" or gearbox.type == "edtGearbox" or gearbox.type == "emtGearbox" or gearbox.type == "estGearbox")
+    ifGearMotorDrive = ifGearMotorDrive and ifMotorGearbox()
     if enhanceDrive then
         electrics.values.gearDirection = 1
     else
@@ -836,6 +858,10 @@ local function reset(jbeamData)
 
     for _, v in ipairs(subMotors) do
         v.electricsThrottleName = "subThrottle"
+    end
+
+    for _, v in ipairs(motors) do
+        v.maxWantedRegenTorque = v.originalRegenTorque
     end
 
     electrics.values.mainThrottle = 0

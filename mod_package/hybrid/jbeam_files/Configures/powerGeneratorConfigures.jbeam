@@ -6,7 +6,6 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			// ["Shift_Logic", "", "Shift Logic", {"coreSlot":true}],
 		],
 		"slotType" : "Power_Generator_Control_Configure",
 
@@ -19,13 +18,38 @@
 			"powerGeneratorName": "gearbox",
 			"SOC": 80,
 			"defaultMode": "auto",
+			"enhancedDrive": true,
 		}
 
 		"gearbox":{
 			"torque":[
 				["rpm", "torque"],
-				[0, 120.00],
-				[10000, 120.00],
+				[0, 50.00],
+				[500, 50.00],
+				[1000, 50.00],
+				[1500, 50.00],
+				[2000, 50.00],
+				[2500, 50.00],
+				[3000, 50.00],
+				[3500, 50.00],
+				[4000, 50.00],
+				[4500, 50.00],
+				[5000, 47.27],
+				[5500, 42.97],
+				[6000, 39.39],
+				[6500, 36.36],
+				[7000, 33.76],
+				[7500, 31.51],
+				[8000, 29.54],
+				[8500, 27.80],
+				[9000, 26.26],
+				[9500, 24.88],
+				[10000, 23.63],
+				[10500, 22.51],
+				[11000, 21.49],
+				[11500, 20.55],
+				[12000, 19.69],
+
 			],
 			"electricsThrottleName": "powerGenerator",
 			"maximumWantedRegenTorque": "$=350*(1-(0.5 or 0))*(1 or 1)",

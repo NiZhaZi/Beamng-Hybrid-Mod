@@ -1,7 +1,7 @@
 -- eatGearbox.lua - 2024.4.20 14:45 - AT Gearbox with electric motor
 -- by NZZ
--- version 0.2.5 beta
--- final edit - 2024.6.18 11:35
+-- version 0.2.6 beta
+-- final edit - 2024.10.11 19:28
 
 local M = {}
 
@@ -251,6 +251,7 @@ local function motorTorque(device, dt)
 
   local timeSign = 1
   --log("", "", "" .. (actualTorque - frictionTorque) * timeSign)
+  device.motorTorque = (actualTorque - frictionTorque) * timeSign * device.motorRatio
   return (actualTorque - frictionTorque) * timeSign * device.motorRatio --/ device.gearRatios[device.gearIndex]
 end
 
@@ -299,9 +300,21 @@ local function updateSounds(device, dt)
 
 end
 
+local function engineCoup()
+  if electrics.values.hybridMode then
+    if electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev" then
+      return 1
+    else
+      return 0
+    end
+  else
+    return 1
+  end
+end
+
 local function updateVelocity(device, dt)
   device.inputAV = device.outputAV1 * device.gearRatio * device.lockCoef
-  device.parent[device.parentOutputAVName] = device.inputAV
+  device.parent[device.parentOutputAVName] = device.inputAV * engineCoup()
 end
 
 local function updateTorque(device, dt)
@@ -404,12 +417,18 @@ local function updateGFX(device, dt)
   if device.motorType == "drive" then
     device.electricsThrottleName = "throttle"
     if electrics.values.ignitionLevel == 2 then
-      device.motorDirection = electrics.values.gearDirection or 0
+      -- device.motorDirection = electrics.values.gearDirection or 0
+      device.motorDirection = 1 * math.abs(electrics.values.motorDirection or 0)
     elseif electrics.values.ignitionLevel ~= 2 then
       device.motorDirection = 0
     end
   elseif device.motorType == "powerGenerator" then
     device.electricsThrottleName = "powerGenerator"
+    if electrics.values.powerGeneratorMode == "on" then
+      device.motorDirection = 1
+    elseif electrics.values.powerGeneratorMode == "off" then
+      device.motorDirection = 0
+    end
   else
     device.electricsThrottleName = 0
   end
@@ -843,6 +862,8 @@ local function new(jbeamData)
 
   local device = {
     --insert0
+    motorTorque = 0,
+
     visualType = "automaticGearbox",
 
     torqueDiff = 0,

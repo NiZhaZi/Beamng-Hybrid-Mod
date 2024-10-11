@@ -1,7 +1,7 @@
 -- powerGenerator.lua - 2024.4.29 17:27 - powerGenerator control for hybrid Transmissions
 -- by NZZ
--- version 0.0.6 alpha
--- final edit - 2024.10.7 12:53
+-- version 0.0.7 alpha
+-- final edit - 2024.10.11 19:28
 
 local M = {}
 
@@ -19,6 +19,7 @@ local defaultSOC = nil
 local SOC = nil
 local lowValue = nil
 local highValue = nil
+local enhancedDrive = nil
 
 local function setSOC(sigh)
     if sigh == "+" and SOC < 100 then
@@ -68,10 +69,12 @@ local function updateGFX(dt)
     end
 
     if powerGeneratorMode == "on" then
-        powerGenerator.motorDirection = 1
+        powerGenerator.motorType = "powerGenerator"
         electrics.values.powerGeneratorMode = "on"
     elseif powerGeneratorMode == "off" then
-        powerGenerator.motorDirection = 0
+        if enhancedDrive then
+            powerGenerator.motorType = "drive"
+        end
         electrics.values.powerGeneratorMode = "off"
     end
 
@@ -94,6 +97,8 @@ local function init(jbeamData)
     defaultSOC = jbeamData.SOC or 80
     defaultSOC = math.min(defaultSOC, 100)
     SOC = defaultSOC
+
+    enhancedDrive = jbeamData.enhancedDrive or true
 
 end
 
