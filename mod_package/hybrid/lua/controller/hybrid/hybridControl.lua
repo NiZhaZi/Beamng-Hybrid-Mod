@@ -1,13 +1,14 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.42 alpha
--- final edit - 2024.10.11 19:28
+-- version 0.0.44 alpha
+-- final edit - 2024.10.13 21:06
 
 local M = {}
 
 local rpmToAV = 0.104719755
 local avToRPM = 9.549296596425384
 local abs = math.abs
+local sign = sign
 
 local proxyEngine = nil
 local gearbox = nil
@@ -61,6 +62,7 @@ local REEVAV = nil
 local REEVSOC = nil
 local highEfficentAV = nil
 local reevThrottle = 0
+local RMSstate = nil
 
 local ifGearMotorDrive = false
 local enhanceDrive = false
@@ -137,6 +139,13 @@ local function getGear()
             directFlag = gearbox.gearIndex
         end
         directFlag = math.max(-1, math.min(1, directFlag))
+        if directFlag > 0 then
+            directFlag = 1
+        elseif directFlag < 0 then
+            directFlag = -1
+        else
+            directFlag = 0
+        end
         electrics.values.motorDirection = directFlag
         motorDirection = directFlag
         -- if gearbox.type == "cvtGearbox" or gearbox.type == "ectGearbox" then
@@ -201,7 +210,7 @@ local function motorMode(state)
         end
         ifMotorOn = true
     elseif state == "on3" then -- EV drive ratio
-        if ifMotorGearbox then
+        if ifMotorGearbox() then
             for _, v in ipairs(motors) do
                 if v.type == "motorShaft" then
                     v:setmotorRatio(motorRatio2)
@@ -416,6 +425,29 @@ local function ifLowSpeed()
     return false
 end
 
+local function reevMotorShaftUpdate(state)
+    if RMSstate ~= state then
+        RMSstate = state
+        if state == "disconnected" then
+            if ifMotorGearbox() then
+                for _, v in ipairs(motors) do
+                    if v.type == "motorShaft" then
+                        v:setMode("disconnected")
+                    end
+                end
+            end
+        elseif state == "connected" then
+            if ifMotorGearbox() then
+                for _, v in ipairs(motors) do
+                    if v.type == "motorShaft" then
+                        v:setMode("connected")
+                    end
+                end
+            end
+        end
+    end
+end
+
 local function updateGFX(dt)
     if drivetrain.shifterMode == 2 then
         --controller.mainController.setGearboxMode("realistic")
@@ -523,47 +555,57 @@ local function updateGFX(dt)
     --direct mode end
 
     --reev mode begin
-    if ifREEVEnable and detO == 1 then
-        if HybridTC or false then
-            HybridTC.updateMotor(REEVMode)
-        end
-        detO = 0
-    end
 
-    if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
-        -- local REEVAV = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ (2.37 * REEVMutiplier))
-        -- if REEVAV > proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV then
-        --     REEVAV = proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV
-        -- end
-        if electrics.values.remainingpower < lastEnergy then
-            REEVAV = REEVAV + 2 * rpmToAV
-        else
-            if electrics.values.remainingpower > REEVSOC then
-                REEVAV = REEVAV - 2 * rpmToAV
-                REEVAV = math.max(0, REEVAV)
+    if ifMotorGearbox() then
+
+        if ifREEVEnable and detO == 1 then
+            if HybridTC or false then
+                HybridTC.updateMotor(REEVMode)
+            end
+            detO = 0
+        end
+
+        if REEVMode == "on" and (hybridMode == "auto" or hybridMode == "reev") then
+            -- local REEVAV = REEVRPM * rpmToAV * math.max(1, (input.throttle * 1.34) ^ (2.37 * REEVMutiplier))
+            -- if REEVAV > proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV then
+            --     REEVAV = proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV
+            -- end
+            if electrics.values.remainingpower < lastEnergy then
+                REEVAV = REEVAV + 2 * rpmToAV
             else
-                if REEVAV > highEfficentAV then
+                if electrics.values.remainingpower > REEVSOC then
                     REEVAV = REEVAV - 2 * rpmToAV
+                    REEVAV = math.max(0, REEVAV)
                 else
-                    REEVAV = REEVAV + 2 * rpmToAV
+                    if REEVAV > highEfficentAV then
+                        REEVAV = REEVAV - 2 * rpmToAV
+                    else
+                        REEVAV = REEVAV + 2 * rpmToAV
+                    end
                 end
             end
-        end
-        REEVAV = math.min(proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV, REEVAV)
-        lastEnergy = electrics.values.remainingpower
-        -- log("D", "lastEnergy", lastEnergy)
+            REEVAV = math.min(proxyEngine.maxRPM * rpmToAV - REEVRPMProtect * rpmToAV, REEVAV)
+            lastEnergy = electrics.values.remainingpower
+            -- log("D", "lastEnergy", lastEnergy)
 
-        proxyEngine:setTempRevLimiter(REEVAV or (REEVRPM * rpmToAV))
-        if electrics.values.engineRunning == 0 and REEVAV > (proxyEngine.idleRPM * rpmToAV) then
-            proxyEngine:activateStarter()
+            proxyEngine:setTempRevLimiter(REEVAV or (REEVRPM * rpmToAV))
+            if electrics.values.engineRunning == 0 and REEVAV > (proxyEngine.idleRPM * rpmToAV) then
+                proxyEngine:activateStarter()
+            end
+            reevThrottle = 1
+            reevMotorShaftUpdate("disconnected")
+        else
+            reevThrottle = electrics.values.throttle
+            reevMotorShaftUpdate("connected")
         end
-        reevThrottle = 1
+
+        electrics.values.reevmode = REEVMode
+
     else
         reevThrottle = electrics.values.throttle
     end
 
     electrics.values.reevThrottle = reevThrottle
-    electrics.values.reevmode = REEVMode
 
     --reev mode end
 
@@ -847,6 +889,7 @@ local function reset(jbeamData)
 
     enhanceDrive = false
     ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
+    RMSstate = nil
 
     for _, u in ipairs(enableModes) do
         if u == "reev" then
