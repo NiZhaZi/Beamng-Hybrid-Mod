@@ -201,7 +201,7 @@ local function setmotorType(device, motorType)
 end
 
 local function motorTorque(device, dt)
-  local engineAV = device.inputAV
+  local engineAV = device.outputAV1 * device.gearRatio
   local throttleFactor = electrics.values[device.electricsThrottleFactorName] or device.throttleFactor
   local throttle = (electrics.values[device.electricsThrottleName] or 0) * throttleFactor
   throttle = clamp(-throttle * clamp(engineAV - device.tempRevLimiterAV, 0, device.tempRevLimiterMaxAVOvershoot) * device.invTempRevLimiterRange + throttle, 0, 1)
@@ -213,7 +213,7 @@ local function motorTorque(device, dt)
   local torqueCurve = device.torqueCurve
   local friction = device.friction
   local dynamicFriction = device.dynamicFriction
-  local rpm = engineAV * avToRPM * motorDirection * device.motorRatio--/ device.gearRatios[device.gearIndex]
+  local rpm = engineAV * avToRPM * motorDirection * device.motorRatio --/ device.gearRatios[device.gearIndex]
   local torqueRPM = floor(rpm)
 
   --local torqueCoef = clamp(device.torqueCoef, 0, 1) --can be used to externally reduce the available torque, for example to limit output power
@@ -251,6 +251,7 @@ local function motorTorque(device, dt)
 
   local timeSign = 1
   --log("", "", "" .. (actualTorque - frictionTorque) * timeSign)
+  device.motorTorque = (actualTorque - frictionTorque) * timeSign * device.motorRatio
   return (actualTorque - frictionTorque) * timeSign * device.motorRatio --/ device.gearRatios[device.gearIndex]
 end
 
@@ -764,6 +765,7 @@ end
 local function reset(device, jbeamData)
 
   --insert0
+  device.motorTorque = 0
 
   device.torqueDiff = 0
 
@@ -859,6 +861,8 @@ end
 local function new(jbeamData)
   local device = {
     --insert0
+    motorTorque = 0,
+
     visualType = "dctGearbox",
 
     updateGFX = updateGFX,
