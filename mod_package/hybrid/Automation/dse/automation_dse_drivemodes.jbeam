@@ -23,6 +23,8 @@
 					"settings": [
 						["type"],
 						["controller", {"controllerName": "CMU", "uiDisplayData.simplePowertrainApp.activeColor": "F5A442"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "soft"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "soft"}],
 						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "off"}],
 						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "off"}],
 						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.7,
@@ -46,6 +48,8 @@
 					"settings": [
 						["type"],
 						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "DCDCDC"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "hard"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "hard"}],
 						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
 						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
 						["controller", {"controllerName": "motorTorqueControl"}],
@@ -66,6 +70,8 @@
 					"settings": [
 						["type"],
 						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "CC1111"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "hard"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "hard"}],
 						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
 						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
 						["controller", {"controllerName": "motorTorqueControl"}],
@@ -84,6 +90,8 @@
 					"settings": [
 						["type"],
 						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "238BE6"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "soft"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "soft"}],
 						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "soft"}],
 						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "soft"}],
 						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.125,
@@ -112,6 +120,8 @@
 					"settings": [
 						["type"],
 						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "FFFF00"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "hard"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "hard"}],
 						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
 						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
 						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.35,
