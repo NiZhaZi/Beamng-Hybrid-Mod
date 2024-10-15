@@ -1,7 +1,7 @@
 -- powerGenerator.lua - 2024.4.29 17:27 - powerGenerator control for hybrid Transmissions
 -- by NZZ
--- version 0.0.7 alpha
--- final edit - 2024.10.11 19:28
+-- version 0.0.8 alpha
+-- final edit - 2024.10.15 21:18
 
 local M = {}
 
@@ -84,6 +84,8 @@ end
 local function reset(jbeamData)
     functionMode = jbeamData.defaultMode or "auto"
     SOC = defaultSOC
+
+    enhancedDrive = jbeamData.enhancedDrive or false
 end
 
 local function init(jbeamData)
@@ -98,9 +100,11 @@ local function init(jbeamData)
     defaultSOC = math.min(defaultSOC, 100)
     SOC = defaultSOC
 
-    enhancedDrive = jbeamData.enhancedDrive or true
+    enhancedDrive = jbeamData.enhancedDrive or false
 
 end
+
+M.enhancedDrive = enhancedDrive
 
 M.setSOC = setSOC
 M.setMode = setMode
