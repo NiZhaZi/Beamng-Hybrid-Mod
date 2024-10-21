@@ -1,7 +1,7 @@
 -- powerGenerator.lua - 2024.4.29 17:27 - powerGenerator control for hybrid Transmissions
 -- by NZZ
--- version 0.0.8 alpha
--- final edit - 2024.10.15 21:18
+-- version 0.0.9 alpha
+-- final edit - 2024.10.21 23:58
 
 local M = {}
 
@@ -20,6 +20,10 @@ local SOC = nil
 local lowValue = nil
 local highValue = nil
 local enhancedDrive = nil
+
+local function getEnhancedDrive()
+    return enhancedDrive
+end
 
 local function setSOC(sigh)
     if sigh == "+" and SOC < 100 then
@@ -105,6 +109,7 @@ local function init(jbeamData)
 end
 
 M.enhancedDrive = enhancedDrive
+M.getEnhancedDrive = getEnhancedDrive
 
 M.setSOC = setSOC
 M.setMode = setMode
