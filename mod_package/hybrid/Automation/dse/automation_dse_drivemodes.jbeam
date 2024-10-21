@@ -12,6 +12,7 @@
 			["Camso_DriveModes_default", "Camso_DriveModes_default_comfort", "Default Mode", {"coreSlot": true}],
 			["Camso_DriveModes_offroad", "Camso_DriveModes_offroad", "Offroad Mode"],
 			["Camso_DriveModes_off2wd", "", "2WD ESC & TC Off Mode"],
+			["Camso_DriveModes_corsa", "Camso_DriveModes_corsa", "Corsa Mode"],
 			["Camso_DriveModes_mod", "", "Additional Mode"]
 		],
 		
@@ -115,7 +116,7 @@
 					]
 				},
 				"sport": {
-					"order": 20,
+					"order": 40,
 					"name": "Sport",
 					"settings": [
 						["type"],
@@ -140,6 +141,28 @@
 						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 2}],
 						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 2}],
 						["transmission", {"defaultForwardMode": "S"}],
+						["controller", {"controllerName": "advawd"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": -0.1}],
+					]
+				},
+				"corsa": {
+					"order": 41,
+					"name": "Corsa",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "FF0000"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "hard"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "hard"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "hard"}],
+						["controller", {"controllerName": "motorTorqueControl"}],
+						["controller", {"controllerName": "brakeControl"}],
+						["transmission", {"defaultForwardMode": "S"}],
+						["controller", {"controllerName": "tractionControl","isEnabled": false}],
+						["controller", {"controllerName": "yawControl","isEnabled": false}],
+						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 2}],
+						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 2}],
 						["controller", {"controllerName": "advawd"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": -0.1}],
@@ -249,6 +272,18 @@
 			"authors": "Camshaft Software"
 		},
 		"slotType": "Camso_DriveModes_off2wd"
+	},
+
+	"Camso_DriveModes_corsa": {
+		"driveModes": {
+			"enabledModes_corsa": ["corsa"]
+		},
+		"information": {
+			"value": 500,
+			"name": "Corsa Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_corsa"
 	},
 
 }
