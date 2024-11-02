@@ -1,8 +1,7 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
---NZZ rwsControl 17点09分2024年4月19日
+-- rwsControl.lua - 2024.4.19 17:09 - rear wheel steering control
+-- by NZZ
+-- version 0.0.2 alpha
+-- final edit - 2024.11.2 21:18
 
 local M = {}
 
@@ -27,6 +26,16 @@ local function updateGFX(dt)
     
 end
 
+local function setParameters(parameters)
+    local Val
+    if parameters.val < 0.5 then
+        Val = 0
+    else
+        Val = 1
+    end
+    electrics.values.fws = Val
+end
+
 -- public interface
 M.switchFWS = switchFWS
 
@@ -34,5 +43,6 @@ M.init = onInit
 M.onInit      = onInit
 M.onReset     = onInit
 M.updateGFX = updateGFX
+M.setParameters = setParameters
 
 return M

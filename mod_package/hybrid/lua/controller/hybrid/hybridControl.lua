@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.46 alpha
--- final edit - 2024.10.21 23:58
+-- version 0.0.45 alpha
+-- final edit - 2024.11.2 21:12
 
 local M = {}
 
@@ -44,7 +44,7 @@ local connectVelocity = nil
 local edriveMode = nil
 local AdvanceAWD = nil
 local AdAWDDiffRPM = nil
-local regenLevel = 5
+local regenLevel = 3
 local ifComfortRegen = nil
 local comfortRegenBegine = nil
 local comfortRegenEnd = nil
@@ -210,7 +210,7 @@ local function motorMode(state)
         end
         ifMotorOn = true
     elseif state == "on3" then -- EV drive ratio
-        if ifMotorGearbox() and powerGenerator.getEnhancedDrive() then
+        if ifMotorGearbox() and powerGenerator.enhancedDrive then
             for _, v in ipairs(motors) do
                 if v.type == "motorShaft" then
                     v:setmotorRatio(motorRatio2)
@@ -925,6 +925,15 @@ local function onReset(jbeamData)
     end
 end
 
+local function setParameters(parameters)
+    if parameters.awd then-- partTime fullTime off
+        edriveMode = parameters.awd
+    end
+    if parameters.regen then
+        regenLevel = math.max(0, math.min(5, parameters.regen))
+    end
+end
+
 M.setMode = setMode
 M.setPartTimeDriveMode = setPartTimeDriveMode
 M.rollingMode = rollingMode
@@ -943,6 +952,7 @@ M.init = init
 M.reset = reset
 M.onInit = onInit
 M.onReset = onReset
+M.setParameters = setParameters
 
 M.new = new
 M.updateGFX = updateGFX

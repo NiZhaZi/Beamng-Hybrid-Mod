@@ -13,6 +13,7 @@
 			["Camso_DriveModes_offroad", "Camso_DriveModes_offroad", "Offroad Mode"],
 			["Camso_DriveModes_off2wd", "", "2WD ESC & TC Off Mode"],
 			["Camso_DriveModes_corsa", "Camso_DriveModes_corsa", "Corsa Mode"],
+			["Camso_DriveModes_eco", "Camso_DriveModes_eco", "Eco Mode"],
 			["Camso_DriveModes_mod", "", "Additional Mode"]
 		],
 		
@@ -41,6 +42,8 @@
 						["controller", {"controllerName": "advawd","mode": "locked"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": 0.1}],
+						["controller", {"controllerName": "hybridControl","awd": "fullTime", "regen": 4}],
+						["controller", {"controllerName": "rwsControl","val": 1}],
 					]
 				},
 				"off": {
@@ -63,6 +66,8 @@
 						["controller", {"controllerName": "advawd"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": 0}],
+						["controller", {"controllerName": "hybridControl","awd": "partTime", "regen": 3}],
+						["controller", {"controllerName": "rwsControl","val": 1}],
 					]
 				},
 				"off2wd": {
@@ -83,6 +88,8 @@
 						["controller", {"output": 1, "controllerName": "advawd","mode": "2wd"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": 0}],
+						["controller", {"controllerName": "hybridControl","awd": "fullTime", "regen": 3}],
+						["controller", {"controllerName": "rwsControl","val": 1}],
 					]
 				},
 				"comfort": {
@@ -113,6 +120,8 @@
 						["controller", {"controllerName": "advawd"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": 0}],
+						["controller", {"controllerName": "hybridControl","awd": "partTime", "regen": 3}],
+						["controller", {"controllerName": "rwsControl","val": 1}],
 					]
 				},
 				"sport": {
@@ -144,6 +153,8 @@
 						["controller", {"controllerName": "advawd"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": -0.1}],
+						["controller", {"controllerName": "hybridControl","awd": "fullTime", "regen": 2}],
+						["controller", {"controllerName": "rwsControl","val": 0}],
 					]
 				},
 				"corsa": {
@@ -166,8 +177,42 @@
 						["controller", {"controllerName": "advawd"}],
 
 						["controller", {"controllerName": "suspensionLift","lift": -0.1}],
+						["controller", {"controllerName": "hybridControl","awd": "fullTime", "regen": 1}],
+						["controller", {"controllerName": "rwsControl","val": 0}],
 					]
-				}
+				},
+				"eco": {
+					"order": 11,
+					"name": "Eco",
+					"settings": [
+						["type"],
+						["controller", {"controllerName": "CMU","uiDisplayData.simplePowertrainApp.activeColor": "00FF00"}],
+						["controller",{"controllerName": "adaptiveFrontDamper","damperMode": "soft"}],
+						["controller",{"controllerName": "adaptiveRearDamper","damperMode": "soft"}],
+						["controller", {"controllerName": "adaptiveFrontSwayBar","torsionBarMode": "soft"}],
+						["controller", {"controllerName": "adaptiveRearSwayBar","torsionBarMode": "soft"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.125,
+										"tractionControl.isEnabled": true,
+										"tractionControl.wheelGroupSettings.mainEngine.minimumThrottleLimit": 0.1,
+										"yawControl.yawAvThreshold": 0.6,
+										"yawControl.isEnabled": false,
+										"controllerName": "motorTorqueControl"}],
+						["controller", {"tractionControl.wheelGroupSettings.mainEngine.slipThreshold": 0.125,
+										"controllerName": "brakeControl",
+										"yawControl.slipAngleThreshold": 0.1,
+										"yawControl.yawAvThreshold": 0.4,
+										"yawControl.isEnabled": true,
+										"tractionControl.isEnabled": true}],
+						["transmission", {"defaultForwardMode": "D"}],
+						["controller", {"isEnabled": true,"controllerName": "lockRear","avDiffThreshold": 3}],
+						["controller", {"isEnabled": true,"controllerName": "lockFront","avDiffThreshold": 3}],
+						["controller", {"controllerName": "advawd"}],
+
+						["controller", {"controllerName": "suspensionLift","lift": 0}],
+						["controller", {"controllerName": "hybridControl","awd": "off", "regen": 5}],
+						["controller", {"controllerName": "rwsControl","val": 1}],
+					]
+				},
 			},
 			"enabledModes": ["comfort", "sport", "off"],
 			"defaultMode": "sport",
@@ -284,6 +329,18 @@
 			"authors": "Camshaft Software"
 		},
 		"slotType": "Camso_DriveModes_corsa"
+	},
+
+	"Camso_DriveModes_eco": {
+		"driveModes": {
+			"enabledModes_eco": ["eco"]
+		},
+		"information": {
+			"value": 500,
+			"name": "Eco Mode",
+			"authors": "Camshaft Software"
+		},
+		"slotType": "Camso_DriveModes_eco"
 	},
 
 }
