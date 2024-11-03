@@ -133,7 +133,7 @@ local function updateGFX(dt)
             brake = 1
             electrics.values.autoholdActive = 1
         elseif input.throttle <= 0 then
-            brake = math.max(0, input.brake, -0.2 * velocity + 1)
+            brake = math.max(0, input.brake, -(1 / 3.00) * velocity + 1)
         else
             brake = input.brake
             electrics.values.autoholdActive = 0
