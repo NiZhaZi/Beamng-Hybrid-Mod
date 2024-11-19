@@ -1,28 +1,33 @@
 {
 "bindings" :   [
      {
+          "control": "alt o",
+          "action":  "switch onePedal brake mode"
+     },
+
+     {
           "control": "alt b",
-          "action":  "switvh advance brake mode"
+          "action":  "switch onePedal CRBS mode"
      },
 
      {
           "control": "alt x",
-          "action":  "switvh sport brake mode"
+          "action":  "switch sport brake mode"
      },
 
      {
           "control": "shift alt i",
-          "action":  "switvh to on-demand AWD"
+          "action":  "switch to on-demand AWD"
      },
 
      {
           "control": "shift alt o",
-          "action":  "switvh to full-time AWD"
+          "action":  "switch to full-time AWD"
      },
 
      {
           "control": "shift alt p",
-          "action":  "switvh to 2WD"
+          "action":  "switch to 2WD"
      }
      
 ],

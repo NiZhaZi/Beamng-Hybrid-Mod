@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.45 alpha
--- final edit - 2024.11.2 21:12
+-- version 0.0.46 alpha
+-- final edit - 2024.11.19 20:55
 
 local M = {}
 
@@ -50,6 +50,8 @@ local comfortRegenBegine = nil
 local comfortRegenEnd = nil
 local lowSpeed = nil
 
+local brakeMode = nil
+
 local enableModes = {}
 local ifREEVEnable = false
 local REEVMode = nil -- control engine start and TC
@@ -95,6 +97,25 @@ local function enhanceRegen()
         regenLevel = regenLevel + 1
     end
 
+end
+
+local function selectBrakeMode(mode)
+    if mode then
+        brakeMode = mode
+    else
+        if mode == "onePedal" then
+            mode = "CRBS"
+        elseif mode == "CRBS" then
+            mode = "sport"
+        elseif mode == "sport" then
+            mode = "onePedal"
+        end
+    end
+end
+
+local function switchBrakeMode(mode)
+    selectBrakeMode(mode)
+    gui.message({ txt = mode .. " mode on" }, 5, "", "")
 end
 
 local function getRegenLevel()
@@ -686,34 +707,55 @@ local function updateGFX(dt)
         local comfortRegen
         for _, v in ipairs(mainMotors) do
             if v then
-                v.maxWantedRegenTorque = v.originalRegenTorque * cauculateRegen( v.outputAV1 * avToRPM / v.maxRPM ) * regenLevel
+                v.wantedRegenTorque1 = v.originalRegenTorque * cauculateRegen( v.outputAV1 * avToRPM / v.maxRPM ) * regenLevel
             end
         end
 
         for _, v in ipairs(subMotors) do
             if v then
                 if electrics.values.throttle > 0 or ifecrawl then
-                    v.maxWantedRegenTorque = 0
+                    v.wantedRegenTorque1 = 0
                 else
-                    v.maxWantedRegenTorque = v.originalRegenTorque * cauculateRegen( v.outputAV1 * avToRPM / v.maxRPM ) * regenLevel
-                    --log("", "hybrid", "hybrid" .. v.maxWantedRegenTorque)
+                    v.wantedRegenTorque1 = v.originalRegenTorque * cauculateRegen( v.outputAV1 * avToRPM / v.maxRPM ) * regenLevel
                 end
             end
         end
     else
         for _, v in ipairs(mainMotors) do
             if v then
-                v.maxWantedRegenTorque = v.originalRegenTorque * regenLevel
+                v.wantedRegenTorque1 = v.originalRegenTorque * regenLevel
             end
         end
 
         for _, v in ipairs(subMotors) do
             if v then
                 if electrics.values.throttle > 0 or ifecrawl then
-                    v.maxWantedRegenTorque = 0
+                    v.wantedRegenTorque1 = 0
                 else
-                    v.maxWantedRegenTorque = v.originalRegenTorque * regenLevel
+                    v.wantedRegenTorque1 = v.originalRegenTorque * regenLevel
                 end
+            end
+        end
+    end
+
+    for _, v in ipairs(motors) do
+        if brakeMode == "sport" then
+            if v then
+                v.maxWantedRegenTorque = v.wantedRegenTorque1 * input.brake
+            end
+        elseif brakeMode == "CRBS" then
+            if v then
+                v.maxWantedRegenTorque = v.wantedRegenTorque1 * input.brake * 2
+                if v.maxWantedRegenTorque > v.wantedRegenTorque1 then
+                    v.maxWantedRegenTorque = v.wantedRegenTorque1
+                end
+            end
+            if input.brake > 0.5 then
+                electrics.values.brake = (input.brake - 0.5) * 2
+            end
+        elseif brakeMode == "onePedal" then
+            if v then
+                v.maxWantedRegenTorque = v.wantedRegenTorque1
             end
         end
     end
@@ -739,6 +781,8 @@ local function init(jbeamData)
             break
         end
     end
+
+    brakeMode = jbeamData.defaultBrakeMode or "onePedal"
 
     motorDirection = 0
     velocityRangeBegin = jbeamData.velocityRangeBegin or nil
@@ -787,6 +831,7 @@ local function init(jbeamData)
             if mainMotor then
                 table.insert(mainMotors, mainMotor)
                 mainMotor.originalRegenTorque = mainMotor.maxWantedRegenTorque
+                mainMotor.wantedRegenTorque1 = 0
                 mainMotor.electricsThrottleName = "mainThrottle"
             end
         end
@@ -801,6 +846,7 @@ local function init(jbeamData)
             if subMotor then
                 table.insert(subMotors, subMotor)
                 subMotor.originalRegenTorque = subMotor.maxWantedRegenTorque
+                subMotor.wantedRegenTorque1 = 0
             end
         end
 
@@ -830,6 +876,8 @@ local function init(jbeamData)
             if motor then
                 table.insert(motors, motor)
                 motor.originalRegenTorque = motor.maxWantedRegenTorque
+                motor.wantedRegenTorque1 = 0
+                motor.maxWantedRegenTorque = 0
             end
         end
     end
@@ -846,6 +894,8 @@ local function init(jbeamData)
             if directMotor then
                 table.insert(directMotors, directMotor)
                 directMotor.originalRegenTorque = directMotor.maxWantedRegenTorque
+                directMotor.wantedRegenTorque1 = 0
+                directMotor.maxWantedRegenTorque = 0
             end
         end
     end
@@ -867,13 +917,16 @@ local function onInit()
 end
 
 local function reset(jbeamData)
+
+    brakeMode = jbeamData.defaultBrakeMode or "onePedal"
+
     motorDirection = 0
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
     AdvanceAWD = jbeamData.AdvanceAWD or false
     if AdvanceAWD and #subMotors ~= 2 then
         AdvanceAWD = false
     end
-    ifComfortRegen = jbeamData.ifComfortRegen or true
+    ifComfortRegen = jbeamData.ifComfortRegen and true
 
     startVelocity = defaultSVelocity
     connectVelocity = defaultCVelocity
@@ -914,7 +967,7 @@ end
 
 local function onReset(jbeamData)
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
-    ifComfortRegen = jbeamData.ifComfortRegen or true
+    ifComfortRegen = jbeamData.ifComfortRegen and true
 
     REEVMode = "off"
 
@@ -940,6 +993,7 @@ M.rollingMode = rollingMode
 
 M.setecrawlMode = setecrawlMode
 
+M.switchBrakeMode = switchBrakeMode
 M.reduceRegen = reduceRegen
 M.enhanceRegen = enhanceRegen
 M.getRegenLevel = getRegenLevel

@@ -1,7 +1,7 @@
 -- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
 -- by NZZ
--- version 0.0.5 alpha
--- final edit - 2024.10.7 17:27
+-- version 0.0.6 alpha
+-- final edit - 2024.11.19 12:37
 
 local M = {}
 
@@ -18,8 +18,7 @@ local motors = nil
 
 local edriveMode = nil
 local regenLevel = 5
-local ifAdvanceBrake = nil
-local ifSportBrake = nil
+local brakeMode = nil
 local ifAssistSteering = nil
 local assistSteeringSpeed = nil
 
@@ -28,8 +27,7 @@ local ondemandMaxRPM = nil
 local function onInit(jbeamData)
     battery =  jbeamData.energyStorage or "mainBattery"
     edriveMode = jbeamData.defaultEAWDMode or "partTime"
-    ifAdvanceBrake = jbeamData.ifAdvanceBrake or false
-    ifSportBrake = jbeamData.ifSportBrake or false
+    brakeMode = jbeamData.brakeMode or "onePedal" -- "onePedal" "CRBS" "sport"
     ifAssistSteering = jbeamData.ifAssistSteering or false
     assistSteeringSpeed = jbeamData.assistSteeringSpeed or 75
 
@@ -101,39 +99,27 @@ local function ifLowSpeed()
     return false
 end
 
-local function switchAdvanceBrake()
-    ifAdvanceBrake = not ifAdvanceBrake
-end
-
-local function switchSportBrake()
-    ifSportBrake = not ifSportBrake
+local function selectBrakeMode(mode)
+    if mode then
+        brakeMode = mode
+    else
+        if mode == "onePedal" then
+            mode = "CRBS"
+        elseif mode == "CRBS" then
+            mode = "sport"
+        elseif mode == "sport" then
+            mode = "onePedal"
+        end
+    end
 end
 
 local function switchAWD(mode)
     edriveMode = mode
 end
 
-local function switchBrakeMode(type)
-    if type == "advance" then
-        switchAdvanceBrake()
-        if ifAdvanceBrake then
-            gui.message({ txt = "advance brake on" }, 5, "", "")
-        else
-            gui.message({ txt = "one-pedal brake on" }, 5, "", "")
-            ifSportBrake = false
-        end
-    elseif type == "sport" then
-        if ifAdvanceBrake then
-            switchSportBrake()
-            if ifSportBrake then
-                gui.message({ txt = "sport brake on" }, 5, "", "")
-            else
-                gui.message({ txt = "sport brake off" }, 5, "", "")
-            end
-        else
-            gui.message({ txt = "switch to advance brake firest" }, 5, "", "")
-        end
-    end
+local function switchBrakeMode(mode)
+    selectBrakeMode(mode)
+    gui.message({ txt = mode .. " mode on" }, 5, "", "")
 end
 
 local function switchAWDMode(mode)
@@ -187,34 +173,27 @@ local function updateGFX(dt)
     local direction = electrics.values.subThrottle
     -- ev part time drive end
 
-
     -- advance brake begin
-    if ifAdvanceBrake then
-        for _, v in ipairs(motors) do
-            if ifSportBrake then
-                if v then
-                    v.maxWantedRegenTorque = v.originalRegenTorque * input.brake
-                end
-                -- electrics.values.brake = input.brake
-            else
-                if v then
-                    v.maxWantedRegenTorque = v.originalRegenTorque * input.brake * 2
-                    if v.maxWantedRegenTorque > v.originalRegenTorque then
-                        v.maxWantedRegenTorque = v.originalRegenTorque
-                    end
-                end
-                if input.brake > 0.5 then
-                    electrics.values.brake = (input.brake - 0.5) * 2
+    for _, v in ipairs(motors) do
+        if brakeMode == "sport" then
+            if v then
+                v.maxWantedRegenTorque = v.originalRegenTorque * input.brake
+            end
+        elseif brakeMode == "CRBS" then
+            if v then
+                v.maxWantedRegenTorque = v.originalRegenTorque * input.brake * 2
+                if v.maxWantedRegenTorque > v.originalRegenTorque then
+                    v.maxWantedRegenTorque = v.originalRegenTorque
                 end
             end
-        end
-    else
-        for _, v in ipairs(motors) do
+            if input.brake > 0.5 then
+                electrics.values.brake = (input.brake - 0.5) * 2
+            end
+        elseif brakeMode == "onePedal" then
             if v then
                 v.maxWantedRegenTorque = v.originalRegenTorque
             end
         end
-        -- electrics.values.brake = input.brake
     end
 
     local ign

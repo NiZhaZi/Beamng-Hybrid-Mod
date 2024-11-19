@@ -43,6 +43,8 @@
 			"REEVRPM": 1500,
 			"REEVMutiplier": 2.0,
 			"REEVRPMProtect": 200,
+			//brake mode settings
+			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -90,6 +92,8 @@
 			"REEVRPM": 1500,
 			"REEVMutiplier": 2.0,
 			"REEVRPMProtect": 200,
+			//brake mode settings
+			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -137,6 +141,8 @@
 			"REEVRPM": 1500,
 			"REEVMutiplier": 2.0,
 			"REEVRPMProtect": 200,
+			//brake mode settings
+			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -184,6 +190,8 @@
 			"REEVRPM": 1500,
 			"REEVMutiplier": 2.0,
 			"REEVRPMProtect": 200,
+			//brake mode settings
+			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -231,6 +239,8 @@
 			"REEVRPM": 1500,
 			"REEVMutiplier": 2.0,
 			"REEVRPMProtect": 200,
+			//brake mode settings
+			"defaultBrakeMode": "onePedal"
 		},
 	},
 

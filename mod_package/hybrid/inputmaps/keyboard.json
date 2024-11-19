@@ -86,6 +86,21 @@
      },
 
      {
+          "control": "alt z",
+          "action":  "Switch onePedal brake mode"
+     },
+
+     {
+          "control": "alt x",
+          "action":  "Switch onePedal CRBS mode"
+     },
+
+     {
+          "control": "alt c",
+          "action":  "Switch sport brake mode"
+     },
+
+     {
           "control": "alt 1",
           "action":  "Switch Rear Wheel Steering"
      },
