@@ -1,17 +1,17 @@
 {
 "bindings" :   [
      {
-          "control": "alt o",
+          "control": "alt z",
           "action":  "switch onePedal brake mode"
      },
 
      {
-          "control": "alt b",
+          "control": "alt x",
           "action":  "switch onePedal CRBS mode"
      },
 
      {
-          "control": "alt x",
+          "control": "alt c",
           "action":  "switch sport brake mode"
      },
 

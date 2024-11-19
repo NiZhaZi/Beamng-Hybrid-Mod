@@ -3,7 +3,7 @@
 "switch onePedal CRBS mode":        {"order":  7, "onDown":"controller.getControllerSafe('evdrive').switchBrakeMode('CRBS')",  	                "title": "switch CRBS brake mode", 	                "desc": "switch CRBS brake mode"                                    },
 "switch sport brake mode":          {"order":  8, "onDown":"controller.getControllerSafe('evdrive').switchBrakeMode('sport')",  	            "title": "switch sport brake mode", 	            "desc": "switch sport brake mode"                                   },
 
-"switch to on-demand AWD":          {"order":  16, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('partTime')",  	            "title": "switvh to on-demand AWD", 	            "desc": "switvh to on-demand AWD"                                   },
-"switch to full-time AWD":          {"order":  17, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('fullTime')",  	            "title": "switvh to full-time AWD", 	            "desc": "switvh to full-time AWD"                                   },
-"switch to 2WD":                    {"order":  18, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('off')",  	                "title": "switvh to 2WD", 	                        "desc": "switvh to 2WD"                                             }
+"switch to on-demand AWD":          {"order":  16, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('partTime')",  	            "title": "switch to on-demand AWD", 	            "desc": "switch to on-demand AWD"                                   },
+"switch to full-time AWD":          {"order":  17, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('fullTime')",  	            "title": "switch to full-time AWD", 	            "desc": "switch to full-time AWD"                                   },
+"switch to 2WD":                    {"order":  18, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('off')",  	                "title": "switch to 2WD", 	                        "desc": "switch to 2WD"                                             }
 }
