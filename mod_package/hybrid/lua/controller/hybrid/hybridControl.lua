@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.46 alpha
--- final edit - 2024.11.19 20:55
+-- version 0.0.47 alpha
+-- final edit - 2024.11.22 23:53
 
 local M = {}
 
@@ -231,7 +231,7 @@ local function motorMode(state)
         end
         ifMotorOn = true
     elseif state == "on3" then -- EV drive ratio
-        if ifMotorGearbox() and powerGenerator.enhancedDrive then
+        if ifMotorGearbox() and powerGenerator:getEnhancedDrive() then
             for _, v in ipairs(motors) do
                 if v.type == "motorShaft" then
                     v:setmotorRatio(motorRatio2)
