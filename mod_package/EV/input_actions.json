@@ -5,5 +5,12 @@
 
 "switch to on-demand AWD":          {"order":  16, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('partTime')",  	            "title": "switch to on-demand AWD", 	            "desc": "switch to on-demand AWD"                                   },
 "switch to full-time AWD":          {"order":  17, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('fullTime')",  	            "title": "switch to full-time AWD", 	            "desc": "switch to full-time AWD"                                   },
-"switch to 2WD":                    {"order":  18, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('off')",  	                "title": "switch to 2WD", 	                        "desc": "switch to 2WD"                                             }
+"switch to main motor 2WD":         {"order":  18, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('mainDrive')",  	            "title": "switch to main motor 2WD", 	            "desc": "switch to main motor 2WD"                                  },
+"switch to sub motor 2WD":          {"order":  19, "onDown":"controller.getControllerSafe('evdrive').switchAWDMode('subDrive')",  	            "title": "switch to sub motor 2WD", 	            "desc": "switch to sub motor 2WD"                                   },
+
+"reduce main output":               {"order":  20, "onDown":"controller.getControllerSafe('motorLimit').setMainMotorsTorqueLimit(-1)",	        "title": "reduce main output", 	                    "desc": "reduce main output"                                        },
+"increase main output":             {"order":  21, "onDown":"controller.getControllerSafe('motorLimit').setMainMotorsTorqueLimit(1)",  	        "title": "increase main output", 	                "desc": "increase main output"                                      },
+"reduce sub output":                {"order":  22, "onDown":"controller.getControllerSafe('motorLimit').setSubMotorsTorqueLimit(-1)",	        "title": "reduce sub output", 	                    "desc": "reduce sub output"                                         },
+"increase sub output":              {"order":  23, "onDown":"controller.getControllerSafe('motorLimit').setSubMotorsTorqueLimit(1)",  	        "title": "increase sub output", 	                "desc": "increase sub output"                                       }
+
 }

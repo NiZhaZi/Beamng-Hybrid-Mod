@@ -16,18 +16,43 @@
      },
 
      {
-          "control": "shift alt i",
+          "control": "shift alt u",
           "action":  "switch to on-demand AWD"
      },
 
      {
-          "control": "shift alt o",
+          "control": "shift alt i",
           "action":  "switch to full-time AWD"
      },
 
      {
+          "control": "shift alt o",
+          "action":  "switch to main motor 2WD"
+     },
+
+     {
           "control": "shift alt p",
-          "action":  "switch to 2WD"
+          "action":  "switch to sub motor 2WD"
+     },
+
+     {
+          "control": "shift ctrl u",
+          "action":  "reduce main output"
+     },
+
+     {
+          "control": "shift ctrl i",
+          "action":  "increase main output"
+     },
+
+     {
+          "control": "shift ctrl o",
+          "action":  "reduce sub output"
+     },
+
+     {
+          "control": "shift ctrl p",
+          "action":  "increase sub output"
      }
      
 ],

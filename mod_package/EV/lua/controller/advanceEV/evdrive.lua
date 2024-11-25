@@ -1,7 +1,7 @@
 -- evdrive.lua - 2024.5.5 16:54 - advance control for EVs
 -- by NZZ
--- version 0.0.6 alpha
--- final edit - 2024.11.19 12:37
+-- version 0.0.7 alpha
+-- final edit - 2024.11.25 20:35
 
 local M = {}
 
@@ -125,11 +125,13 @@ end
 local function switchAWDMode(mode)
     switchAWD(mode)
     if edriveMode == "fullTime" then
-        gui.message({ txt = "full-time AWD mode on" }, 5, "", "")
+        gui.message({ txt = "Full-time AWD mode on" }, 5, "", "")
     elseif edriveMode == "partTime" then
-        gui.message({ txt = "on-demand AWD mode on" }, 5, "", "")
+        gui.message({ txt = "On-demand AWD mode on" }, 5, "", "")
+    elseif edriveMode == "subDrive" then
+        gui.message({ txt = "Main Motors off" }, 5, "", "")
     else
-        gui.message({ txt = "AWD mode off" }, 5, "", "")
+        gui.message({ txt = "Sub Motors off" }, 5, "", "")
     end
 end
 
@@ -159,6 +161,7 @@ local function updateGFX(dt)
 
 
     electrics.values.mainThrottle = electrics.values.throttle
+    electrics.values.subThrottle = electrics.values.throttle
     if edriveMode == "partTime" then
         if abs(mianRPM - subRPM) >= ondemandMaxRPM or ifLowSpeed() then
             electrics.values.subThrottle = electrics.values.throttle
@@ -167,10 +170,12 @@ local function updateGFX(dt)
         end
     elseif edriveMode == "fullTime" then
         electrics.values.subThrottle = electrics.values.throttle
+    elseif edriveMode == "subDrive" then
+        electrics.values.mainThrottle = 0
     else
-        electrics.values.subThrottle = 0
+        electrics.values.subThrottle = 0    
     end
-    local direction = electrics.values.subThrottle
+    -- local direction = electrics.values.subThrottle
     -- ev part time drive end
 
     -- advance brake begin
@@ -235,6 +240,18 @@ local function updateGFX(dt)
 
 end
 
+local function getMainMotors()
+    return mainMotors
+end
+
+local function getSubMotors()
+    return subMotors
+end
+
+local function getMotors()
+    return motors
+end
+
 -- public interface
 
 M.switchBrakeMode = switchBrakeMode
@@ -245,4 +262,9 @@ M.onInit      = onInit
 M.onReset     = onInit
 M.updateGFX = updateGFX
 
+M.getMainMotors = getMainMotors
+M.getSubMotors = getSubMotors
+M.getMotors = getMotors
+
+rawset(_G, "evdrive", M)
 return M
