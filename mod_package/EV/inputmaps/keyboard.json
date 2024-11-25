@@ -36,23 +36,28 @@
      },
 
      {
-          "control": "shift ctrl u",
+          "control": "ctrl alt u",
           "action":  "reduce main output"
      },
 
      {
-          "control": "shift ctrl i",
+          "control": "ctrl alt i",
           "action":  "increase main output"
      },
 
      {
-          "control": "shift ctrl o",
+          "control": "ctrl alt o",
           "action":  "reduce sub output"
      },
 
      {
-          "control": "shift ctrl p",
+          "control": "ctrl alt p",
           "action":  "increase sub output"
+     },
+
+     {
+          "control": "shift e",
+          "action":  "switch spoiler"
      }
      
 ],
