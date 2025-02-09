@@ -1,0 +1,74 @@
+{
+"bindings" :   [
+     {
+          "control": "alt a",
+          "action":  "Auto"
+     },
+
+     {
+          "control": "alt e",
+          "action":  "EV"
+     },
+
+     {
+          "control": "alt i",
+          "action":  "ICE"
+     },
+
+     {
+          "control": "alt h",
+          "action":  "Hybrid"
+     },
+
+     {
+          "control": "alt r",
+          "action":  "REEV"
+     },
+
+     {
+          "control": "alt =",
+          "action":  "Enhance Energy Recovery"
+     },
+
+     {
+          "control": "alt -",
+          "action":  "Reduce Energy Recovery"
+     },
+
+     {
+          "control": "shift alt i",
+          "action":  "EV part-time AWD"
+     },
+
+     {
+          "control": "shift alt o",
+          "action":  "EV full-time AWD"
+     },
+
+     {
+          "control": "shift alt p",
+          "action":  "EV 2WD"
+     },
+
+     {
+          "control": "shift =",
+          "action":  "Engine Velocity Increase"
+     },
+
+     {
+          "control": "shift -",
+          "action":  "Engine Velocity Decrease"
+     },
+
+     {
+          "control": "shift v",
+          "action":  "Engine Velocity Reset"
+     } 
+],
+
+"name"              : "Keyboard"          , 
+"version"           : 1                   , 
+"devicetype"        : "keyboard"          , 
+"vidpid"            : "6F1D2B61"          , 
+"guid"              : "{6F1D2B61-D5A0-11CF-BFC7-444553540000}"
+}

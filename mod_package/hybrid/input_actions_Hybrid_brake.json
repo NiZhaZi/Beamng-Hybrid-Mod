@@ -1,0 +1,5 @@
+{
+"Switch onePedal brake mode":   {"order": 25, "onDown":"controller.getControllerSafe('hybridControl').switchBrakeMode('onePedal')",  	        "title": "switch onePedal brake mode", 	    "desc": "switch onePedal brake mode"                                                        },
+"Switch onePedal CRBS mode":    {"order": 26, "onDown":"controller.getControllerSafe('hybridControl').switchBrakeMode('CRBS')",  	            "title": "switch CRBS brake mode", 	        "desc": "switch CRBS brake mode"                                                            },
+"Switch sport brake mode":      {"order": 27, "onDown":"controller.getControllerSafe('hybridControl').switchBrakeMode('sport')",  	            "title": "switch sport brake mode", 	    "desc": "switch sport brake mode"                                                           }
+}

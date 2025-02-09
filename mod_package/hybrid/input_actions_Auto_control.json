@@ -1,0 +1,6 @@
+{
+"Switch EV Crawl":              {"order": 21, "onDown":"controller.getControllerSafe('hybridControl').setecrawlMode()",                         "title": "Switch EV Crawl", 	            "desc": "Switch EV Crawl"                                                                   },
+"Switch Auto Hold":             {"order": 22, "onDown":"controller.getControllerSafe('autoControl').switchAutoHold()",                          "title": "Switch Auto Hold",                "desc": "Switch Auto Hold"                                                                  },
+"Switch Auto Start":            {"order": 23, "onDown":"controller.getControllerSafe('autoControl').switchAutoStart()",                         "title": "Switch Auto Start",               "desc": "Switch Auto Start"                                                                 },
+"Switch Hill Descent Control":  {"order": 24, "onDown":"controller.getControllerSafe('autoControl').switchHDC()",                               "title": "Switch HDC",                      "desc": "Switch HDC"                                                                        }
+}

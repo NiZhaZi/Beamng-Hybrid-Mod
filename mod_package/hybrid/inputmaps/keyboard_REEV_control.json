@@ -1,0 +1,39 @@
+{
+"bindings" :   [
+     {
+          "control": "ctrl alt =",
+          "action":  "set SOC increase"
+     },
+
+     {
+          "control": "ctrl alt -",
+          "action":  "set SOC decrease"
+     },
+
+     {
+          "control": "ctrl alt r",
+          "action":  "reset SOC"
+     },
+
+     {
+          "control": "shift alt j",
+          "action":  "Power Generator On"
+     },
+
+     {
+          "control": "shift alt k",
+          "action":  "Power Generator Off"
+     },
+
+     {
+          "control": "shift alt l",
+          "action":  "Power Generator Auto"
+     }  
+],
+
+"name"              : "Keyboard"          , 
+"version"           : 1                   , 
+"devicetype"        : "keyboard"          , 
+"vidpid"            : "6F1D2B61"          , 
+"guid"              : "{6F1D2B61-D5A0-11CF-BFC7-444553540000}"
+}

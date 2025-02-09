@@ -1,0 +1,39 @@
+{
+"bindings" :   [
+     {
+          "control": "alt 1",
+          "action":  "Switch Rear Wheel Steering"
+     },
+
+     {
+          "control": "alt 7",
+          "action":  "Chassis Adjust Mode"
+     },
+
+     {
+          "control": "alt 6",
+          "action":  "Out Of Trouble Mode"
+     },
+
+     {
+          "control": "alt 8",
+          "action":  "Chassis Lift"
+     },
+
+     {
+          "control": "alt 9",
+          "action":  "Chassis Drop"
+     },
+
+     {
+          "control": "alt 0",
+          "action":  "Chassis Reset"
+     } 
+],
+
+"name"              : "Keyboard"          , 
+"version"           : 1                   , 
+"devicetype"        : "keyboard"          , 
+"vidpid"            : "6F1D2B61"          , 
+"guid"              : "{6F1D2B61-D5A0-11CF-BFC7-444553540000}"
+}

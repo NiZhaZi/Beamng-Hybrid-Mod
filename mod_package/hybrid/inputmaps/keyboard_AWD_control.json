@@ -1,0 +1,39 @@
+{
+"bindings" :   [
+     {
+          "control": "shift ctrl e",
+          "action":  "inhanceMainOut"
+     },
+
+     {
+          "control": "shift ctrl q",
+          "action":  "dehanceMainOut"
+     },
+
+     {
+          "control": "shift ctrl r",
+          "action":  "resetMainOut"
+     },
+
+     {
+          "control": "shift ctrl l",
+          "action":  "switchLockMode"
+     },
+
+     {
+          "control": "shift ctrl f",
+          "action":  "switchFrontDifferential"
+     },
+
+     {
+          "control": "shift ctrl g",
+          "action":  "switchRearDifferential"
+     }  
+],
+
+"name"              : "Keyboard"          , 
+"version"           : 1                   , 
+"devicetype"        : "keyboard"          , 
+"vidpid"            : "6F1D2B61"          , 
+"guid"              : "{6F1D2B61-D5A0-11CF-BFC7-444553540000}"
+}

@@ -1,0 +1,24 @@
+{
+"bindings" :   [
+     {
+          "control": "alt z",
+          "action":  "Switch onePedal brake mode"
+     },
+
+     {
+          "control": "alt x",
+          "action":  "Switch onePedal CRBS mode"
+     },
+
+     {
+          "control": "alt c",
+          "action":  "Switch sport brake mode"
+     } 
+],
+
+"name"              : "Keyboard"          , 
+"version"           : 1                   , 
+"devicetype"        : "keyboard"          , 
+"vidpid"            : "6F1D2B61"          , 
+"guid"              : "{6F1D2B61-D5A0-11CF-BFC7-444553540000}"
+}

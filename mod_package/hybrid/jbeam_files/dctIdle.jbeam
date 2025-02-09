@@ -1,0 +1,28 @@
+{
+	"DCT_idle": {
+		"information":{
+			"name":"DCT idle function",
+			"value":500
+		},
+		"slotType" : "DCT_idle",
+		"slots": [
+			["type", "default", "description"],
+			// ["DCT_idle", "DCT_idle", "DCT idle function"],			
+		],
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+		],
+		"controller": [
+			["fileName"],
+			["dctIdle", {
+				"name" : "dctIdle",
+				"defaultMode" : "nIdle",
+				}],
+		],
+
+		"vehicleController": {
+			"shiftLogicName": "dctGearboxAdv",
+        }
+	},
+
+}

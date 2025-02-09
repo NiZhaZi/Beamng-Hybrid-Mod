@@ -1,0 +1,9 @@
+{
+"set SOC increase":             {"order": 51, "onDown":"controller.getControllerSafe('powerGenerator').setSOC('+')",                            "title": "SOC increase", 	                "desc": "SOC increase"                                                                      },
+"set SOC decrease":             {"order": 52, "onDown":"controller.getControllerSafe('powerGenerator').setSOC('-')",                            "title": "SOC decrease", 	                "desc": "SOC decrease"                                                                      },
+"reset SOC":                    {"order": 53, "onDown":"controller.getControllerSafe('powerGenerator').setSOC()",                               "title": "SOC reset", 	                    "desc": "SOC reset"                                                                         },
+
+"Power Generator On":           {"order": 61, "onDown":"controller.getControllerSafe('powerGenerator').changeMode('on')",                       "title": "Power Generator On", 	            "desc": "Power Generator On"                                                                },
+"Power Generator Off":          {"order": 62, "onDown":"controller.getControllerSafe('powerGenerator').changeMode('off')",                      "title": "Power Generator Off", 	        "desc": "Power Generator Off"                                                               },
+"Power Generator Auto":         {"order": 63, "onDown":"controller.getControllerSafe('powerGenerator').changeMode('auto')",                     "title": "Power Generator Auto", 	        "desc": "Power Generator Auto"                                                              }
+}

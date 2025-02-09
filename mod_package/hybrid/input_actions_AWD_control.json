@@ -1,0 +1,8 @@
+{
+"switchLockMode":               {"order": 41, "onDown":"controller.getControllerSafe('dynamicAWD').switchForceOutputMode()",                    "title": "Switch Lock Mode", 	            "desc": "Lock the centre differential"                                                      },
+"inhanceMainOut":               {"order": 42, "onDown":"controller.getControllerSafe('dynamicAWD').increaseMainOurtput()",                      "title": "Increase Main Ourtput", 	        "desc": "Increase Main Ourtput"                                                             },
+"dehanceMainOut":               {"order": 43, "onDown":"controller.getControllerSafe('dynamicAWD').decreaseMainOurtput()",                      "title": "Decrease Main Ourtput", 	        "desc": "Decrease Main Ourtput"                                                             },
+"resetMainOut":                 {"order": 44, "onDown":"controller.getControllerSafe('dynamicAWD').resetVariableOutputRatio()",                 "title": "Reset Main Ourtput", 	            "desc": "Reset Main Ourtput"                                                                },
+"switchFrontDifferential":      {"order": 45, "onDown":"controller.getControllerSafe('dynamicLSD').switchLockMode('front')",                    "title": "switch Front Differential Mode", 	"desc": "switch Front Differential Mode"                                                    },
+"switchRearDifferential":       {"order": 46, "onDown":"controller.getControllerSafe('dynamicLSD').switchLockMode('rear')",                     "title": "switch Rear Differential Mode", 	"desc": "switch Rear Differential Mode"                                                     }
+}
