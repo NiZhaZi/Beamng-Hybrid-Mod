@@ -1,7 +1,7 @@
 -- autoContrl.lua - 2024.3.17 12:48 - auto functions control
 -- by NZZ
--- version 0.0.13 alpha
--- final edit - 2024.11.2 20:51
+-- version 0.0.14 alpha
+-- final edit - 2025.2.10 12:34
 
 local M = {}
 local debugTime = 0
@@ -133,7 +133,7 @@ local function updateGFX(dt)
             brake = 1
             electrics.values.autoholdActive = 1
         elseif input.throttle <= 0 then
-            brake = math.max(0, input.brake, -(1 / 3.00) * velocity + 1)
+            brake = math.max(0, input.brake, -(1 / 0.10) * velocity + 1) -- auto stay
         else
             brake = input.brake
             electrics.values.autoholdActive = 0
