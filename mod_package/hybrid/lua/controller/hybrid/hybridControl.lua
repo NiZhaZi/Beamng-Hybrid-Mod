@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.47 alpha
--- final edit - 2024.11.22 23:53
+-- version 0.0.48 alpha
+-- final edit - 2025.2.13 12:59
 
 local M = {}
 
@@ -70,6 +70,8 @@ local ifGearMotorDrive = false
 local enhanceDrive = false
 
 local ecrawlMode = false
+
+local tcsMultiper = nil
 
 local function ifMotorGearbox()
     if (gearbox.type == "eatGearbox" or gearbox.type == "ectGearbox" or gearbox.type == "edtGearbox" or gearbox.type == "emtGearbox" or gearbox.type == "estGearbox") then
@@ -617,6 +619,18 @@ local function updateGFX(dt)
             reevMotorShaftUpdate("disconnected")
         else
             reevThrottle = electrics.values.throttle
+
+            if electrics.values.tcs == 0 then
+                local wheelspeed = electrics.values.wheelspeed * 3.6
+                local airspeed = electrics.values.airspeed * 3.6
+                if wheelspeed > 1 and airspeed > 0.5 and wheelspeed > airspeed * 1.5 then
+                    reevThrottle = math.max(0, reevThrottle * tcsMultiper)
+                    tcsMultiper = math.max(0.01, tcsMultiper - 0.05)
+                else
+                    tcsMultiper = math.min(1.00, tcsMultiper + 0.01)
+                end
+            end
+            -- log("D", "w", tcsMultiper)
             reevMotorShaftUpdate("connected")
         end
 
@@ -797,6 +811,8 @@ local function init(jbeamData)
     REEVRPMProtect = jbeamData.REEVRPMProtect or 0
     ifGearMotorDrive = jbeamData.ifGearMotorDrive or false
 
+    tcsMultiper = 1
+
     detO = 0
     
     motorRatio1 = jbeamData.motorRatio1 or 1
@@ -933,6 +949,8 @@ local function reset(jbeamData)
 
     REEVMode = "off"
     REEVAV = REEVRPM * rpmToAV
+
+    tcsMultiper = 1
 
     if jbeamData.defaultMode then
         setMode(jbeamData.defaultMode)
