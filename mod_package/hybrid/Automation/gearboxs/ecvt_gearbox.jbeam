@@ -26,6 +26,7 @@
 			["fileName"],
 			
 		],
+
 		"gearbox": {
 			//https://wiki.beamng.com/AutomaticGearbox
 			"gearChangeTime": 0.11996076388889, //Seconds to do the shift (forced minimum, vehicleController can make it longer)
@@ -75,8 +76,8 @@
 
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-		["torqueConverter", "torqueConverter", "mainEngine", 1],
-		["eatGearbox", "gearbox", "torqueConverter", 1]
+			["torqueConverter", "torqueConverter", "mainEngine", 1],
+			["eatGearbox", "gearbox", "torqueConverter", 1]
 
 		]
 	}

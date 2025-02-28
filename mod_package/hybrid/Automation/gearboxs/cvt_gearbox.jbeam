@@ -24,6 +24,7 @@
 			["fileName"],
 			
 		],
+		
 		"gearbox": {
 			//https://wiki.beamng.com/AutomaticGearbox
 			"uiName": "Gearbox",
@@ -57,8 +58,8 @@
 
 		"powertrain" : [
 			["type", "name", "inputName", "inputIndex"],
-		["torqueConverter", "clutch", "mainEngine", 1],
-		["ectGearbox", "gearbox", "clutch", 1]
+			["torqueConverter", "clutch", "mainEngine", 1],
+			["ectGearbox", "gearbox", "clutch", 1]
 
 		]
 	}

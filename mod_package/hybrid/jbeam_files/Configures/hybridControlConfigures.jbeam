@@ -6,6 +6,7 @@
 		},
         "slots": [
 			["type", "default", "description"],
+			["Drive_Modes", "Mode_E", "Drive Modes"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -25,9 +26,6 @@
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
 			"AdAWDDiffRPM": 250,
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
-			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
 			"motorRatio1": 1.05,
 			"motorRatio2": 2.50,
@@ -55,6 +53,7 @@
 		},
         "slots": [
 			["type", "default", "description"],
+			["Drive_Modes", "Mode_E", "Drive Modes"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -74,9 +73,6 @@
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
 			"AdAWDDiffRPM": 250,
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
-			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
 			"motorRatio1": 2.05,
 			"motorRatio2": 2.05,
@@ -104,6 +100,7 @@
 		},
         "slots": [
 			["type", "default", "description"],
+			["Drive_Modes", "Mode_E", "Drive Modes"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -123,9 +120,6 @@
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
 			"AdAWDDiffRPM": 250,
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
-			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
 			"motorRatio1": 2.05,
 			"motorRatio2": 2.05,
@@ -153,6 +147,7 @@
 		},
         "slots": [
 			["type", "default", "description"],
+			["Drive_Modes", "Mode_E", "Drive Modes"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -172,9 +167,6 @@
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
 			"AdAWDDiffRPM": 250,
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
-			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
 			"motorRatio1": 2.05,
 			"motorRatio2": 2.05,
@@ -202,6 +194,7 @@
 		},
         "slots": [
 			["type", "default", "description"],
+			["Drive_Modes", "Mode_E", "Drive Modes"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -221,9 +214,6 @@
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
 			"AdAWDDiffRPM": 250,
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
-			"defaultMode" : "hybrid",
 			//ratio1 for hybrid mode, ratio2 for EV mode
 			"motorRatio1": 2.05,
 			"motorRatio2": 2.05,
@@ -241,6 +231,48 @@
 			"REEVRPMProtect": 200,
 			//brake mode settings
 			"defaultBrakeMode": "onePedal"
+		},
+	},
+
+
+
+
+
+	"Mode_All": {
+		"information":{
+			"name":"Hybrid All Drive Modes",
+			"value": 0
+		},
+
+        "slots": [
+			["type", "default", "description"],
+		],
+
+		"slotType" : "Drive_Modes",
+		
+		"hybridControl":{
+			//mode settings
+			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
+			"defaultMode" : "hybrid",
+		},
+	},
+
+	"Mode_E": {
+		"information":{
+			"name":"Hybrid Gearbox Drive Modes",
+			"value": 0
+		},
+		
+        "slots": [
+			["type", "default", "description"],
+		],
+
+		"slotType" : "Drive_Modes",
+		
+		"hybridControl":{
+			//mode settings
+			"enableModes" : ["hybrid", "electric", "auto", "reev"],
+			"defaultMode" : "hybrid",
 		},
 	},
 
