@@ -36,7 +36,7 @@
 
 	"Hybrid_Configure_FWD": {
 		"information":{
-			"name":"Hybrid Configure FWD",
+			"name":"Hybrid Configure AWD",
 			"value": 0
 		},
         "slots": [
@@ -53,7 +53,7 @@
 
 	"Hybrid_Configure_RWD": {
 		"information":{
-			"name":"Hybrid Configure RWD",
+			"name":"Hybrid Configure AWD",
 			"value": 0
 		},
         "slots": [
@@ -70,7 +70,7 @@
 
 	"Hybrid_Configure_Parallel": {
 		"information":{
-			"name":"Hybrid Configure Parallel AWD",
+			"name":"Hybrid Configure AWD",
 			"value": 0
 		},
         "slots": [

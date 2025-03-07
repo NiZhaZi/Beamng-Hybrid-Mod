@@ -21,26 +21,26 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontDriveShaft"],
-			"ondemandMaxRPM" : 50,
-			"AWDMultiplier" : 1.00,
+			"ondemandMaxRPM" : "$ondemandMaxRPM",
+			"AWDMultiplier" : "$AWDMultiplier",
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
-			"AdAWDDiffRPM": 250,
+			"AdAWDDiffRPM": "$AdAWDDiffRPM",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 1.05,
-			"motorRatio2": 2.50,
+			"motorRatio1": "$motorRatio1",
+			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 35,
-			"connectVelocity" : 40,
-			"lowSpeed": 0.5, // km/h
+			"startVelocity" : "$startVelocity",
+			"connectVelocity" : "$connectVelocity",
+			"lowSpeed": "$lowSpeed", // km/h
 			//REEV mode settings
-			"REEVRPM": 1500,
+			"REEVRPM": "$REEVRPM",
 			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": 200,
+			"REEVRPMProtect": "$REEVRPMProtect",
 			//brake mode settings
 			"defaultBrakeMode": "onePedal"
 		},
@@ -68,26 +68,26 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["awdmotor"],
 			"subMotorNames": [],
-			"ondemandMaxRPM" : 50,
-			"AWDMultiplier" : 1.00,
+			"ondemandMaxRPM" : "$ondemandMaxRPM",
+			"AWDMultiplier" : "$AWDMultiplier",
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
-			"AdAWDDiffRPM": 250,
+			"AdAWDDiffRPM": "$AdAWDDiffRPM",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.05,
-			"motorRatio2": 2.05,
+			"motorRatio1": "$motorRatio1",
+			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 35,
-			"connectVelocity" : 40,
-			"lowSpeed": 0.5, // km/h
+			"startVelocity" : "$startVelocity",
+			"connectVelocity" : "$connectVelocity",
+			"lowSpeed": "$lowSpeed", // km/h
 			//REEV mode settings
-			"REEVRPM": 1500,
+			"REEVRPM": "$REEVRPM",
 			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": 200,
+			"REEVRPMProtect": "$REEVRPMProtect",
 			//brake mode settings
 			"defaultBrakeMode": "onePedal"
 		},
@@ -115,26 +115,26 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["frontDriveShaft"],
 			"subMotorNames": ["rearMotor", "rearMotor_L", "rearMotor_R"],
-			"ondemandMaxRPM" : 50,
-			"AWDMultiplier" : 1.08,
+			"ondemandMaxRPM" : "$ondemandMaxRPM",
+			"AWDMultiplier" : "$AWDMultiplier",
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
-			"AdAWDDiffRPM": 250,
+			"AdAWDDiffRPM": "$AdAWDDiffRPM",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.05,
-			"motorRatio2": 2.05,
+			"motorRatio1": "$motorRatio1",
+			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 35,
-			"connectVelocity" : 40,
-			"lowSpeed": 0.5, // km/h
+			"startVelocity" : "$startVelocity",
+			"connectVelocity" : "$connectVelocity",
+			"lowSpeed": "$lowSpeed", // km/h
 			//REEV mode settings
-			"REEVRPM": 1500,
+			"REEVRPM": "$REEVRPM",
 			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": 200,
+			"REEVRPMProtect": "$REEVRPMProtect",
 			//brake mode settings
 			"defaultBrakeMode": "onePedal"
 		},
@@ -162,26 +162,26 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontMotor", "frontMotor_L", "frontMotor_R"],
-			"ondemandMaxRPM" : 50,
-			"AWDMultiplier" : 1.08,
+			"ondemandMaxRPM" : "$ondemandMaxRPM",
+			"AWDMultiplier" : "$AWDMultiplier",
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
-			"AdAWDDiffRPM": 250,
+			"AdAWDDiffRPM": "$AdAWDDiffRPM",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.05,
-			"motorRatio2": 2.05,
+			"motorRatio1": "$motorRatio1",
+			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 35,
-			"connectVelocity" : 40,
-			"lowSpeed": 0.5, // km/h
+			"startVelocity" : "$startVelocity",
+			"connectVelocity" : "$connectVelocity",
+			"lowSpeed": "$lowSpeed", // km/h
 			//REEV mode settings
-			"REEVRPM": 1500,
+			"REEVRPM": "$REEVRPM",
 			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": 200,
+			"REEVRPMProtect": "$REEVRPMProtect",
 			//brake mode settings
 			"defaultBrakeMode": "onePedal"
 		},
@@ -209,26 +209,26 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": [],
 			"subMotorNames": [],
-			"ondemandMaxRPM" : 50,
-			"AWDMultiplier" : 1.00,
+			"ondemandMaxRPM" : "$ondemandMaxRPM",
+			"AWDMultiplier" : "$AWDMultiplier",
 			"defaultEAWDMode": "partTime",
 			"AdvanceAWD": false,
-			"AdAWDDiffRPM": 250,
+			"AdAWDDiffRPM": "$AdAWDDiffRPM",
 			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": 2.05,
-			"motorRatio2": 2.05,
+			"motorRatio1": "$motorRatio1",
+			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
 			//auto mode settings
-			"startVelocity" : 35,
-			"connectVelocity" : 40,
-			"lowSpeed": 0.5, // km/h
+			"startVelocity" : "$startVelocity",
+			"connectVelocity" : "$connectVelocity",
+			"lowSpeed": "$lowSpeed", // km/h
 			//REEV mode settings
-			"REEVRPM": 1500,
+			"REEVRPM": "$REEVRPM",
 			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": 200,
+			"REEVRPMProtect": "$REEVRPMProtect",
 			//brake mode settings
 			"defaultBrakeMode": "onePedal"
 		},
@@ -272,6 +272,25 @@
 		"hybridControl":{
 			//mode settings
 			"enableModes" : ["hybrid", "electric", "auto", "reev"],
+			"defaultMode" : "hybrid",
+		},
+	},
+
+	"Mode_P": {
+		"information":{
+			"name":"Performance Gearbox Drive Modes",
+			"value": 0
+		},
+		
+        "slots": [
+			["type", "default", "description"],
+		],
+
+		"slotType" : "Drive_Modes",
+		
+		"hybridControl":{
+			//mode settings
+			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
 			"defaultMode" : "hybrid",
 		},
 	},

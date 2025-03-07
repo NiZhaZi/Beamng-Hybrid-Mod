@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.48 alpha
--- final edit - 2025.2.13 12:59
+-- version 0.0.49 alpha
+-- final edit - 2025.3.7 18:14
 
 local M = {}
 
@@ -214,48 +214,37 @@ local function engineMode(state)
 end
 
 local function motorMode(state)
-    if state == "on1" then -- hybrid drive ratio
+    local motorAction = {
+        on1 = {motorRatio = motorRatio1, mode = "connected"},
+        on2 = {motorRatio = motorRatio2, mode = "disconnected"},
+        on3 = {motorRatio = motorRatio2, mode = "connected", condition = ifMotorGearbox() and powerGenerator:getEnhancedDrive()},
+        off = {motorRatio = 0, mode = "connected"}
+    }
+
+    local action = motorAction[state]
+    if action then
+        -- If it's "on3", check the condition before proceeding
+        if state == "on3" and not action.condition then
+            motorMode("on2")  -- Fall back to "on2" if condition is not met
+            return
+        end
+
+        -- Apply the action to motors
         for _, v in ipairs(motors) do
             if v.type == "motorShaft" then
-                v:setmotorRatio(motorRatio1)
-                v:setMode("connected")
-            else
+                v:setmotorRatio(action.motorRatio)
+                v:setMode(action.mode)
             end
         end
-        ifMotorOn = true
-    elseif state == "on2" then -- EV drive ratio
-        for _, v in ipairs(motors) do
-            if v.type == "motorShaft" then
-                v:setmotorRatio(motorRatio2)
-                v:setMode("disconnected")
-            else
-            end         
-        end
-        ifMotorOn = true
-    elseif state == "on3" then -- EV drive ratio
-        if ifMotorGearbox() and powerGenerator:getEnhancedDrive() then
-            for _, v in ipairs(motors) do
-                if v.type == "motorShaft" then
-                    v:setmotorRatio(motorRatio2)
-                    v:setMode("connected")
-                else
-                end         
-            end
-            ifMotorOn = true
+
+        if state == "off" then
+            ifMotorOn = false
         else
-            motorMode("on2")
+            ifMotorOn = true
         end
-    elseif state == "off" then
-        for _, v in ipairs(motors) do
-            if v.type == "motorShaft" then
-                v:setmotorRatio(0)
-                v:setMode("connected")
-            else
-            end     
-        end
-        ifMotorOn = false
     end
 end
+
 
 local function enhanceDriveMode()
     if ifGearMotorDrive then
@@ -625,10 +614,14 @@ local function updateGFX(dt)
                 local airspeed = electrics.values.airspeed * 3.6
                 if wheelspeed > 1 and airspeed > 0.5 and wheelspeed > airspeed * 1.5 then
                     reevThrottle = math.max(0, reevThrottle * tcsMultiper)
-                    tcsMultiper = math.max(0.01, tcsMultiper - 0.05)
+                    tcsMultiper = math.max(0.01, tcsMultiper - 0.02)
+                    electrics.values.tcsActive2 = 1
                 else
                     tcsMultiper = math.min(1.00, tcsMultiper + 0.01)
+                    electrics.values.tcsActive2 = 0
                 end
+            else
+                electrics.values.tcsActive2 = 0
             end
             -- log("D", "w", tcsMultiper)
             reevMotorShaftUpdate("connected")

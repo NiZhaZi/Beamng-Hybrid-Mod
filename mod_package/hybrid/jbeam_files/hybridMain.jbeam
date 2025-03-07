@@ -12,7 +12,22 @@
 			
 		],
 		"variables": [
-			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+			["name",             "type",   "unit",  "category",       "default",  "min",  "max",  "title",                 "description"],
+			//AWD
+			["$ondemandMaxRPM",  "range",  "RPM",   "electricmotor",  50,         0,      99999,  "Ondemand Max RPM",      "Ondemand Max RPM Differencial",                {"subCategory": "electricmotor", "stepDis":1.00}],
+			["$AWDMultiplier",   "range",  "X",     "electricmotor",  1.08,       1,      99999,  "AWD Multiplier",        "Ondemand Max RPM Differencial Coef",           {"subCategory": "electricmotor", "stepDis":0.01}],
+			//AWD act when mianRPM - subRPM * AWDMultiplier >= ondemandMaxRPM
+			["$AdAWDDiffRPM",    "range",  "RPM",   "electricmotor",  250,        0,      99999,  "Advance AWD Diff RPM",  "Advance AWD Diff RPM",                         {"subCategory": "electricmotor", "stepDis":1.00}],
+			//GearRatios
+			["$motorRatio1",     "range",  "X",     "electricmotor",  2.05,       0,      99999,  "Motor Ratio 1",         "Hybrid Mode Motor Gear Ratio",                 {"subCategory": "electricmotor", "stepDis":0.01}],
+			["$motorRatio2",     "range",  "X",     "electricmotor",  2.05,       0,      99999,  "Motor Ratio 2",         "EV Mode Motor Gear Ratio",           		   {"subCategory": "electricmotor", "stepDis":0.01}],
+			//auto mode settings
+			["$startVelocity",   "range",  "kph",   "electricmotor",  35,         5,      99999,  "Start Velocity",        "Velocity of Engine Start",           		   {"subCategory": "electricmotor", "stepDis":1.00}],
+			["$connectVelocity", "range",  "kph",   "electricmotor",  40,         7,      99999,  "Connect Velocity",      "Velocity of Engine Involve",         		   {"subCategory": "electricmotor", "stepDis":1.00}],
+			["$lowSpeed",        "range",  "kph",   "electricmotor",  0.5,        0.5,    10,     "Low Speed",       	   "Engine Start If Hign Throttle and Low Speed",  {"subCategory": "electricmotor", "stepDis":0.01}],
+			//REEV mode settings
+			["$REEVRPM",         "range",  "RPM",   "electricmotor",  1500,       0,      99999,  "REEV RPM",              "Default REEV Engine RPM",           		   {"subCategory": "electricmotor", "stepDis":1.00}],
+			["$REEVRPMProtect",  "range",  "RPM",   "electricmotor",  200,        0,      99999,  "REEV Protect RPM",      "Max REEV Engine RPM Less than Redline",        {"subCategory": "electricmotor", "stepDis":1.00}],
 		],
 		"controller": [
 			["fileName"],
