@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.49 alpha
--- final edit - 2025.3.7 18:14
+-- version 0.0.50 alpha
+-- final edit - 2025.3.8 22:56
 
 local M = {}
 
@@ -774,7 +774,17 @@ local function init(jbeamData)
     proxyEngine = powertrain.getDevice("mainEngine")
     gearbox = powertrain.getDevice("gearbox")
     
-    enableModes = jbeamData.enableModes or {"hybrid", "fuel", "electric", "auto", "reev"}
+    local _modes = {jbeamData.autoMode, jbeamData.hybridMode, jbeamData.electricMode, jbeamData.reevMode, jbeamData.fuelMode}
+    for _, v in ipairs(_modes) do 
+        if v then
+            table.insert(enableModes, v)
+        end
+    end
+
+    if next(enableModes) == nil then
+        enableModes = {"hybrid"}
+    end
+    -- enableModes = jbeamData.enableModes or {"hybrid", "fuel", "electric", "auto", "reev"}
     -- auto      自动选择
     -- reev      增程模式
     -- electric  电机直驱

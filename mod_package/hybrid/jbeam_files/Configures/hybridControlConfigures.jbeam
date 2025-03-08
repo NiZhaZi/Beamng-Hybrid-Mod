@@ -6,7 +6,11 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			["Drive_Modes", "Mode_E", "Drive Modes"],
+			["auto", "auto_mode", "Auto Mode"],
+			["hybrid", "hybrid_mode", "Hybrid Mode"],
+			["electric", "electric_mode", "Electric Mode"],
+			["reev", "reev_mode", "Reev Mode"],
+			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -53,7 +57,11 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			["Drive_Modes", "Mode_E", "Drive Modes"],
+			["auto", "auto_mode", "Auto Mode"],
+			["hybrid", "hybrid_mode", "Hybrid Mode"],
+			["electric", "electric_mode", "Electric Mode"],
+			["reev", "reev_mode", "Reev Mode"],
+			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -100,7 +108,11 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			["Drive_Modes", "Mode_E", "Drive Modes"],
+			["auto", "auto_mode", "Auto Mode"],
+			["hybrid", "hybrid_mode", "Hybrid Mode"],
+			["electric", "electric_mode", "Electric Mode"],
+			["reev", "reev_mode", "Reev Mode"],
+			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -147,7 +159,11 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			["Drive_Modes", "Mode_E", "Drive Modes"],
+			["auto", "auto_mode", "Auto Mode"],
+			["hybrid", "hybrid_mode", "Hybrid Mode"],
+			["electric", "electric_mode", "Electric Mode"],
+			["reev", "reev_mode", "Reev Mode"],
+			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -194,7 +210,11 @@
 		},
         "slots": [
 			["type", "default", "description"],
-			["Drive_Modes", "Mode_E", "Drive Modes"],
+			["auto", "auto_mode", "Auto Mode"],
+			["hybrid", "hybrid_mode", "Hybrid Mode"],
+			["electric", "electric_mode", "Electric Mode"],
+			["reev", "reev_mode", "Reev Mode"],
+			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
 
@@ -237,62 +257,74 @@
 
 
 
-
-	"Mode_All": {
+	"auto_mode": {
 		"information":{
-			"name":"Hybrid All Drive Modes",
+			"name":"Auto Mode",
 			"value": 0
 		},
-
-        "slots": [
-			["type", "default", "description"],
-		],
-
-		"slotType" : "Drive_Modes",
+		
+		"slotType" : "auto",
 		
 		"hybridControl":{
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto", "reev"],
-			"defaultMode" : "hybrid",
+			"autoMode": "auto"
 		},
+
 	},
 
-	"Mode_E": {
+	"hybrid_mode": {
 		"information":{
-			"name":"Hybrid Gearbox Drive Modes",
+			"name":"Hybrid Mode",
 			"value": 0
 		},
 		
-        "slots": [
-			["type", "default", "description"],
-		],
-
-		"slotType" : "Drive_Modes",
+		"slotType" : "hybrid",
 		
 		"hybridControl":{
-			//mode settings
-			"enableModes" : ["hybrid", "electric", "auto", "reev"],
-			"defaultMode" : "hybrid",
+			"hybridMode": "hybrid"
 		},
+
 	},
 
-	"Mode_P": {
+	"electric_mode": {
 		"information":{
-			"name":"Performance Gearbox Drive Modes",
+			"name":"Electric Mode",
 			"value": 0
 		},
 		
-        "slots": [
-			["type", "default", "description"],
-		],
-
-		"slotType" : "Drive_Modes",
+		"slotType" : "electric",
 		
 		"hybridControl":{
-			//mode settings
-			"enableModes" : ["hybrid", "fuel", "electric", "auto"],
-			"defaultMode" : "hybrid",
+			"electricMode": "electric"
 		},
+
+	},
+
+	"reev_mode": {
+		"information":{
+			"name":"Reev Mode",
+			"value": 0
+		},
+		
+		"slotType" : "reev",
+		
+		"hybridControl":{
+			"reevMode": "reev"
+		},
+
+	},
+
+	"fuel_mode": {
+		"information":{
+			"name":"Fuel Mode",
+			"value": 0
+		},
+		
+		"slotType" : "fuel",
+		
+		"hybridControl":{
+			"fuelMode": "fuel"
+		},
+
 	},
 
 }
