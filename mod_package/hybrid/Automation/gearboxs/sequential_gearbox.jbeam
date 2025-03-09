@@ -1,0 +1,86 @@
+{
+	"AMT_Gearbox_E_Transmission": {
+		"information":{
+			"authors":"Camshaft Software",
+			"name":"Hybrid Sequential Transmission",
+			"value": 1100
+		},
+		"slotType" : "Camso_Transmission",
+		"slots": [
+			["type", "default", "description"],
+			["Camso_TransferCase", "", "Drive Type"],
+			["Shift_Logic", "AMT_Gearbox", "Shift Logic", {"coreSlot":true}],
+		],
+		
+		"variables": [
+			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+				["$whineMult", "range", "", "Gearing", 1, 0, 5, "Whine Volume", "Gearbox whine volume multiplier",{"subCategory": "Transmission", "stepDis": 1, "minDis": 0, "maxDis": 500}],
+				["$gear_R", "range", ":1", "Gearing", 2.22, 0.1, 17, "Gear R", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_1", "range", ":1", "Gearing", 2.11, 0.1, 17, "Gear 1", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_2", "range", ":1", "Gearing", 1.62, 0.1, 17, "Gear 2", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_3", "range", ":1", "Gearing", 1.25, 0.1, 17, "Gear 3", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_4", "range", ":1", "Gearing", 1.00, 0.1, 17, "Gear 4", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_5", "range", ":1", "Gearing", 0.83, 0.1, 17, "Gear 5", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_6", "range", ":1", "Gearing", 0.70, 0.1, 17, "Gear 6", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+				["$gear_7", "range", ":1", "Gearing", 0.60, 0.1, 17, "Gear 7", "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}]
+		],
+
+		"controller": [
+			["fileName"],
+			
+		],
+		"gearbox": {
+			//https://wiki.beamng.com/ManualGearbox
+			//"gearDamageThreshold":3000, //Multiplier for tolerance to smashing gears (no clutch + mismatched rpm)
+			"gearRatios": ["$=-$gear_R", 0, "$gear_1", "$gear_2", "$gear_3", "$gear_4", "$gear_5", "$gear_6", "$gear_7"],
+			"friction": 13.670573742362, //Constant friction torque on input shaft
+			"gearboxNode:": ["engine0"], //node used to play gear damage sound
+
+			"gearWhineCoefsInput":  ["$=$whineMult * 0.60", 0, "$=$whineMult * 0.32", "$=$whineMult * 0.32", "$=$whineMult * 0.32", "$=$whineMult * 0.32", "$=$whineMult * 0.32", "$=$whineMult * 0.32", "$=$whineMult * 0.32"],
+			"gearWhineCoefsOutput": [0, 0, "$=$whineMult * 0.6", "$=$whineMult * 0.6", "$=$whineMult * 0.6", "$=$whineMult * 0.6", "$=$whineMult * 0.6", "$=$whineMult * 0.6", "$=$whineMult * 0.6"],
+			//"gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+			//"gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+			"gearWhineInputEvent": "event:>Vehicle>Transmission>straight_01>twine_in_race",
+			"gearWhineOutputEvent": "event:>Vehicle>Transmission>straight_01>twine_out_race"
+		},
+
+		"clutch": {
+			//"thermalsEnabled": true
+			//"clutchMass": 10, //Thermal mass representing clutch disc and PP/Clutch surfaces
+			//"coolingCoef": 1, //Multiplier to tweak how fast it cools
+			//"warningTemp": 200, //Temp for UI warning
+			//"maxSafeClutchTemp": 300, //Temp after which torque limit decreases (but may recover if left to cool)
+			//"clutchOverheatRange": 100, //Additional temp before clutch is pretty wrecked and won't recover much
+			//"maxClutchTemp": 500 //Clutch will never recover at all if it hits this temp
+		},
+
+		/*
+		"engine": {
+			"transmissionType": "manual",
+			// -1, 0 (neutral), 1, etc
+			"gears": ["$=-$gear_R_dadc1", 0, "$gear_1_dadc1", "$gear_2_dadc1", "$gear_3_dadc1", "$gear_4_dadc1", "$gear_5_dadc1", "$gear_6_dadc1", "$gear_7_dadc1"],
+			"clutchDuration":0.15,
+			//"clutchTorque":180
+		},
+		*/
+
+		"vehicleController": {
+			//manual transmission useful values
+			"shiftDownRPMOffsetCoef":1.2,
+			"clutchLaunchStartRPM": 1600, //RPM where launching behavior starts
+			"clutchLaunchTargetRPM": 2100, //RPM it tries to maintain while launching
+			"transmissionShiftDelay": 0.12, //Time taken in between clutching actions
+			"revMatchThrottle": 0.65, //Controls shift rev matching assist. Reduce this value to as much as 0.25 for high powered engines
+			"clutchInRate": 20, //Controls shift assist clutching speed (value of 5 will be take 1/5 seconds to complete)
+			"clutchOutRate": 20, //Controls shift assist clutching speed (value of 5 will be take 1/5 seconds to complete)
+			"calculateOptimalLoadShiftPoints": true //The high shift points ones can be auto calculated
+		},
+
+		"powertrain" : [
+			["type", "name", "inputName", "inputIndex"],
+			["frictionClutch", "clutch", "mainEngine", 1],
+			["estGearbox", "gearbox", "clutch", 1]
+
+		]
+	}
+}

@@ -1,7 +1,7 @@
 -- estGearbox.lua - 2024.5.12 11:50 - Sequential Gearbox with electric motor
 -- by NZZ
--- version 0.2.6 beta
--- final edit - 2024.10.13 22:50
+-- version 0.2.7 beta
+-- final edit - 2025.3.9 14:06
 
 local M = {}
 
@@ -302,7 +302,7 @@ end
 
 local function engineCoup()
   if electrics.values.hybridMode then
-    if electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev" then
+    if (electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev") and electrics.values.electricReverse == 0 then
       return 1
     else
       return 0
@@ -317,7 +317,7 @@ local function updateVelocity(device, dt)
   device.parent[device.parentOutputAVName] = device.inputAV * engineCoup()
 end
 
-local function updateTorque(device)
+local function updateTorque(device, dt)
   local inputTorque = device.parent[device.parentOutputTorqueName] + motorTorque(device, dt)
   local inputAV = device.inputAV
   local friction = (device.friction * clamp(inputAV, -1, 1) + device.dynamicFriction * inputAV + device.torqueLossCoef * inputTorque) * device.wearFrictionCoef * device.damageFrictionCoef
@@ -537,7 +537,7 @@ local function calculateInertia(device)
   device.maxCumulativeGearRatio = maxCumulativeGearRatio * device.maxGearRatio
 end
 
-local function resetSounds(device)
+local function resetSounds(device, jbeamData)
   device.gearWhineInputTorqueSmoother:reset()
   device.gearWhineOutputTorqueSmoother:reset()
   device.gearWhineInputAVSmoother:reset()
@@ -963,6 +963,123 @@ local function new(jbeamData)
     --get rid of the break beam if it's just an empty string (cancellation)
     device.breakTriggerBeam = nil
   end
+
+  device.motorType = jbeamData.motorType or "powerGenerator"
+
+  device.motorRatio = 1
+
+  device.motorDirection = 0
+
+  device.torqueReactionNodes = jbeamData["torqueReactionNodes_nodes"]
+
+  device.maxRPM = 0
+
+  if not jbeamData.torque then
+    log("E", "electricMotor.init", "Can't find torque table... Powertrain is going to break!")
+  end
+  local torqueTable = tableFromHeaderTable(jbeamData.torque)
+  local points = {}
+  for _, v in pairs(torqueTable) do
+    table.insert(points, { v.rpm, v.torque })
+    device.maxRPM = max(device.maxRPM, v.rpm)
+  end
+  device.torqueCurve = createCurve(points)
+  device.maxAV = device.maxRPM * rpmToAV
+
+  device.torqueData = getTorqueData(device)
+  device.maxPower = device.torqueData.maxPower
+  device.maxTorque = device.torqueData.maxTorque
+  device.maxPowerThrottleMap = device.torqueData.maxPower * psToWatt
+
+  if jbeamData.regenTorqueCurve then
+    local regenTorqueTable = tableFromHeaderTable(jbeamData.regenTorqueCurve)
+    points = {}
+    for _, v in pairs(regenTorqueTable) do
+      table.insert(points, { v.rpm, v.torque})
+    end
+    device.regenCurve = createCurve(points)
+  else
+    local regenFadeRPM = jbeamData.regenFadeRPM or 1000
+    local maxRegenPower = jbeamData.maxRegenPower or device.maxPower
+    local regenTorqueLimit = jbeamData.maxRegenTorque or device.maxTorque
+
+    device.regenCurve = {[0] = 0}
+
+    for i = 1, device.maxRPM do
+      local fadeCoef = min(1, i / regenFadeRPM)
+      local maxRegenTorque = min(regenTorqueLimit, maxRegenPower * 1000 / (i * rpmToAV))
+      local maxOverallTorque = device.torqueCurve[i]
+      local scaledMaxTorque = fadeCoef * min(maxRegenTorque, maxOverallTorque)
+
+      table.insert(device.regenCurve, scaledMaxTorque)
+    end
+  end
+
+  local maxRegenTorque = 0
+  local minPeakRegenRPM = 0
+  local lastTorque = 0
+
+  for i = 0, device.maxRPM do
+    local regenTorque = device.regenCurve[i]
+    if regenTorque > 0 and regenTorque <= lastTorque and minPeakRegenRPM == 0 then
+      minPeakRegenRPM = i -- once torque stops increasing along the curve the first time, we record that as the "lowest peak RPM"
+    end
+    maxRegenTorque = max(maxRegenTorque, regenTorque)
+    lastTorque = regenTorque
+  end
+
+  device.maxRegenTorque = maxRegenTorque
+  device.minPeakRegenRPM = minPeakRegenRPM
+  device.instantMaxRegenTorque = 0
+  device.minWantedRegenTorque = jbeamData.minimumWantedRegenTorque or 0
+  device.maxWantedRegenTorque = jbeamData.maximumWantedRegenTorque or maxRegenTorque
+
+  device.invEngInertia = 1 / device.inertia
+  device.halfInvEngInertia = device.invEngInertia * 0.5
+
+  local tempElectricalEfficiencyTable = nil
+  if not jbeamData.electricalEfficiency or type(jbeamData.electricalEfficiency) == "number" then
+    tempElectricalEfficiencyTable = { { 0, jbeamData.electricalEfficiency or 1 }, { 1, jbeamData.electricalEfficiency or 1 } }
+  elseif type(jbeamData.electricalEfficiency) == "table" then
+    tempElectricalEfficiencyTable = deepcopy(jbeamData.electricalEfficiency)
+  end
+
+  local copy = deepcopy(tempElectricalEfficiencyTable)
+  tempElectricalEfficiencyTable = {}
+  for k, v in pairs(copy) do
+    if type(k) == "number" then
+      table.insert(tempElectricalEfficiencyTable, { v[1] * 100, v[2] })
+    end
+  end
+
+  tempElectricalEfficiencyTable = createCurve(tempElectricalEfficiencyTable)
+  device.electricalEfficiencyTable = {}
+  for k, v in pairs(tempElectricalEfficiencyTable) do
+    device.electricalEfficiencyTable[k * 0.01] = v
+  end
+
+  device.torqueForBatteryCoef = 0
+
+  device.requiredEnergyType = "electricEnergy"
+  device.energyStorage = jbeamData.energyStorage or "mainBattery"
+
+  if device.torqueReactionNodes and #device.torqueReactionNodes == 3 then
+    local pos1 = vec3(v.data.nodes[device.torqueReactionNodes[1]].pos)
+    local pos2 = vec3(v.data.nodes[device.torqueReactionNodes[2]].pos)
+    local pos3 = vec3(v.data.nodes[device.torqueReactionNodes[3]].pos)
+    local avgPos = (((pos1 + pos2) / 2) + pos3) / 2
+    device.visualPosition = { x = avgPos.x, y = avgPos.y, z = avgPos.z }
+  end
+
+  device.engineNodeID = device.torqueReactionNodes and (device.torqueReactionNodes[1] or v.data.refNodes[0].ref) or v.data.refNodes[0].ref
+  if device.engineNodeID < 0 then
+    log("W", "combustionEngine.init", "Can't find suitable engine node, using ref node instead!")
+    device.engineNodeID = v.data.refNodes[0].ref
+  end
+
+  device:resetTempRevLimiter()
+
+  --insert1
 
   selectUpdates(device)
 

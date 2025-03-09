@@ -41,7 +41,32 @@
             "reverseSoundNode:":["a1"],
             "warningMaxSpeed": 14,
             "warningVolume": 0.5
-        }
+        },
+
+		"hybridControl":{
+			//EV ondemand AWD settings
+			"ondemandMaxRPM" : "$ondemandMaxRPM",
+			"AWDMultiplier" : "$AWDMultiplier",
+			"defaultEAWDMode": "partTime",
+			"AdvanceAWD": false,
+			"AdAWDDiffRPM": "$AdAWDDiffRPM",
+			//ratio1 for hybrid mode, ratio2 for EV mode
+			"motorRatio1": "$motorRatio1",
+			"motorRatio2": "$motorRatio2",
+			//auto mode settings
+			"startVelocity" : "$startVelocity",
+			"connectVelocity" : "$connectVelocity",
+			"lowSpeed": "$lowSpeed", // km/h
+			//REEV mode settings
+			"REEVRPM": "$REEVRPM",
+			"REEVMutiplier": 2.0,
+			"REEVRPMProtect": "$REEVRPMProtect",
+			//brake mode settings
+			"defaultBrakeMode": "onePedal"
+			//electric reverse
+			"electricReverse": true
+		},
+
 	},
 
 }

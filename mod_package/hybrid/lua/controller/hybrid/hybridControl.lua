@@ -1,7 +1,7 @@
 -- hybridContrl.lua - 2024.4.30 13:28 - hybrid control for hybrid Vehicles
 -- by NZZ
--- version 0.0.50 alpha
--- final edit - 2025.3.8 22:56
+-- version 0.0.51 alpha
+-- final edit - 2025.3.9 14:07
 
 local M = {}
 
@@ -65,6 +65,8 @@ local REEVSOC = nil
 local highEfficentAV = nil
 local reevThrottle = 0
 local RMSstate = nil
+
+local electricReverse = nil
 
 local ifGearMotorDrive = false
 local enhanceDrive = false
@@ -199,6 +201,9 @@ local function getGear()
         electrics.values.motorDirection = 0
         motorDirection = 0
     end
+
+    return motorDirection
+
 end
 
 local function engineMode(state)
@@ -767,6 +772,20 @@ local function updateGFX(dt)
         end
     end
 
+
+
+    --electric Reverse
+    if electricReverse then
+        if hybridMode == "hybrid" and getGear() == -1 then
+            motorMode("on3")
+            electrics.values.reevThrottle = 0
+            electrics.values.electricReverse = 1
+        elseif hybridMode == "hybrid" and getGear() ~= -1 then
+            motorMode("on1")
+            electrics.values.electricReverse = 0
+        end
+    end
+
 end
 
 local function init(jbeamData)
@@ -927,6 +946,9 @@ local function init(jbeamData)
     
     ecrawlMode = jbeamData.ecrawlMode or false
 
+    electricReverse = jbeamData.electricReverse == nil and true or jbeamData.electricReverse
+    electrics.values.electricReverse = 0
+
 end
 
 local function new()
@@ -983,6 +1005,8 @@ local function reset(jbeamData)
 
     electrics.values.mainThrottle = 0
     ecrawlMode = jbeamData.ecrawlMode or false
+
+    electrics.values.electricReverse = 0
 
 end
 

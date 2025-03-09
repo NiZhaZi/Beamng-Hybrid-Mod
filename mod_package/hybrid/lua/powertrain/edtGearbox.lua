@@ -1,7 +1,7 @@
 -- edtGearbox.lua - 2024.4.20 14:45 - DCT Gearbox with electric motor
 -- by NZZ
--- version 0.2.6 beta
--- final edit - 2024.10.13 21:04
+-- version 0.2.7 beta
+-- final edit - 2025.3.9 14:06
 
 local M = {}
 
@@ -257,7 +257,7 @@ end
 
 local function engineCoup()
   if electrics.values.hybridMode then
-    if electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev" then
+    if (electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev") and electrics.values.electricReverse == 0 then
       return 1
     else
       return 0

@@ -1,7 +1,7 @@
 -- emtGearbox.lua - 2024.3.18 13:31 - MT Gearbox with electric motor
 -- by NZZ
--- version 0.2.6 beta
--- final edit - 2024.10.13 22:48
+-- version 0.2.7 beta
+-- final edit - 2025.3.9 14:06
 
 local M = {}
 
@@ -302,7 +302,7 @@ end
 
 local function engineCoup()
   if electrics.values.hybridMode then
-    if electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev" then
+    if (electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev") and electrics.values.electricReverse == 0 then
       return 1
     else
       return 0
@@ -692,7 +692,7 @@ local function calculateInertia(device)
   device.maxCumulativeGearRatio = maxCumulativeGearRatio * device.maxGearRatio
 end
 
-local function resetSounds(device)
+local function resetSounds(device, jbeamData)
   device.gearWhineInputTorqueSmoother:reset()
   device.gearWhineOutputTorqueSmoother:reset()
   device.gearWhineInputAVSmoother:reset()

@@ -25,28 +25,10 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontDriveShaft"],
-			"ondemandMaxRPM" : "$ondemandMaxRPM",
-			"AWDMultiplier" : "$AWDMultiplier",
-			"defaultEAWDMode": "partTime",
-			"AdvanceAWD": false,
-			"AdAWDDiffRPM": "$AdAWDDiffRPM",
-			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": "$motorRatio1",
-			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
-			//auto mode settings
-			"startVelocity" : "$startVelocity",
-			"connectVelocity" : "$connectVelocity",
-			"lowSpeed": "$lowSpeed", // km/h
-			//REEV mode settings
-			"REEVRPM": "$REEVRPM",
-			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": "$REEVRPMProtect",
-			//brake mode settings
-			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -76,28 +58,10 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["awdmotor"],
 			"subMotorNames": [],
-			"ondemandMaxRPM" : "$ondemandMaxRPM",
-			"AWDMultiplier" : "$AWDMultiplier",
-			"defaultEAWDMode": "partTime",
-			"AdvanceAWD": false,
-			"AdAWDDiffRPM": "$AdAWDDiffRPM",
-			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": "$motorRatio1",
-			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
-			//auto mode settings
-			"startVelocity" : "$startVelocity",
-			"connectVelocity" : "$connectVelocity",
-			"lowSpeed": "$lowSpeed", // km/h
-			//REEV mode settings
-			"REEVRPM": "$REEVRPM",
-			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": "$REEVRPMProtect",
-			//brake mode settings
-			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -127,28 +91,10 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["frontDriveShaft"],
 			"subMotorNames": ["rearMotor", "rearMotor_L", "rearMotor_R"],
-			"ondemandMaxRPM" : "$ondemandMaxRPM",
-			"AWDMultiplier" : "$AWDMultiplier",
-			"defaultEAWDMode": "partTime",
-			"AdvanceAWD": false,
-			"AdAWDDiffRPM": "$AdAWDDiffRPM",
-			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": "$motorRatio1",
-			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
-			//auto mode settings
-			"startVelocity" : "$startVelocity",
-			"connectVelocity" : "$connectVelocity",
-			"lowSpeed": "$lowSpeed", // km/h
-			//REEV mode settings
-			"REEVRPM": "$REEVRPM",
-			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": "$REEVRPMProtect",
-			//brake mode settings
-			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -178,28 +124,10 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": ["rearDriveShaft"],
 			"subMotorNames": ["frontMotor", "frontMotor_L", "frontMotor_R"],
-			"ondemandMaxRPM" : "$ondemandMaxRPM",
-			"AWDMultiplier" : "$AWDMultiplier",
-			"defaultEAWDMode": "partTime",
-			"AdvanceAWD": false,
-			"AdAWDDiffRPM": "$AdAWDDiffRPM",
-			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": "$motorRatio1",
-			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
-			//auto mode settings
-			"startVelocity" : "$startVelocity",
-			"connectVelocity" : "$connectVelocity",
-			"lowSpeed": "$lowSpeed", // km/h
-			//REEV mode settings
-			"REEVRPM": "$REEVRPM",
-			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": "$REEVRPMProtect",
-			//brake mode settings
-			"defaultBrakeMode": "onePedal"
 		},
 	},
 
@@ -229,28 +157,10 @@
 			//EV ondemand AWD settings
 			"mainMotorNames": [],
 			"subMotorNames": [],
-			"ondemandMaxRPM" : "$ondemandMaxRPM",
-			"AWDMultiplier" : "$AWDMultiplier",
-			"defaultEAWDMode": "partTime",
-			"AdvanceAWD": false,
-			"AdAWDDiffRPM": "$AdAWDDiffRPM",
-			//ratio1 for hybrid mode, ratio2 for EV mode
-			"motorRatio1": "$motorRatio1",
-			"motorRatio2": "$motorRatio2",
 			//comfortable regen settings
 			"ifComfortRegen": true,
 			"comfortRegenBegine": 0.75,//should be bigger than comfortRegenEnd
 			"comfortRegenEnd": 0.15,
-			//auto mode settings
-			"startVelocity" : "$startVelocity",
-			"connectVelocity" : "$connectVelocity",
-			"lowSpeed": "$lowSpeed", // km/h
-			//REEV mode settings
-			"REEVRPM": "$REEVRPM",
-			"REEVMutiplier": 2.0,
-			"REEVRPMProtect": "$REEVRPMProtect",
-			//brake mode settings
-			"defaultBrakeMode": "onePedal"
 		},
 	},
 
