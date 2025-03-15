@@ -7,7 +7,7 @@
 		"slotType" : "Camso_differential_rear",
 		"slots": [
 			["type", "default", "description"],
-
+			["Camso_ElectricMotor_R", "Single_ElectricMotor_R", "Rear Motor"],
 		],
 		"controller": [
 			["fileName"],
@@ -30,11 +30,11 @@
 		"slotType" : "Camso_differential_rear",
 		"slots": [
 			["type", "default", "description"],
-
+			["Camso_ElectricMotor_R", "Dual_ElectricMotor_R", "Rear Motor"],
 		],
 		"controller": [
 			["fileName"],
-
+			
 		],
 		"powertrain" : [
 		["type", "name", "inputName", "inputIndex"],

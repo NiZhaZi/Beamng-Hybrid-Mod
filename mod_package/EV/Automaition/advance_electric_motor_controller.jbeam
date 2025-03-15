@@ -61,8 +61,6 @@
 		"slots": [
 			["type", "default", "description"],
 			["Camso_engine_structure", "", "Engine Structure", {"coreSlot": true}],
-			["Camso_ElectricMotor_F", "", "Front Motor"],
-			["Camso_ElectricMotor_R", "", "Rear Motor"],
 			["Camso_SpeedLimiter", "", "Speed Limiter", {"coreSlot": true}]
 		]
 	}
