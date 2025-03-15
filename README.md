@@ -53,7 +53,7 @@ Here is the guide for using it.
    4. Copy the code under.
 
       ```
-      "Single_motor_differential_front",
+      "Camso_differential_front": "Single_motor_differential_front",
       "Camso_differential_rear": "Dual_motor_differential_rear",
       "Camso_ElectricMotor_F": "Single_ElectricMotor_F",
       "Camso_ElectricMotor_R": "Dual_ElectricMotor_R",
