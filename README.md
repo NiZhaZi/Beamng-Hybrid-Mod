@@ -44,3 +44,22 @@ Here is the guide for using it.
 
 
 ## EV
+   1. Export the car and cancel "Zip-Pack Mod".
+
+   2. Download the pack from GitHub.
+
+   3. Unzip the zip file from the first link of step 2. Copy all files under "EV" folder to the folder of exported car.
+
+   4. Copy the code under.
+
+      ```
+      "Single_motor_differential_front",
+      "Camso_differential_rear": "Dual_motor_differential_rear",
+      "Camso_ElectricMotor_F": "Single_ElectricMotor_F",
+      "Camso_ElectricMotor_R": "Dual_ElectricMotor_R",
+      "Camso_Engine": "Advance_Engine_ElectricController",
+      ```
+
+   5. Open the .pc file of the car which is waiting for being modified and paste the content under "parts" part. Comment the duplicate lines. If the function is not needed, the content in the quotation marks can be deleted.
+
+   6. Start the game and choose the car to check if the car was modified correctly. Some parts can be exchanged in the game menu.
