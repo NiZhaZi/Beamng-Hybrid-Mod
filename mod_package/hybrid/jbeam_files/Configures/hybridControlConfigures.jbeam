@@ -9,7 +9,6 @@
 			["auto", "auto_mode", "Auto Mode"],
 			["hybrid", "hybrid_mode", "Hybrid Mode"],
 			["electric", "electric_mode", "Electric Mode"],
-			["reev", "reev_mode", "Reev Mode"],
 			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
@@ -42,7 +41,6 @@
 			["auto", "auto_mode", "Auto Mode"],
 			["hybrid", "hybrid_mode", "Hybrid Mode"],
 			["electric", "electric_mode", "Electric Mode"],
-			["reev", "reev_mode", "Reev Mode"],
 			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
@@ -75,7 +73,6 @@
 			["auto", "auto_mode", "Auto Mode"],
 			["hybrid", "hybrid_mode", "Hybrid Mode"],
 			["electric", "electric_mode", "Electric Mode"],
-			["reev", "reev_mode", "Reev Mode"],
 			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
@@ -108,7 +105,6 @@
 			["auto", "auto_mode", "Auto Mode"],
 			["hybrid", "hybrid_mode", "Hybrid Mode"],
 			["electric", "electric_mode", "Electric Mode"],
-			["reev", "reev_mode", "Reev Mode"],
 			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
@@ -141,7 +137,6 @@
 			["auto", "auto_mode", "Auto Mode"],
 			["hybrid", "hybrid_mode", "Hybrid Mode"],
 			["electric", "electric_mode", "Electric Mode"],
-			["reev", "reev_mode", "Reev Mode"],
 			["fuel", "fuel_mode", "Fuel Mode"],
 		],
 		"slotType" : "Hybrid_Control_Configure",
@@ -205,20 +200,6 @@
 		
 		"hybridControl":{
 			"electricMode": "electric"
-		},
-
-	},
-
-	"reev_mode": {
-		"information":{
-			"name":"Reev Mode",
-			"value": 0
-		},
-		
-		"slotType" : "reev",
-		
-		"hybridControl":{
-			"reevMode": "reev"
 		},
 
 	},

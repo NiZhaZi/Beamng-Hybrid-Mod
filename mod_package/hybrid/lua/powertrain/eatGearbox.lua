@@ -1,7 +1,7 @@
 -- eatGearbox.lua - 2024.4.20 14:45 - AT Gearbox with electric motor
 -- by NZZ
--- version 0.2.7 beta
--- final edit - 2025.3.9 14:06
+-- version 0.2.8 beta
+-- final edit - 2025.3.21 18:54
 
 local M = {}
 
@@ -302,7 +302,11 @@ end
 
 local function engineCoup()
   if electrics.values.hybridMode then
-    if (electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel" or electrics.values.hybridMode == "reev") and electrics.values.electricReverse == 0 then
+    if (electrics.values.hybridMode == "hybrid" or electrics.values.hybridMode == "fuel") and electrics.values.electricReverse == 0 then
+      return 1
+    elseif (electrics.values.hybridMode == "electric" or electrics.values.autoModeStage == 1) and electrics.values.powerGeneratorMode == "on" then
+      return 1
+    elseif electrics.values.autoModeStage == 2 or electrics.values.autoModeStage == 3 then
       return 1
     else
       return 0

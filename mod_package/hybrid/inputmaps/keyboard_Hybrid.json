@@ -21,11 +21,6 @@
      },
 
      {
-          "control": "alt r",
-          "action":  "REEV"
-     },
-
-     {
           "control": "alt =",
           "action":  "Enhance Energy Recovery"
      },
