@@ -314,7 +314,7 @@ local function handleStalling(isEngineRunning, dt)
             else
               message = "vehicle.vehicleController.stalled"
             end
-            guihooks.message({txt = message}, 2, "vehicle.engine.isStalling")
+            -- guihooks.message({txt = message}, 2, "vehicle.engine.isStalling")
             timer.stalledEngineMessageTimer = 1.8
           end
         end
