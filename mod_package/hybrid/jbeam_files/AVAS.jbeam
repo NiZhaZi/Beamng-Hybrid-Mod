@@ -1,0 +1,193 @@
+{
+    "AVAS": {
+		"information":{
+			"name":"Automated Voice Annunciator Systems",
+			"value":0
+		},
+		"slotType" : "AVAS",
+		"slots": [
+			["type", "default", "description"],
+            ["Version_AVAS", "Version_Legacy", "Version"],
+			["Sound_Forward", "Forward_AVAS_Sound_1", "Forward AVAS Sound"],
+            ["Sound_Reverse", "Reverse_AVAS_Sound_1", "Reverse AVAS Sound"],			
+		],
+		"controller": [
+			["fileName"],
+			["AVAS"],
+		],
+		"AVAS": {
+            "warningMaxSpeed": 14,
+            "warningVolume": 0.5
+        },
+	},
+
+    "Version_Legacy": {
+		"information":{
+			"name":"AVAS For BeamNG.Drive and Legacy Version Automation",
+			"value":0
+		},
+		"slotType" : "Version_AVAS",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundNode:":["a61"],
+            "reverseSoundNode:":["a1"],
+        },
+	},
+
+    "Version_Beta": {
+		"information":{
+			"name":"AVAS For Open Beta Version Automation",
+			"value":0
+		},
+		"slotType" : "Version_AVAS",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundNode:":["body61"],
+            "reverseSoundNode:":["body1"],
+        },
+	},
+
+    "Forward_AVAS_Sound_1": {
+		"information":{
+			"name":"Forward AVAS 1",
+			"value":0
+		},
+		"slotType" : "Sound_Forward",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_01",
+        },
+	},
+
+    "Forward_AVAS_Sound_2": {
+		"information":{
+			"name":"Forward AVAS 2",
+			"value":0
+		},
+		"slotType" : "Sound_Forward",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
+        },
+	},
+
+    "Forward_AVAS_Sound_3": {
+		"information":{
+			"name":"Forward AVAS 3",
+			"value":0
+		},
+		"slotType" : "Sound_Forward",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_03",
+        },
+	},
+
+    "Forward_AVAS_Sound_4": {
+		"information":{
+			"name":"Forward AVAS 4",
+			"value":0
+		},
+		"slotType" : "Sound_Forward",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_04",
+        },
+	},
+
+    "Forward_AVAS_Sound_5": {
+		"information":{
+			"name":"Forward AVAS 5",
+			"value":0
+		},
+		"slotType" : "Sound_Forward",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_05",
+        },
+	},
+
+    "Reverse_AVAS_Sound_1": {
+		"information":{
+			"name":"Reverse AVAS 1",
+			"value":0
+		},
+		"slotType" : "Sound_Reverse",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_01",
+        },
+	},
+
+    "Reverse_AVAS_Sound_2": {
+		"information":{
+			"name":"Reverse AVAS 2",
+			"value":0
+		},
+		"slotType" : "Sound_Reverse",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
+        },
+	},
+
+    "Reverse_AVAS_Sound_3": {
+		"information":{
+			"name":"Reverse AVAS 3",
+			"value":0
+		},
+		"slotType" : "Sound_Reverse",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_03",
+        },
+	},
+
+    "Reverse_AVAS_Sound_4": {
+		"information":{
+			"name":"Reverse AVAS 4",
+			"value":0
+		},
+		"slotType" : "Sound_Reverse",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_04",
+        },
+	},
+
+    "Reverse_AVAS_Sound_5": {
+		"information":{
+			"name":"Reverse AVAS 5",
+			"value":0
+		},
+		"slotType" : "Sound_Reverse",
+		"slots": [
+			["type", "default", "description"],			
+		],
+		"AVAS": {
+            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_05",
+        },
+	},
+}

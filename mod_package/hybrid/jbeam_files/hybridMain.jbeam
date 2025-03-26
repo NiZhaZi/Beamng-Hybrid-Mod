@@ -9,7 +9,7 @@
 			["type", "default", "description"],
 			["Battery", "Lithium_Titanate_Battery", "Battery"],
 			["Hybrid_Configure", "", "Hybrid Configure", {"coreSlot":true}],
-			
+			["AVAS", "AVAS", "BattAutomated Voice Annunciator Systemsery"],
 		],
 		"variables": [
 			["name",             "type",   "unit",  "category",       "default",  "min",  "max",  "title",                 "description"],
@@ -31,18 +31,7 @@
 		],
 		"controller": [
 			["fileName"],
-			["AVAS"],
 		],
-
-		"AVAS": {
-            "forwardSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
-            "reverseSoundEvent":"event:>Engine>Pedestrian Warning>Version_02",
-            "forwardSoundNode:":["a61"],
-            "reverseSoundNode:":["a1"],
-            "warningMaxSpeed": 14,
-            "warningVolume": 0.5
-        },
-
 		"hybridControl":{
 			//EV ondemand AWD settings
 			"ondemandMaxRPM" : "$ondemandMaxRPM",
@@ -66,7 +55,5 @@
 			//electric reverse
 			"electricReverse": true
 		},
-
 	},
-
 }

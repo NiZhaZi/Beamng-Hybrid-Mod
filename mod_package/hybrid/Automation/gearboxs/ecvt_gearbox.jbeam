@@ -15,7 +15,7 @@
 		"variables": [
 			["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
 
-			["$gear_R",  "range", ":1", "Gearing", 2.84, 0.1, 17, "Gear R",  "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
+			["$gear_R",  "range", ":1", "Gearing", 0.61, 0.1, 17, "Gear R",  "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
 			["$gear_d",  "range", ":1", "Gearing", 0.61, 0.1, 17, "Gear D",  "Gear ratio", {"subCategory": "Transmission", "stepDis": 0.01}],
 
 			["$shift_up",   "range", "X", "Gearing", 0.75, 0.01, 20, "Shift Up",   "Shift Up Speed",   {"subCategory": "Transmission", "stepDis": 0.01}],
