@@ -15,9 +15,15 @@
 			["fileName"],
 			["AVAS"],
 		],
+		"variables": [
+			["name",              "type",   "unit",    "category",  "default",  "min",  "max",  "title",                   "description"],
+			//AWD
+			["$warningMaxSpeed",  "range",  "kph",     "AVAS",      14,         0,      50,     "AVAS warning max speed",  "AVAS warning max speed",  {"stepDis":1.00}],
+			["$warningVolume",    "range",  "Volume",  "AVAS",      0.5,        0,      10,     "AVAS warning volume",     "AVAS warning volume",     {"stepDis":0.10}],
+		]
 		"AVAS": {
-            "warningMaxSpeed": 14,
-            "warningVolume": 0.5
+            "warningMaxSpeed": "$ = 3.6 * $warningMaxSpeed",
+            "warningVolume": "$warningVolume"
         },
 	},
 
