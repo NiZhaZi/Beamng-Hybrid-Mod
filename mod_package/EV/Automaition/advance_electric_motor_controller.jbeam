@@ -33,6 +33,7 @@
 	        ["fileName"],
 			["advanceEV/evdrive", {"name": "evdrive"}],
 			["advanceEV/motorLimit", {"name": "motorLimit",}],
+			["spoiler", {"name": "spoiler",}],
 	    ],
 
 		"evdrive": {
@@ -61,7 +62,8 @@
 		"slots": [
 			["type", "default", "description"],
 			["Camso_engine_structure", "", "Engine Structure", {"coreSlot": true}],
-			["Camso_SpeedLimiter", "", "Speed Limiter", {"coreSlot": true}]
+			["Camso_SpeedLimiter", "", "Speed Limiter", {"coreSlot": true}],
+			["Functions", "Functions", "Functions"]
 		]
 	}
 }
